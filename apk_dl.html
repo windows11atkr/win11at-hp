@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アプリダウンロード | windows11at</title>
+    <style>
+        /* ==========================================================================
+           1. 全体デザインルール（Aero UI 2.0）定義
+           ========================================================================== */
+        :root {
+            --bg-deep-navy: #0D111D;
+            --panel-bg: rgba(22, 31, 51, 0.85);
+            --text-main: #FFFFFF;
+            --text-sub: #94A3B8;
+            --aurora-gradient: linear-gradient(135deg, #60A5FA, #A5B4FC, #C084FC);
+            --radius-pill: 24px;
+            --radius-large-pill: 32px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep-navy);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        /* 背景のオーロラボケ（奥行き演出） */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--aurora-gradient);
+            filter: blur(120px);
+            opacity: 0.15;
+            top: 20%;
+            left: 30%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. レイアウト構造（PC・スマホ共通ベース）
+           ========================================================================== */
+        .main-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 100%;
+            z-index: 1;
+            
+            /* Aero UI 2.0: 上部ハイライトと下部アンビエントシャドウ */
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.2),
+                0 20px 40px -5px rgba(13, 17, 29, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .header h1 {
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        /* ==========================================================================
+           3. コンテンツエリア（中央パネル ＆ ネオングロー）
+           ========================================================================== */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #A5B4FC;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #A5B4FC;
+        }
+
+        .status-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #A5B4FC;
+            letter-spacing: 0.05em;
+        }
+
+        .coming-soon-panel {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .coming-soon-text {
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            background: var(--aurora-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 12px rgba(165, 180, 252, 0.3));
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(165, 180, 252, 0.2)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 20px rgba(165, 180, 252, 0.5)); }
+        }
+
+        /* ==========================================================================
+           4. インタラクション設計（Pill形状ボタン）
+           ========================================================================== */
+        .links-container {
+            display: flex;
+            margin-bottom: 24px;
+        }
+
+        .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px;
+            border-radius: var(--radius-pill);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+        }
+
+        .btn-x {
+            background: var(--text-main);
+            color: var(--bg-deep-navy);
+            border: 1px solid var(--text-main);
+        }
+
+        .btn-x:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-youtube {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-youtube:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* 区切り線 */
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin-bottom: 24px;
+        }
+
+        /* トップに戻るボタン（Aero UI 2.0 マット樹脂スタイル） */
+        .btn-back-home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-sub);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-pill);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back-home:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        /* ==========================================================================
+           5. レスポンシブUI最適化（スマホ vs PC）
+           ========================================================================== */
+        
+        /* 📱 スマホ用スタイル（デフォルト） */
+        @media (max-width: 767px) {
+            .main-card {
+                max-width: 400px;
+                border-radius: var(--radius-large-pill);
+                padding: 32px 24px;
+            }
+            .status-badge { margin-bottom: 20px; }
+            .header { margin-bottom: 28px; }
+            .header h1 { font-size: 1.35rem; }
+            .coming-soon-panel { padding: 40px 16px; margin-bottom: 28px; }
+            .coming-soon-text { font-size: 1.8rem; }
+            
+            /* スマホは縦並びフルサイズ */
+            .links-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .btn-link { width: 100%; }
+        }
+
+        /* 💻 PC用スタイル */
+        @media (min-width: 768px) {
+            .main-card {
+                max-width: 600px;
+                border-radius: 40px;
+                padding: 48px 40px;
+            }
+            .status-badge { margin-bottom: 24px; }
+            .header { margin-bottom: 36px; }
+            .header h1 { font-size: 1.75rem; }
+            .coming-soon-panel { padding: 56px 32px; margin-bottom: 36px; }
+            .coming-soon-text { font-size: 2.4rem; }
+            
+            /* PCは2カラム（横並び）配置 */
+            .links-container {
+                flex-direction: row;
+                gap: 16px;
+            }
+            .btn-link { flex: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-card">
+        <!-- 状態タグ -->
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span class="status-text">Android アプリ配布ページ</span>
+        </div>
+
+        <!-- ヘッダーエリア -->
+        <div class="header">
+            <h1>自作アプリケーション</h1>
+            <p>@windows11at プロジェクト</p>
+        </div>
+
+        <!-- 配布ステータス（中央パネル） -->
+        <div class="coming-soon-panel">
+            <div class="coming-soon-text">Coming soon...</div>
+        </div>
+
+        <!-- 公式SNSへのリンクエリア -->
+        <div class="links-container">
+            <!-- X -->
+            <a href="https://x.com/windows11at" target="_blank" rel="noopener noreferrer" class="btn-link btn-x">
+                <svg viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                X で進捗を確認
+            </a>
+            
+            <!-- YouTube -->
+            <a href="https://youtube.com/@windows11at" target="_blank" rel="noopener noreferrer" class="btn-link btn-youtube">
+                <svg viewBox="0 0 24 24">
+                    <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.507 9.388.507 9.388.507s7.517 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                YouTube チャンネル
+            </a>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- トップに戻るボタン（index.htmlへ遷移） -->
+        <a href="index.html" class="btn-back-home">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            公式サイトのトップへ戻る
+        </a>
+    </div>
+
+</body>
+</html>

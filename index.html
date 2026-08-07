@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>windows11at Official Blog</title>
+    <style>
+        /* Aero-SQUI 1.0 全体定義 */
+        :root {
+            --bg-page: #f3f4f6;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --highlight-line: rgba(255, 255, 255, 0.7);
+            --shadow-ambient: rgba(13, 17, 29, 0.06);
+            --aurora-start: #38bdf8;
+            --aurora-mid: #a5b4fc;
+            --aurora-end: #c084fc;
+            --glow-color: rgba(165, 180, 252, 0.35);
+            
+            /* SNS/Community ブランドカラー */
+            --color-x: #000000;
+            --color-youtube: #ff0000;
+            --color-discord: #5865f2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px 12px; /* スマホ向けに余白を最適化 */
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* ヘッダー構造 */
+        header {
+            margin-bottom: 24px;
+            padding: 0 4px;
+        }
+
+        .blog-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: #0d111d;
+        }
+
+        .blog-subtitle {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* 👑 Androidアプリ制作中 特設バナー */
+        .app-banner {
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-mid), var(--aurora-end));
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px var(--glow-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .app-banner:active {
+            transform: scale(0.98);
+        }
+
+        .app-banner-text {
+            color: #ffffff;
+        }
+
+        .app-banner-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .app-banner-action {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .app-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* 💻 📱 PC・スマホ分岐レイアウト */
+        .layout-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 32px; }
+            .blog-title { font-size: 28px; }
+            .app-banner { padding: 24px 32px; margin-bottom: 32px; }
+            .app-banner-title { font-size: 20px; }
+            .layout-wrapper { flex-direction: row; align-items: flex-start; gap: 32px; }
+            .main-content { flex: 1; }
+            .sidebar { width: 340px; position: sticky; top: 40px; }
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        /* 🎮 新・ミニゲームカード */
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--highlight-line);
+            border-radius: 24px;
+            padding: 24px 16px;
+            box-shadow: 0 10px 30px var(--shadow-ambient);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .game-card { padding: 40px 32px; }
+        }
+
+        .game-status {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 4px;
+        }
+
+        .game-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0d111d;
+            margin-bottom: 4px;
+        }
+
+        .game-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        /* ゲームキャンバスエリア */
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #0d111d;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            aspect-ratio: 4 / 5;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            touch-action: none; /* スマホのデフォルトスクロールを防止 */
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 29, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            color: #ffffff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            transition: transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .game-btn:active { transform: scale(0.95); }
+
+        /* 📢 SNS/コミュニティ宣伝カード */
+        .sns-promo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sns-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--highlight-line);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px var(--shadow-ambient);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            -webkit-tap-highlight-color: transparent;
+            transition: border-color 0.2s;
+        }
+
+        @media (min-width: 768px) {
+            .sns-card { padding: 28px; border-radius: 24px; gap: 12px; transition: transform 0.2s ease, border-color 0.2s ease; }
+            .sns-card:hover { transform: translateY(-2px); }
+        }
+
+        .sns-card.x-card:hover { border-color: rgba(0, 0, 0, 0.2); }
+        .sns-card.youtube-card:hover { border-color: rgba(255, 0, 0, 0.2); }
+        .sns-card.discord-card:hover { border-color: rgba(88, 101, 242, 0.3); }
+
+        .sns-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sns-badge {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .x-badge { background-color: var(--color-x); }
+        .youtube-badge { background-color: var(--color-youtube); }
+        .discord-badge { background-color: var(--color-discord); }
+
+        .sns-account-id {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .sns-text {
+            font-size: 12px;
+            color: var(--text-sub);
+            line-height: 1.5;
+        }
+
+        .sns-action {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .x-card .sns-action { color: var(--color-x); }
+        .youtube-card .sns-action { color: var(--color-youtube); }
+        .discord-card .sns-action { color: var(--color-discord); }
+
+        /* フッター */
+        footer {
+            margin-top: 40px;
+            padding: 20px 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 11px;
+            color: var(--text-sub);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ヘッダー -->
+        <header>
+            <div class="blog-title">windows11at</div>
+            <div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
+        </header>
+
+        <!-- 👑 Androidアプリ制作中 特設バナー -->
+        <a href="apk_dl.html" class="app-banner">
+            <div class="app-banner-text">
+                <div class="app-banner-title">Androidアプリ制作中！</div>
+                <div class="app-banner-action">詳しくはこちら →</div>
+            </div>
+            <div class="app-badge">Coming Soon</div>
+        </a>
+
+        <!-- レイアウトメインラッパー -->
+        <div class="layout-wrapper">
+            
+            <!-- 左側：メインコンテンツ -->
+            <main class="main-content">
+                <div class="section-title">Articles</div>
+                
+                <!-- 🎮 スマホ最適化！激おもブロック崩しシューティング -->
+                <div class="game-card">
+                    <div class="game-status">【現在、新しい記事を準備中です】</div>
+                    <div class="game-title">🔮 Aero Breakout</div>
+                    <div class="game-desc">画面の下半分をスワイプして自機を移動＆弾は自動連射！</div>
+                    
+                    <div class="canvas-container">
+                        <canvas id="gameCanvas" width="400" height="500"></canvas>
+                        
+                        <!-- スタート＆オーバーレイ画面 -->
+                        <div id="overlayScreen" class="game-overlay">
+                            <h3 id="overlayTitle" style="font-size: 24px; margin-bottom: 10px; background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">READY?</h3>
+                            <p id="overlayScore" style="font-size: 14px; color: #a5b4fc; margin-bottom: 20px;">ブロックを全て破壊せよ</p>
+                            <button onclick="initGame()" class="game-btn">ゲームスタート</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 右側：サイドバー -->
+            <aside class="sidebar">
+                <div class="section-title">Official Channels</div>
+                <div class="sns-promo-list">
+
+                    <!-- X (Twitter) -->
+                    <a href="https://x.com/windows11at" target="_blank" class="sns-card x-card">
+                        <div class="sns-header">
+                            <span class="sns-badge x-badge">X</span>
+                            <span class="sns-account-id">@windows11at</span>
+                        </div>
+                        <p class="sns-text">自作Androidアプリの開発進捗や、日々のガジェット要塞化の様子をリアルタイムでポストしています。最新情報はここが最速！</p>
+                        <div class="sns-action">フォローして進捗を追う →</div>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="https://youtube.com/@windows11at" target="_blank" class="sns-card youtube-card">
+                        <div class="sns-header">
+                            <span class="sns-badge youtube-badge">YouTube</span>
+                            <span class="sns-account-id">@windows11at</span>
+                        </div>
+                        <p class="sns-text">デスクセットアップの紹介や、アプリの動作デモ動画などを投稿予定。テキストだけでは伝わらないガジェットの魅力を映像でお届けします。</p>
+                        <div class="sns-action">チャンネル登録して待つ →</div>
+                    </a>
+
+                    <!-- Discordサーバー -->
+                    <a href="https://discord.gg/JqfqJQTvJG" target="_blank" class="sns-card discord-card">
+                        <div class="sns-header">
+                            <span class="sns-badge discord-badge">Discord</span>
+                            <span class="sns-account-id">Windows11at Discord server</span>
+                        </div>
+                        <p class="sns-text">公式コミュニティサーバーです。アプリのデバッグ報告、要望の受付、ガジェット談義など、メンバーと直接雑談・交流できる場所です。</p>
+                        <div class="sns-action">サーバーに参加する →</div>
+                    </a>
+
+                </div>
+            </aside>
+
+        </div>
+
+        <!-- フッター -->
+        <footer>
+            <div>© 2026 windows11at</div>
+        </footer>
+    </div>
+
+    <!-- 🎮 超爽快ブロック崩しスクリプト -->
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const overlay = document.getElementById('overlayScreen');
+        const oTitle = document.getElementById('overlayTitle');
+        const oScore = document.getElementById('overlayScore');
+
+        let gameActive = false;
+        let score = 0;
+        
+        // パドル（自機）
+        const paddle = { x: 170, y: 460, w: 60, h: 10, speed: 8 };
+        
+        // 弾リスト
+        let bullets = [];
+        let shootTimer = 0;
+
+        // ブロック設定
+        const rowCount = 5;
+        const colCount = 6;
+        const blockW = 56;
+        const blockH = 18;
+        const blockPadding = 6;
+        const blockTopOffset = 50;
+        const blockLeftOffset = 18;
+        let blocks = [];
+
+        // スマホ用タッチイベント追従
+        canvas.addEventListener('touchmove', (e) => {
+            if (!gameActive) return;
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touchX = e.touches[0].clientX - rect.left;
+            // キャンバス内の比率に換算
+            const canvasTouchX = (touchX / rect.width) * canvas.width;
+            paddle.x = canvasTouchX - paddle.w / 2;
+            
+            // 画面外はみ出し防止
+            if (paddle.x < 0) paddle.x = 0;
+            if (paddle.x + paddle.w > canvas.width) paddle.x = canvas.width - paddle.w;
+        }, { passive: false });
+
+        // PC用マウスイベント追従
+        canvas.addEventListener('mousemove', (e) => {
+            if (!gameActive) return;
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const canvasMouseX = (mouseX / rect.width) * canvas.width;
+            paddle.x = canvasMouseX - paddle.w / 2;
+            
+            if (paddle.x < 0) paddle.x = 0;
+            if (paddle.x + paddle.w > canvas.width) paddle.x = canvas.width - paddle.w;
+        });
+
+        function initGame() {
+            score = 0;
+            bullets = [];
+            shootTimer = 0;
+            paddle.x = 170;
+            
+            // ブロックの生成（耐久力を持たせる）
+            blocks = [];
+            for (let c = 0; c < colCount; c++) {
+                blocks[c] = [];
+                for (let r = 0; r < rowCount; r++) {
+                    // 上の行ほど硬い（最大耐久3）
+                    blocks[c][r] = { x: 0, y: 0, status: 3 - Math.floor(r/2) };
+                }
+            }
+            
+            overlay.style.display = 'none';
+            gameActive = true;
+            requestAnimationFrame(gameLoop);
+        }
+
+        function gameLoop() {
+            if (!gameActive) return;
+
+            // 1. アップデート
+            // 自動連射ロジック
+            shootTimer++;
+            if (shootTimer % 12 === 0) {
+                bullets.push({ x: paddle.x + paddle.w / 2, y: paddle.y, speed: 6 });
+            }
+
+            // 弾の移動と衝突判定
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                let b = bullets[i];
+                b.y -= b.speed;
+
+                // 画面外に消えた弾の削除
+                if (b.y < 0) {
+                    bullets.splice(i, 1);
+                    continue;
+                }
+
+                // ブロックとの衝突判定
+                let hit = false;
+                for (let c = 0; c < colCount; c++) {
+                    for (let r = 0; r < rowCount; r++) {
+                        let block = blocks[c][r];
+                        if (block.status > 0) {
+                            if (b.x > block.x && b.x < block.x + blockW && b.y > block.y && b.y < block.y + blockH) {
+                                block.status--;
+                                score += 10;
+                                bullets.splice(i, 1);
+                                hit = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (hit) break;
+                }
+            }
+
+            // クリア判定
+            let allCleared = true;
+            for (let c = 0; c < colCount; c++) {
+                for (let r = 0; r < rowCount; r++) {
+                    if (blocks[c][r].status > 0) allCleared = false;
+                }
+            }
+            if (allCleared) {
+                endGame(true);
+                return;
+            }
+
+            // 2. 描画
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // ブロックの描画
+            for (let c = 0; c < colCount; c++) {
+                for (let r = 0; r < rowCount; r++) {
+                    if (blocks[c][r].status > 0) {
+                        const blockX = (c * (blockW + blockPadding)) + blockLeftOffset;
+                        const blockY = (r * (blockH + blockPadding)) + blockTopOffset;
+                        blocks[c][r].x = blockX;
+                        blocks[c][r].y = blockY;
+
+                        // 耐久度によって色を変える（Aeroネオンカラー）
+                        if (blocks[c][r].status === 3) ctx.fillStyle = '#c084fc'; // 紫
+                        else if (blocks[c][r].status === 2) ctx.fillStyle = '#a5b4fc'; // 薄紫
+                        else ctx.fillStyle = '#38bdf8'; // 青
+
+                        ctx.beginPath();
+                        ctx.roundRect(blockX, blockY, blockW, blockH, 4);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            // 自機（パドル）の描画
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 5);
+            ctx.fill();
+
+            // 弾の描画
+            ctx.fillStyle = '#38bdf8';
+            bullets.forEach(b => {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // スコアテキスト描画
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText(`SCORE: ${score}`, 20, 30);
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function endGame(isWin) {
+            gameActive = false;
+            oTitle.textContent = isWin ? "🎯 MISSION CLEARED!" : "GAME OVER";
+            oScore.textContent = `最終スコア: ${score} 点`;
+            overlay.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
