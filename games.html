@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミニゲーム | windows11at</title>
+    <style>
+        /* Aero-SQUI 1.0 共通テーマ定義 */
+        :root {
+            --bg-page: #f3f4f6;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --highlight-line: rgba(255, 255, 255, 0.7);
+            --shadow-ambient: rgba(13, 17, 29, 0.06);
+            --aurora-start: #38bdf8;
+            --aurora-mid: #a5b4fc;
+            --aurora-end: #c084fc;
+            --glow-color: rgba(165, 180, 252, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* ヘッダー構造（index.htmlと統一） */
+        header {
+            margin-bottom: 24px;
+            padding: 0 4px;
+        }
+
+        .blog-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: #0d111d;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .blog-subtitle {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* レイアウト */
+        .store-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 32px; }
+            .blog-title { font-size: 28px; }
+            .store-layout { flex-direction: row; align-items: flex-start; gap: 32px; }
+            .store-sidebar { width: 300px; position: sticky; top: 40px; }
+            .store-main { flex: 1; }
+        }
+
+        /* アプリ情報サイドバー */
+        .app-identity-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--highlight-line);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 30px var(--shadow-ambient);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-icon-placeholder {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            border-radius: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 28px var(--glow-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .app-icon-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+        }
+
+        .app-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0d111d;
+            margin-bottom: 4px;
+        }
+
+        .app-developer {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+        }
+
+        .store-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        /* メインゲームパネル */
+        .store-main-panel {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--highlight-line);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 30px var(--shadow-ambient);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .store-main-panel { padding: 32px; }
+        }
+
+        .panel-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0d111d;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .panel-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        /* ゲームキャンバスエリア */
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 24px auto;
+            background: #0d111d;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.6);
+            aspect-ratio: 4 / 5;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 29, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+            transition: opacity 0.3s ease;
+        }
+
+        .game-title-large {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .game-explanation {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 24px;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .game-score-display {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f59e0b;
+            margin-bottom: 16px;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            color: #ffffff;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+            transition: transform 0.1s, opacity 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .game-btn:active { transform: scale(0.95); }
+
+        /* 操作ヒント */
+        .controls-guide {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 13px;
+            color: var(--text-main);
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto 24px auto;
+        }
+
+        .controls-guide ul {
+            padding-left: 20px;
+            margin-top: 6px;
+            color: var(--text-sub);
+        }
+
+        /* 戻るリンク */
+        .back-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .back-nav:hover {
+            color: #0284c7;
+        }
+
+        /* フッター */
+        footer {
+            margin-top: 40px;
+            padding: 20px 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 11px;
+            color: var(--text-sub);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ヘッダー（index.htmlと統一） -->
+        <header>
+            <a href="index.html" class="blog-title">windows11at</a>
+            <div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
+        </header>
+
+        <!-- ストア風レイアウト構造 -->
+        <div class="store-layout">
+            
+            <!-- 左側：ミニゲーム情報 -->
+            <aside class="store-sidebar">
+                <div class="app-identity-card">
+                    <div class="app-icon-placeholder">
+                        <svg class="app-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="70" height="70" rx="20" stroke="white" stroke-width="3" opacity="0.9"/>
+                            <circle cx="35" cy="50" r="6" fill="white"/>
+                            <circle cx="50" cy="35" r="6" fill="white"/>
+                            <circle cx="50" cy="65" r="6" fill="white"/>
+                            <circle cx="65" cy="50" r="6" fill="white"/>
+                            <rect x="30" y="47" width="40" height="6" rx="3" fill="white" opacity="0.3"/>
+                            <rect x="47" y="30" width="6" height="40" rx="3" fill="white" opacity="0.3"/>
+                            <circle cx="70" cy="35" r="5" fill="white"/>
+                            <circle cx="75" cy="45" r="5" fill="white"/>
+                        </svg>
+                    </div>
+                    
+                    <h1 class="app-name">ガジェットディフェンダー</h1>
+                    <p class="app-developer">Mini Game v1.0</p>
+                    <div class="store-store-status">
+                        <span class="store-badge">HTML5 ゲーム</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 右側：ゲームメイン画面 -->
+            <main class="store-main">
+                <div class="store-main-panel">
+                    <h2 class="panel-title">ガジェット・ディフェンダー (Gadget Defender)</h2>
+                    <p class="panel-desc">迫りくる「バグ」や「水滴」の脅威から、画面中央の大切なメイン機（スマホ）を守り抜くシューティング・防衛ミニゲームです！</p>
+                    
+                    <!-- ゲームキャンバス -->
+                    <div class="canvas-container" id="gameContainer">
+                        <canvas id="gameCanvas" width="400" height="500"></canvas>
+                        
+                        <!-- スタート / ゲームオーバーオーバーレイ -->
+                        <div class="game-overlay" id="gameOverlay">
+                            <div class="game-title-large" id="overlayTitle">GADGET DEFENDER</div>
+                            <div class="game-score-display" id="overlayScore" style="display: none;">Score: 0</div>
+                            <div class="game-explanation" id="overlayDesc">
+                                画面中央のコア（スマートフォン）を狙って四方からウイルス（赤い弾）が迫ってきます。<br>
+                                画面をタップ/クリックして、迎撃電磁パルスを放ち、ガジェットを守り抜いてください！
+                            </div>
+                            <button class="game-btn" id="startBtn">ゲームスタート</button>
+                        </div>
+                    </div>
+
+                    <!-- 操作ガイド -->
+                    <div class="controls-guide">
+                        <strong>遊び方・操作方法</strong>
+                        <ul>
+                            <li><strong>タップ / クリック：</strong> タップした方向へ迎撃パルスを発射します。</li>
+                            <li><strong>防衛対象：</strong> 中央のスマートフォン（耐久値：5）。敵が到達すると減少します。</li>
+                            <li><strong>ゲームオーバー：</strong> ガジェットの耐久値が0になるとゲーム終了です。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ナビゲーション -->
+                <a href="index.html" class="back-nav">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    トップへ戻る
+                </a>
+            </main>
+
+        </div>
+
+        <!-- フッター -->
+        <footer>
+            <div>© 2026 windows11at</div>
+        </footer>
+    </div>
+
+    <!-- ゲームロジックJavaScript -->
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameOverlay = document.getElementById('gameOverlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayScore = document.getElementById('overlayScore');
+        const overlayDesc = document.getElementById('overlayDesc');
+        const startBtn = document.getElementById('startBtn');
+
+        // ゲーム状態管理
+        let gameState = 'READY'; // READY, PLAYING, GAMEOVER
+        let score = 0;
+        let hp = 5;
+        let maxHp = 5;
+        let lastEnemySpawn = 0;
+        let spawnInterval = 1200; // ms
+
+        // オブジェクト配列
+        let bullets = [];
+        let enemies = [];
+        let particles = [];
+
+        // 中心（プレイヤーコア＝スマートフォン）の位置
+        const coreX = canvas.width / 2;
+        const coreY = canvas.height / 2;
+        const coreRadius = 25;
+
+        // 星座バックグラウンドエフェクト用
+        let stars = [];
+        for(let i=0; i<30; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2,
+                alpha: Math.random()
+            });
+        }
+
+        // イベントリスナー
+        startBtn.addEventListener('click', startGame);
+        canvas.addEventListener('pointerdown', fireBullet);
+
+        function startGame() {
+            gameState = 'PLAYING';
+            score = 0;
+            hp = maxHp;
+            bullets = [];
+            enemies = [];
+            particles = [];
+            spawnInterval = 1200;
+            lastEnemySpawn = performance.now();
+            gameOverlay.style.opacity = 0;
+            setTimeout(() => { gameOverlay.style.display = 'none'; }, 300);
+        }
+
+        function gameOver() {
+            gameState = 'GAMEOVER';
+            overlayTitle.innerText = 'GAME OVER';
+            overlayScore.innerText = `最終スコア: ${score}`;
+            overlayScore.style.display = 'block';
+            overlayDesc.innerHTML = 'ガジェットのセキュリティが突破されました！<br>もう一度挑戦しますか？';
+            startBtn.innerText = 'リトライ';
+            gameOverlay.style.display = 'flex';
+            setTimeout(() => { gameOverlay.style.opacity = 1; }, 10);
+        }
+
+        function fireBullet(e) {
+            if (gameState !== 'PLAYING') return;
+
+            // キャンバス内の相対座標を取得
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.clientX - rect.left;
+            const clientY = e.clientY - rect.top;
+            
+            // キャンバス本来の解像度サイズにスケーリング変換
+            const targetX = (clientX / rect.width) * canvas.width;
+            const targetY = (clientY / rect.height) * canvas.height;
+
+            // 中心からの角度を計算
+            const angle = Math.atan2(targetY - coreY, targetX - coreX);
+
+            // 弾を追加
+            bullets.push({
+                x: coreX + Math.cos(angle) * coreRadius,
+                y: coreY + Math.sin(angle) * coreRadius,
+                vx: Math.cos(angle) * 5,
+                vy: Math.sin(angle) * 5,
+                radius: 4
+            });
+
+            // 発射時微小パーティクル
+            createParticles(coreX + Math.cos(angle) * coreRadius, coreY + Math.sin(angle) * coreRadius, '#38bdf8', 4);
+        }
+
+        function createParticles(x, y, color, count) {
+            for(let i=0; i<count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 2 + 1;
+                particles.push({
+                    x: x, y: y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    radius: Math.random() * 2 + 1,
+                    color: color,
+                    alpha: 1,
+                    decay: Math.random() * 0.03 + 0.02
+                });
+            }
+        }
+
+        // メインゲームループ
+        function loop(timestamp) {
+            update(timestamp);
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function update(timestamp) {
+            // 背景の星を揺らす
+            stars.forEach(s => {
+                s.alpha += (Math.random() - 0.5) * 0.1;
+                if(s.alpha < 0) s.alpha = 0;
+                if(s.alpha > 1) s.alpha = 1;
+            });
+
+            if (gameState !== 'PLAYING') return;
+
+            // 敵の自動生成
+            if (timestamp - lastEnemySpawn > spawnInterval) {
+                spawnEnemy();
+                lastEnemySpawn = timestamp;
+                // 徐々に難易度アップ
+                if (spawnInterval > 500) spawnInterval -= 15;
+            }
+
+            // 弾の移動
+            bullets.forEach((b, index) => {
+                b.x += b.vx;
+                b.y += b.vy;
+                // 画面外に出たら削除
+                if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
+                    bullets.splice(index, 1);
+                }
+            });
+
+            // 敵の移動とコア衝突判定
+            enemies.forEach((enemy, eIndex) => {
+                // コア（中心）に向かって進む
+                const angle = Math.atan2(coreY - enemy.y, coreX - enemy.x);
+                enemy.x += Math.cos(angle) * enemy.speed;
+                enemy.y += Math.sin(angle) * enemy.speed;
+
+                // コアとの衝突
+                const distToCore = Math.hypot(coreX - enemy.x, coreY - enemy.y);
+                if (distToCore < coreRadius + enemy.radius) {
+                    enemies.splice(eIndex, 1);
+                    hp--;
+                    createParticles(enemy.x, enemy.y, '#ef4444', 12);
+                    if (hp <= 0) {
+                        gameOver();
+                    }
+                }
+
+                // 弾との衝突判定
+                bullets.forEach((bullet, bIndex) => {
+                    const distToBullet = Math.hypot(bullet.x - enemy.x, bullet.y - enemy.y);
+                    if (distToBullet < enemy.radius + bullet.radius) {
+                        // 撃破効果
+                        createParticles(enemy.x, enemy.y, enemy.color, 8);
+                        enemies.splice(eIndex, 1);
+                        bullets.splice(bIndex, 1);
+                        score += 10;
+                    }
+                });
+            });
+
+            // パーティクルの更新
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= p.decay;
+                if (p.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+        }
+
+        function spawnEnemy() {
+            // 画面外の四方からランダムに出現
+            let x, y;
+            const edge = Math.floor(Math.random() * 4); // 0:上, 1:右, 2:下, 3:左
+            const offset = 30;
+
+            if (edge === 0) {
+                x = Math.random() * canvas.width;
+                y = -offset;
+            } else if (edge === 1) {
+                x = canvas.width + offset;
+                y = Math.random() * canvas.height;
+            } else if (edge === 2) {
+                x = Math.random() * canvas.width;
+                y = canvas.height + offset;
+            } else {
+                x = -offset;
+                y = Math.random() * canvas.height;
+            }
+
+            // スコアに応じて高速な敵が出現
+            const isFast = Math.random() < 0.25 && score > 100;
+
+            enemies.push({
+                x: x, y: y,
+                radius: isFast ? 6 : 9,
+                speed: isFast ? 1.8 : 1.0,
+                color: isFast ? '#a855f7' : '#ef4444', // 紫＝高速バグ、赤＝通常バグ
+            });
+        }
+
+        function draw() {
+            // 画面クリア
+            ctx.fillStyle = '#0d111d';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 背景の星
+            stars.forEach(s => {
+                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+                ctx.fillRect(s.x, s.y, s.size, s.size);
+            });
+
+            // 中央の防衛コア（スマートフォンをデフォルメデザイン）
+            ctx.save();
+            ctx.translate(coreX, coreY);
+            
+            // オーラ光沢
+            let gradient = ctx.createRadialGradient(0, 0, 10, 0, 0, coreRadius + 15);
+            gradient.addColorStop(0, 'rgba(56, 189, 248, 0.2)');
+            gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(0, 0, coreRadius + 15, 0, Math.PI * 2);
+            ctx.fill();
+
+            // スマホ筐体風角丸四角形
+            ctx.fillStyle = '#1e293b';
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            const w = 26;
+            const h = 42;
+            ctx.beginPath();
+            ctx.roundRect(-w/2, -h/2, w, h, 6);
+            ctx.fill();
+            ctx.stroke();
+
+            // 内側画面
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            ctx.roundRect(-w/2 + 2, -h/2 + 4, w - 4, h - 8, 3);
+            ctx.fill();
+
+            // 壁・インジケータ光
+            ctx.fillStyle = hp > 2 ? '#38bdf8' : '#ef4444';
+            ctx.beginPath();
+            ctx.arc(0, h/2 - 2, 1.5, 0, Math.PI*2);
+            ctx.fill();
+            
+            ctx.restore();
+
+            // 弾の描画
+            bullets.forEach(b => {
+                ctx.fillStyle = '#38bdf8';
+                ctx.shadowColor = '#38bdf8';
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0; // リセット
+            });
+
+            // 敵の描画
+            enemies.forEach(e => {
+                ctx.fillStyle = e.color;
+                ctx.shadowColor = e.color;
+                ctx.shadowBlur = 6;
+                ctx.beginPath();
+                ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // コアに近いデザイン用のインナーコア
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(e.x, e.y, e.radius * 0.4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // パーティクルの描画
+            particles.forEach(p => {
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1.0; // リセット
+
+            // UIテキスト（プレイ中のみ常時表示）
+            if (gameState === 'PLAYING' || gameState === 'GAMEOVER') {
+                ctx.font = 'bold 14px system-ui, sans-serif';
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'left';
+                ctx.fillText(`SCORE: ${score}`, 15, 25);
+
+                // HPバー
+                ctx.textAlign = 'right';
+                ctx.fillText('HP: ', canvas.width - 75, 25);
+                
+                // HPの枠線
+                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(canvas.width - 70, 14, 55, 12);
+                
+                // HPの残量充填
+                if(hp > 0) {
+                    ctx.fillStyle = hp > 2 ? '#22c55e' : '#ef4444';
+                    ctx.fillRect(canvas.width - 68, 16, (hp / maxHp) * 51, 8);
+                }
+            }
+        }
+
+        // ループの開始
+        requestAnimationFrame(loop);
+    </script>
+</body>
+</html>
