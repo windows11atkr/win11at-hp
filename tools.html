@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Tool Kit | windows11at</title>
+    
+    <!-- Material Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        /* Aero-SQUI 1.0 共通テーマ定義 */
+        :root {
+            --bg-page: #f3f4f6;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+            --highlight-line: rgba(255, 255, 255, 0.7);
+            --shadow-ambient: rgba(13, 17, 29, 0.06);
+            --aurora-start: #38bdf8;
+            --aurora-mid: #a5b4fc;
+            --aurora-end: #c084fc;
+            --glow-color: rgba(165, 180, 252, 0.35);
+            
+            --color-x: #000000;
+            --color-youtube: #ff0000;
+            --color-discord: #5865f2;
+
+            --shadow-2dp: 0 4px 20px rgba(13, 17, 29, 0.05);
+            --shadow-4dp: 0 10px 30px rgba(13, 17, 29, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 20px 12px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ヘッダー構造（共通テーマ準拠） */
+        header {
+            margin-bottom: 24px;
+            padding: 0 4px;
+        }
+
+        .blog-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: #0d111d;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .blog-subtitle {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* 📱 PC・スマホ分岐レイアウト */
+        .store-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 40px 20px; }
+            header { margin-bottom: 32px; }
+            .blog-title { font-size: 28px; }
+            .store-layout { flex-direction: row; align-items: flex-start; gap: 32px; }
+            .store-sidebar { width: 300px; position: sticky; top: 40px; }
+            .store-main { flex: 1; min-width: 0; }
+        }
+
+        /* アプリ情報サイドバー・ナビゲーション */
+        .app-identity-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--highlight-line);
+            border-radius: 24px;
+            padding: 24px 16px;
+            box-shadow: 0 10px 30px var(--shadow-ambient);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-icon-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            border-radius: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 24px var(--glow-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .app-icon-placeholder .material-icons {
+            font-size: 40px;
+            color: #ffffff;
+        }
+
+        .app-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0d111d;
+            margin-bottom: 4px;
+        }
+
+        .app-developer {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 16px;
+        }
+
+        .store-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* サイドバー メニューナビゲーション */
+        .nav-drawer {
+            width: 100%;
+            text-align: left;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding-top: 16px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-sub);
+            padding: 10px 12px 4px 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 13.5px;
+            font-weight: 500;
+            border-radius: 14px;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(192, 132, 252, 0.15));
+            color: #0284c7;
+            font-weight: 600;
+        }
+
+        .nav-item .material-icons {
+            font-size: 18px;
+            color: var(--text-sub);
+        }
+
+        .nav-item.active .material-icons {
+            color: #0284c7;
+        }
+
+        /* メインパネル */
+        .store-main-panel {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--highlight-line);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 30px var(--shadow-ambient);
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .store-main-panel { padding: 32px; }
+        }
+
+        /* カード・コンテンツ切替 */
+        .tool-card {
+            display: none;
+        }
+
+        .tool-card.active {
+            display: block;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0d111d;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title .material-icons {
+            color: #0284c7;
+            font-size: 24px;
+        }
+
+        .panel-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            line-height: 1.6;
+        }
+
+        /* フォームコントロール */
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 12px;
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 14px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            background-color: rgba(0, 0, 0, 0.02);
+            color: var(--text-main);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--aurora-start);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+
+        /* ボタン */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        .btn {
+            height: 42px;
+            padding: 0 20px;
+            border-radius: 21px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-outlined {
+            background-color: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            color: var(--text-main);
+        }
+
+        .btn-outlined:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        /* グリッド ＆ 表示ボックス */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+        @media (max-width: 600px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0284c7, var(--aurora-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-lbl {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        /* Todoリスト アイテム */
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 14px;
+            margin-bottom: 8px;
+        }
+
+        /* QRコード表示エリア */
+        #qr-code-output {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.06);
+            margin-top: 16px;
+            min-height: 160px;
+        }
+
+        /* ナビゲーションフッターリンク */
+        .back-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .back-nav:hover {
+            color: #0284c7;
+        }
+
+        /* 🔝 トップに戻るボタン */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 6px 20px var(--glow-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .scroll-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
+        }
+
+        .scroll-top-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* フッター */
+        footer {
+            margin-top: 40px;
+            padding: 20px 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 11px;
+            color: var(--text-sub);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ヘッダー (共通定義) -->
+        <header>
+            <a href="index.html" class="blog-title">windows11at</a>
+            <div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
+        </header>
+
+        <!-- ストアレイアウト -->
+        <div class="store-layout">
+            
+            <!-- 左側/上部：アプリ・ツールキット情報とナビゲーション -->
+            <aside class="store-sidebar">
+                <div class="app-identity-card">
+                    <div class="app-icon-placeholder">
+                        <span class="material-icons">handyman</span>
+                    </div>
+                    
+                    <h1 class="app-name">便利ツール集</h1>
+                    <p class="app-developer">@windows11at</p>
+                    <div class="store-store-status">
+                        <span class="store-badge">Web Tool Kit v1.0</span>
+                    </div>
+
+                    <!-- ツール切替ドロワー -->
+                    <nav class="nav-drawer">
+                        <div class="nav-section-title">日常生活で使う</div>
+                        <div class="nav-item active" onclick="switchTab(event, 'calc')">
+                            <span class="material-icons">percent</span> 割引・消費税計算
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'dutch')">
+                            <span class="material-icons">groups</span> 割り勘計算機
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'recipe')">
+                            <span class="material-icons">restaurant</span> 料理の分量計算
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'memo')">
+                            <span class="material-icons">check_box</span> クイックメモ & Todo
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'timer')">
+                            <span class="material-icons">timer</span> 簡易タイマー
+                        </div>
+
+                        <div class="nav-section-title">文字・文章作成</div>
+                        <div class="nav-item" onclick="switchTab(event, 'char-count')">
+                            <span class="material-icons">description</span> 文字数カウント
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'replace')">
+                            <span class="material-icons">find_replace</span> テキスト置換
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'case')">
+                            <span class="material-icons">text_fields</span> 大文字・小文字変換
+                        </div>
+
+                        <div class="nav-section-title">便利なツール</div>
+                        <div class="nav-item" onclick="switchTab(event, 'password')">
+                            <span class="material-icons">key</span> パスワード自動生成
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'qr')">
+                            <span class="material-icons">qr_code_2</span> QRコード作成
+                        </div>
+                        <div class="nav-item" onclick="switchTab(event, 'unit')">
+                            <span class="material-icons">straighten</span> px / rem 単位変換
+                        </div>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- 右側/下部：メインツールパネル -->
+            <main class="store-main">
+                <div class="store-main-panel">
+
+                    <!-- 1. 割引・消費税計算 -->
+                    <div id="calc" class="tool-card active">
+                        <div class="panel-title"><span class="material-icons">percent</span> 割引・消費税計算</div>
+                        <div class="panel-desc">買い物時に「◯◯%引き」の実際の値段や税込み価格をすぐ計算できます。</div>
+                        <div class="grid-2 form-group">
+                            <div><label>元々の価格 (円)</label><input type="number" id="calc-price" placeholder="1000"></div>
+                            <div><label>割引率 (%)</label><input type="number" id="calc-discount" value="10"></div>
+                        </div>
+                        <div class="form-group">
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                                <input type="checkbox" id="chk-tax" checked> 消費税 (10%) を計算に含める
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="calculatePrice()">金額を計算</button>
+                        </div>
+                        <div class="grid-2" style="margin-top: 16px;">
+                            <div class="stat-box">
+                                <div class="stat-val" id="calc-res-discount">¥0</div>
+                                <div class="stat-lbl">割引後の価格 (税別)</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-val" id="calc-res-total">¥0</div>
+                                <div class="stat-lbl">最終支払金額 (税込)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 割り勘計算機 -->
+                    <div id="dutch" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">groups</span> 割り勘計算機</div>
+                        <div class="panel-desc">飲み会や旅行の清算用。幹事の多め支払いにも対応しています。</div>
+                        <div class="grid-2 form-group">
+                            <div><label>総額 (円)</label><input type="number" id="dutch-total" placeholder="12000"></div>
+                            <div><label>人数</label><input type="number" id="dutch-people" value="4"></div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="calculateDutch()">割り勘を計算</button>
+                        </div>
+                        <div class="grid-2" style="margin-top: 16px;">
+                            <div class="stat-box">
+                                <div class="stat-val" id="dutch-res-each">¥0</div>
+                                <div class="stat-lbl">1人あたりの支払額</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-val" id="dutch-res-rem">¥0</div>
+                                <div class="stat-lbl">端数（幹事の調整分）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 料理の分量計算 -->
+                    <div id="recipe" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">restaurant</span> 料理の分量計算</div>
+                        <div class="panel-desc">レシピの「2人分」を「3人分」にしたい時など、人数の変更に合わせて分量を自動換算します。</div>
+                        <div class="grid-3 form-group">
+                            <div><label>元の人数</label><input type="number" id="recipe-base-ppl" value="2"></div>
+                            <div><label>作りたい人数</label><input type="number" id="recipe-target-ppl" value="3"></div>
+                            <div><label>元の分量 (g, ml など)</label><input type="number" id="recipe-base-amount" placeholder="150"></div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="calculateRecipe()">分量を計算</button>
+                        </div>
+                        <div class="stat-box" style="margin-top: 16px;">
+                            <div class="stat-val" id="recipe-res">0</div>
+                            <div class="stat-lbl">調整後の分量</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. クイックメモ & Todo -->
+                    <div id="memo" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">check_box</span> クイックメモ & Todo</div>
+                        <div class="panel-desc">ブラウザを閉じても保存される簡易タスクメモです。</div>
+                        <div class="form-group" style="display:flex; gap:8px;">
+                            <input type="text" id="todo-input" placeholder="新しいタスクを入力...">
+                            <button class="btn btn-primary" onclick="addTodo()">追加</button>
+                        </div>
+                        <div id="todo-list" style="margin-top: 16px;"></div>
+                    </div>
+
+                    <!-- 5. 簡易タイマー -->
+                    <div id="timer" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">timer</span> 簡易タイマー</div>
+                        <div class="panel-desc">カップラーメンや作業の集中（ポモドーロ）に使えるカウントダウンタイマーです。</div>
+                        <div class="stat-box" style="margin-bottom: 20px;">
+                            <div class="stat-val" id="timer-display" style="font-size: 3rem;">03:00</div>
+                        </div>
+                        <div class="grid-2 form-group">
+                            <div><label>分</label><input type="number" id="timer-min" value="3"></div>
+                            <div><label>秒</label><input type="number" id="timer-sec" value="0"></div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" id="timer-start-btn" onclick="toggleTimer()">スタート</button>
+                            <button class="btn btn-outlined" onclick="resetTimer()">リセット</button>
+                        </div>
+                    </div>
+
+                    <!-- 6. 文字数カウント -->
+                    <div id="char-count" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">description</span> 文字数カウント</div>
+                        <div class="panel-desc">入力したテキストの文字数、空白除外数、行数をリアルタイムに計測します。</div>
+                        <div class="form-group">
+                            <textarea id="count-input" rows="6" placeholder="ここにテキストを入力または貼り付け..." oninput="updateCharCount()"></textarea>
+                        </div>
+                        <div class="grid-3">
+                            <div class="stat-box">
+                                <div class="stat-val" id="cnt-total">0</div>
+                                <div class="stat-lbl">総文字数</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-val" id="cnt-no-space">0</div>
+                                <div class="stat-lbl">空白抜き文字数</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-val" id="cnt-lines">0</div>
+                                <div class="stat-lbl">行数</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. テキスト置換 -->
+                    <div id="replace" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">find_replace</span> テキスト置換</div>
+                        <div class="panel-desc">指定した文字列を一括で別の文字列に置き換えます。</div>
+                        <div class="form-group">
+                            <textarea id="replace-src" rows="4" placeholder="元のテキスト"></textarea>
+                        </div>
+                        <div class="grid-2 form-group">
+                            <div><label>検索文字列</label><input type="text" id="replace-from" placeholder="置き換え前"></div>
+                            <div><label>置換文字列</label><input type="text" id="replace-to" placeholder="置き換え後"></div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="execReplace()">置換を実行</button>
+                        </div>
+                        <div class="form-group" style="margin-top: 16px;">
+                            <label>結果</label>
+                            <textarea id="replace-res" rows="4" readonly></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 8. 大文字・小文字変換 -->
+                    <div id="case" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">text_fields</span> 大文字・小文字変換</div>
+                        <div class="panel-desc">アルファベットの大文字・小文字・全角・半角の一括変換を行います。</div>
+                        <div class="form-group">
+                            <textarea id="case-input" rows="5" placeholder="Enter English Text Here..."></textarea>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="convertCase('upper')">UPPERCASE</button>
+                            <button class="btn btn-primary" onclick="convertCase('lower')">lowercase</button>
+                            <button class="btn btn-outlined" onclick="convertCase('title')">Title Case</button>
+                        </div>
+                    </div>
+
+                    <!-- 9. パスワード自動生成 -->
+                    <div id="password" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">key</span> パスワード自動生成</div>
+                        <div class="panel-desc">安全性の高いランダムなパスワードを生成します。</div>
+                        <div class="form-group">
+                            <label>文字数: <span id="pass-len-val">16</span></label>
+                            <input type="range" id="pass-len" min="6" max="32" value="16" style="accent-color: var(--aurora-start);" oninput="document.getElementById('pass-len-val').innerText=this.value">
+                        </div>
+                        <div class="grid-2 form-group">
+                            <label><input type="checkbox" id="chk-num" checked> 数字 (0-9) を含める</label>
+                            <label><input type="checkbox" id="chk-sym" checked> 記号 (!@#$%^&*) を含める</label>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="generatePassword()">パスワード生成</button>
+                        </div>
+                        <div class="stat-box" style="margin-top: 16px; word-break: break-all;">
+                            <div class="stat-val" id="pass-res">--------</div>
+                            <div class="stat-lbl">生成されたパスワード</div>
+                        </div>
+                    </div>
+
+                    <!-- 10. QRコード作成 -->
+                    <div id="qr" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">qr_code_2</span> QRコード作成</div>
+                        <div class="panel-desc">入力したURLやテキストから即座にQRコードを生成します。</div>
+                        <div class="form-group">
+                            <label>URL または テキスト</label>
+                            <input type="text" id="qr-input" placeholder="https://example.com">
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" onclick="generateQR()">QRコード作成</button>
+                        </div>
+                        <div id="qr-code-output">
+                            <span style="color: var(--text-sub); font-size:12px;">ここにQRコードが表示されます</span>
+                        </div>
+                    </div>
+
+                    <!-- 11. px / rem 単位変換 -->
+                    <div id="unit" class="tool-card">
+                        <div class="panel-title"><span class="material-icons">straighten</span> px / rem 単位変換</div>
+                        <div class="panel-desc">WebデザインやCSSコーディングで役立つ px と rem の相互変換ツールです（ルート: 16px基準）。</div>
+                        <div class="grid-2 form-group">
+                            <div><label>px 値</label><input type="number" id="unit-px" placeholder="16" oninput="convertPxToRem()"></div>
+                            <div><label>rem 値</label><input type="number" id="unit-rem" placeholder="1" oninput="convertRemToPx()"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ナビゲーション（戻るリンク） -->
+                <a href="index.html" class="back-nav">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    公式サイトのトップへ戻る
+                </a>
+            </main>
+
+        </div>
+
+        <!-- フッター -->
+        <footer>
+            <div>© 2026 windows11at</div>
+        </footer>
+    </div>
+
+    <!-- 🔝 トップに戻るボタン -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" aria-label="トップに戻る">
+        <span class="material-icons">arrow_upward</span>
+    </button>
+
+    <script>
+        /* --- タブ切替機能 --- */
+        function switchTab(e, tabId) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active'));
+
+            if (e && e.currentTarget) {
+                e.currentTarget.classList.add('active');
+            }
+            const targetCard = document.getElementById(tabId);
+            if (targetCard) {
+                targetCard.classList.add('active');
+            }
+        }
+
+        /* --- 🔝 トップに戻るボタンの制御 --- */
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        /* --- 1. 割引計算 --- */
+        function calculatePrice() {
+            const price = parseFloat(document.getElementById('calc-price').value) || 0;
+            const discount = parseFloat(document.getElementById('calc-discount').value) || 0;
+            const includeTax = document.getElementById('chk-tax').checked;
+
+            const discountedPrice = price * (1 - discount / 100);
+            const finalPrice = includeTax ? discountedPrice * 1.1 : discountedPrice;
+
+            document.getElementById('calc-res-discount').innerText = '¥' + Math.floor(discountedPrice).toLocaleString();
+            document.getElementById('calc-res-total').innerText = '¥' + Math.floor(finalPrice).toLocaleString();
+        }
+
+        /* --- 2. 割り勘計算 --- */
+        function calculateDutch() {
+            const total = parseFloat(document.getElementById('dutch-total').value) || 0;
+            const people = parseInt(document.getElementById('dutch-people').value) || 1;
+
+            const each = Math.floor(total / people);
+            const remainder = total - (each * people);
+
+            document.getElementById('dutch-res-each').innerText = '¥' + each.toLocaleString();
+            document.getElementById('dutch-res-rem').innerText = '¥' + remainder.toLocaleString();
+        }
+
+        /* --- 3. 料理分量計算 --- */
+        function calculateRecipe() {
+            const basePpl = parseFloat(document.getElementById('recipe-base-ppl').value) || 1;
+            const targetPpl = parseFloat(document.getElementById('recipe-target-ppl').value) || 1;
+            const baseAmount = parseFloat(document.getElementById('recipe-base-amount').value) || 0;
+
+            const result = (baseAmount / basePpl) * targetPpl;
+            document.getElementById('recipe-res').innerText = Number.isInteger(result) ? result : result.toFixed(1);
+        }
+
+        /* --- 4. メモ & Todo --- */
+        let todos = JSON.parse(localStorage.getItem('w11at_todos') || '[]');
+        function renderTodos() {
+            const list = document.getElementById('todo-list');
+            list.innerHTML = '';
+            todos.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'todo-item';
+                div.innerHTML = `
+                    <span style="${item.done ? 'text-decoration: line-through; opacity: 0.5;' : ''}">${item.text}</span>
+                    <div>
+                        <button class="btn btn-outlined" style="height:30px; padding:0 10px; font-size:12px;" onclick="toggleTodo(${index})">${item.done ? '未完了' : '完了'}</button>
+                        <button class="btn btn-outlined" style="height:30px; padding:0 10px; font-size:12px; color:#ef4444;" onclick="deleteTodo(${index})">削除</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+            localStorage.setItem('w11at_todos', JSON.stringify(todos));
+        }
+
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            if (input.value.trim()) {
+                todos.push({ text: input.value.trim(), done: false });
+                input.value = '';
+                renderTodos();
+            }
+        }
+
+        function toggleTodo(index) {
+            todos[index].done = !todos[index].done;
+            renderTodos();
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodos();
+        }
+        renderTodos();
+
+        /* --- 5. タイマー --- */
+        let timerInterval = null;
+        let timerSeconds = 180;
+        let isRunning = false;
+
+        function updateTimerDisplay() {
+            const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+            const s = String(timerSeconds % 60).padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${m}:${s}`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timer-start-btn');
+            if (!isRunning) {
+                if (timerSeconds <= 0) {
+                    const min = parseInt(document.getElementById('timer-min').value) || 0;
+                    const sec = parseInt(document.getElementById('timer-sec').value) || 0;
+                    timerSeconds = min * 60 + sec;
+                }
+                if (timerSeconds <= 0) return;
+                
+                isRunning = true;
+                btn.innerText = '一時停止';
+                timerInterval = setInterval(() => {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                    if (timerSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        btn.innerText = 'スタート';
+                        alert('時間になりました！');
+                    }
+                }, 1000);
+            } else {
+                clearInterval(timerInterval);
+                isRunning = false;
+                btn.innerText = 'スタート';
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            document.getElementById('timer-start-btn').innerText = 'スタート';
+            const min = parseInt(document.getElementById('timer-min').value) || 0;
+            const sec = parseInt(document.getElementById('timer-sec').value) || 0;
+            timerSeconds = min * 60 + sec;
+            updateTimerDisplay();
+        }
+
+        /* --- 6. 文字数カウント --- */
+        function updateCharCount() {
+            const txt = document.getElementById('count-input').value;
+            document.getElementById('cnt-total').innerText = txt.length;
+            document.getElementById('cnt-no-space').innerText = txt.replace(/\s/g, '').length;
+            document.getElementById('cnt-lines').innerText = txt ? txt.split('\n').length : 0;
+        }
+
+        /* --- 7. テキスト置換 --- */
+        function execReplace() {
+            const src = document.getElementById('replace-src').value;
+            const from = document.getElementById('replace-from').value;
+            const to = document.getElementById('replace-to').value;
+            if (!from) return;
+            document.getElementById('replace-res').value = src.split(from).join(to);
+        }
+
+        /* --- 8. 大文字・小文字変換 --- */
+        function convertCase(type) {
+            const input = document.getElementById('case-input');
+            let val = input.value;
+            if (type === 'upper') val = val.toUpperCase();
+            if (type === 'lower') val = val.toLowerCase();
+            if (type === 'title') {
+                val = val.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+            }
+            input.value = val;
+        }
+
+        /* --- 9. パスワード生成 --- */
+        function generatePassword() {
+            const len = parseInt(document.getElementById('pass-len').value);
+            const incNum = document.getElementById('chk-num').checked;
+            const incSym = document.getElementById('chk-sym').checked;
+
+            let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (incNum) chars += '0123456789';
+            if (incSym) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+            let res = '';
+            for (let i = 0; i < len; i++) {
+                res += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('pass-res').innerText = res;
+        }
+
+        /* --- 10. QRコード作成 --- */
+        function generateQR() {
+            const val = document.getElementById('qr-input').value;
+            const output = document.getElementById('qr-code-output');
+            if (!val) {
+                output.innerHTML = '<span style="color: var(--text-sub); font-size:12px;">URLまたはテキストを入力してください</span>';
+                return;
+            }
+            output.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(val)}" alt="QR Code" style="border-radius:8px;">`;
+        }
+
+        /* --- 11. px / rem 単位変換 --- */
+        function convertPxToRem() {
+            const px = parseFloat(document.getElementById('unit-px').value);
+            if (!isNaN(px)) {
+                document.getElementById('unit-rem').value = px / 16;
+            } else {
+                document.getElementById('unit-rem').value = '';
+            }
+        }
+
+        function convertRemToPx() {
+            const rem = parseFloat(document.getElementById('unit-rem').value);
+            if (!isNaN(rem)) {
+                document.getElementById('unit-px').value = rem * 16;
+            } else {
+                document.getElementById('unit-px').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
