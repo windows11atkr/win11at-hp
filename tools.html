@@ -842,21 +842,35 @@
                     </div>
 
                     <!-- 5. 簡易タイマー -->
-                    <div id="timer" class="tool-card">
-                        <div class="panel-title"><span class="material-icons">timer</span> 簡易タイマー</div>
-                        <div class="panel-desc">カップラーメンや作業の集中（ポモドーロ）に使えるカウントダウンタイマーです。</div>
-                        <div class="stat-box" style="margin-bottom: 20px;">
-                            <div class="stat-val" id="timer-display" style="font-size: 3rem;">03:00</div>
-                        </div>
-                        <div class="grid-2 form-group">
-                            <div><label>分</label><input type="number" id="timer-min" value="3"></div>
-                            <div><label>秒</label><input type="number" id="timer-sec" value="0"></div>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-primary" id="timer-start-btn" onclick="toggleTimer()">スタート</button>
-                            <button class="btn btn-outlined" onclick="resetTimer()">リセット</button>
-                        </div>
-                    </div>
+<div id="timer" class="tool-card">
+    <div class="panel-title"><span class="material-icons">timer</span> 簡易タイマー</div>
+    <div class="panel-desc">カップラーメンや作業の集中（ポモドーロ）に使えるカウントダウンタイマーです。</div>
+    
+    <!-- タイマー表示 ＆ 通知トーストエリア -->
+    <div class="stat-box" style="margin-bottom: 20px; position: relative; overflow: hidden;">
+        <div class="stat-val" id="timer-display" style="font-size: 3.2rem; font-weight: 700; letter-spacing: 2px;">03:00</div>
+        <!-- カスタム通知トースト -->
+        <div id="timer-toast" style="display: none; position: absolute; inset: 0; background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end)); color: white; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 16px; border-radius: 16px; animation: toastIn 0.3s ease;">
+            <span class="material-icons">notifications_active</span> 時間になりました！
+        </div>
+    </div>
+
+    <div class="grid-2 form-group">
+        <div><label>分</label><input type="number" id="timer-min" value="3" min="0" max="99"></div>
+        <div><label>秒</label><input type="number" id="timer-sec" value="0" min="0" max="59"></div>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-primary" id="timer-start-btn" onclick="toggleTimer()">スタート</button>
+        <button class="btn btn-outlined" onclick="resetTimer()">リセット</button>
+    </div>
+</div>
+
+<style>
+@keyframes toastIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
 
                     <!-- 6. 文字数カウント -->
                     <div id="char-count" class="tool-card">
@@ -1130,54 +1144,112 @@
         renderTodos();
 
         /* --- 5. タイマー --- */
-        let timerInterval = null;
-        let timerSeconds = 180;
-        let isRunning = false;
+        /* --- 5. 簡易タイマー（完全修復版） --- */
+let timerInterval = null;
+let timerSeconds = 180; // 現在の残り秒数
+let initialSeconds = 180; // リセット時に戻す「開始時の設定値」
+let isRunning = false;
 
-        function updateTimerDisplay() {
-            const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
-            const s = String(timerSeconds % 60).padStart(2, '0');
-            document.getElementById('timer-display').innerText = `${m}:${s}`;
-        }
+// 表示を「MM:SS」形式にアップデート
+function updateTimerDisplay() {
+    const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+    const s = String(timerSeconds % 60).padStart(2, '0');
+    document.getElementById('timer-display').innerText = `${m}:${s}`;
+}
 
-        function toggleTimer() {
-            const btn = document.getElementById('timer-start-btn');
-            if (!isRunning) {
-                if (timerSeconds <= 0) {
-                    const min = parseInt(document.getElementById('timer-min').value) || 0;
-                    const sec = parseInt(document.getElementById('timer-sec').value) || 0;
-                    timerSeconds = min * 60 + sec;
-                }
-                if (timerSeconds <= 0) return;
-                
-                isRunning = true;
-                btn.innerText = '一時停止';
-                timerInterval = setInterval(() => {
-                    timerSeconds--;
-                    updateTimerDisplay();
-                    if (timerSeconds <= 0) {
-                        clearInterval(timerInterval);
-                        isRunning = false;
-                        btn.innerText = 'スタート';
-                        alert('時間になりました！');
-                    }
-                }, 1000);
-            } else {
-                clearInterval(timerInterval);
-                isRunning = false;
-                btn.innerText = 'スタート';
-            }
-        }
+// 入力欄（分・秒）から秒数を算出・セットする
+function setTimerFromInput() {
+    if (isRunning) return;
+    const min = Math.max(0, parseInt(document.getElementById('timer-min').value, 10) || 0);
+    const sec = Math.max(0, parseInt(document.getElementById('timer-sec').value, 10) || 0);
+    
+    initialSeconds = min * 60 + sec;
+    timerSeconds = initialSeconds;
+    updateTimerDisplay();
+    hideToast();
+}
 
-        function resetTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            document.getElementById('timer-start-btn').innerText = 'スタート';
-            const min = parseInt(document.getElementById('timer-min').value) || 0;
-            const sec = parseInt(document.getElementById('timer-sec').value) || 0;
-            timerSeconds = min * 60 + sec;
+// 入力イベントの監視
+document.getElementById('timer-min').addEventListener('input', setTimerFromInput);
+document.getElementById('timer-sec').addEventListener('input', setTimerFromInput);
+
+// スタート / 一時停止 / 再スタート
+function toggleTimer() {
+    const btn = document.getElementById('timer-start-btn');
+    hideToast();
+
+    // 1. タイマーが「0秒」で終了している状態から再度押された場合
+    if (!isRunning && timerSeconds <= 0) {
+        setTimerFromInput(); // 最初からリロード
+    }
+
+    // 2. カウントダウン開始
+    if (!isRunning) {
+        if (timerSeconds <= 0) return; // 0分0秒の場合は発火しない
+
+        isRunning = true;
+        btn.innerText = '一時停止';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outlined');
+
+        timerInterval = setInterval(() => {
+            timerSeconds--;
             updateTimerDisplay();
-        }
+
+            // タイムアップ時
+            if (timerSeconds <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                isRunning = false;
+
+                // ボタン表記を「スタート」に戻す（0秒で再開状態になるのを防ぐ）
+                btn.innerText = 'スタート';
+                btn.classList.remove('btn-outlined');
+                btn.classList.add('btn-primary');
+
+                showToast(); // 自作おしゃれ通知を表示
+            }
+        }, 1000);
+    } 
+    // 3. 一時停止処理
+    else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        isRunning = false;
+        btn.innerText = '再開';
+        btn.classList.remove('btn-outlined');
+        btn.classList.add('btn-primary');
+    }
+}
+
+// 明確なリセット処理
+function resetTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    isRunning = false;
+
+    // ボタン状態を初期化
+    const btn = document.getElementById('timer-start-btn');
+    btn.innerText = 'スタート';
+    btn.classList.remove('btn-outlined');
+    btn.classList.add('btn-primary');
+
+    // 初期設定値（または入力欄の値）に戻す
+    setTimerFromInput();
+}
+
+// 通知トーストの表示・非表示
+function showToast() {
+    const toast = document.getElementById('timer-toast');
+    if (toast) toast.style.display = 'flex';
+}
+
+function hideToast() {
+    const toast = document.getElementById('timer-toast');
+    if (toast) toast.style.display = 'none';
+}
 
         /* --- 6. 文字数カウント --- */
         function updateCharCount() {
