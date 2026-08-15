@@ -98,62 +98,240 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
             border-top: 1px solid var(--highlight-line);
             border-radius: 24px;
-            padding: 24px 16px;
+            padding: 20px 16px;
             box-shadow: 0 10px 30px var(--shadow-ambient);
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+        }
+
+        .app-header-compact {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .app-header-compact {
+                flex-direction: column;
+                justify-content: center;
+            }
         }
 
         .app-icon-placeholder {
-            width: 80px;
-            height: 80px;
+            width: 54px;
+            height: 54px;
             background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
-            border-radius: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 24px var(--glow-color);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px var(--glow-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 14px;
+            flex-shrink: 0;
         }
 
         .app-icon-placeholder .material-icons {
-            font-size: 40px;
+            font-size: 28px;
             color: #ffffff;
         }
 
+        @media (min-width: 768px) {
+            .app-icon-placeholder {
+                width: 80px;
+                height: 80px;
+                border-radius: 20px;
+                margin-bottom: 12px;
+            }
+            .app-icon-placeholder .material-icons {
+                font-size: 40px;
+            }
+        }
+
+        .app-title-group {
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .app-title-group {
+                text-align: center;
+            }
+        }
+
         .app-name {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             color: #0d111d;
-            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .app-name { font-size: 20px; margin-bottom: 4px; }
         }
 
         .app-developer {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-sub);
-            margin-bottom: 16px;
         }
 
         .store-badge {
             background: #e0f2fe;
             color: #0369a1;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 11px;
             font-weight: 600;
-            margin-bottom: 20px;
             display: inline-block;
+            margin-top: 4px;
         }
 
-        /* サイドバー メニューナビゲーション */
+        @media (min-width: 768px) {
+            .store-badge {
+                padding: 4px 12px;
+                border-radius: 12px;
+                font-size: 12px;
+                margin-top: 8px;
+                margin-bottom: 16px;
+            }
+        }
+
+        /* 📱 スマホ表示用 カスタムドロップダウン (デザイン一新) */
+        .custom-select-wrapper {
+            width: 100%;
+            margin-top: 16px;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .custom-select-wrapper {
+                display: none; /* PCでは非表示 */
+            }
+        }
+
+        .custom-select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 16px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.08);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .custom-select-trigger:active {
+            transform: scale(0.98);
+        }
+
+        .custom-select-selected {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .custom-select-selected .material-icons {
+            color: #0284c7;
+            font-size: 20px;
+        }
+
+        .custom-select-arrow {
+            color: var(--text-sub);
+            transition: transform 0.25s ease;
+            font-size: 20px;
+        }
+
+        .custom-select-wrapper.open .custom-select-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* ドロップダウンのドロワーメニュー */
+        .custom-select-options {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(13, 17, 29, 0.15);
+            max-height: 320px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            padding: 8px;
+            animation: menuFadeIn 0.2s ease-out;
+        }
+
+        @keyframes menuFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .custom-select-wrapper.open .custom-select-options {
+            display: block;
+        }
+
+        .custom-opt-group {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-sub);
+            padding: 8px 12px 4px 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .custom-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .custom-option:hover, .custom-option.selected {
+            background-color: rgba(56, 189, 248, 0.12);
+            color: #0284c7;
+            font-weight: 600;
+        }
+
+        .custom-option .material-icons {
+            font-size: 18px;
+            color: var(--text-sub);
+        }
+
+        .custom-option.selected .material-icons {
+            color: #0284c7;
+        }
+
+        /* 💻 PCサイドバー メニューナビゲーション */
         .nav-drawer {
+            display: none; /* スマホでは非表示 */
             width: 100%;
             text-align: left;
             border-top: 1px solid rgba(0, 0, 0, 0.06);
             padding-top: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .nav-drawer {
+                display: block; /* PCでのみ表示 */
+            }
         }
 
         .nav-section-title {
@@ -206,7 +384,7 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
             border-top: 1px solid var(--highlight-line);
             border-radius: 24px;
-            padding: 24px;
+            padding: 20px;
             box-shadow: 0 10px 30px var(--shadow-ambient);
             margin-bottom: 24px;
         }
@@ -473,54 +651,106 @@
             <!-- 左側/上部：アプリ・ツールキット情報とナビゲーション -->
             <aside class="store-sidebar">
                 <div class="app-identity-card">
-                    <div class="app-icon-placeholder">
-                        <span class="material-icons">handyman</span>
-                    </div>
-                    
-                    <h1 class="app-name">便利ツール集</h1>
-                    <p class="app-developer">@windows11at</p>
-                    <div class="store-store-status">
-                        <span class="store-badge">Web Tool Kit v1.0</span>
+                    <div class="app-header-compact">
+                        <div class="app-icon-placeholder">
+                            <span class="material-icons">handyman</span>
+                        </div>
+                        <div class="app-title-group">
+                            <h1 class="app-name">便利ツール集</h1>
+                            <p class="app-developer">@windows11at</p>
+                            <div><span class="store-badge">Web Tool Kit v1.0</span></div>
+                        </div>
                     </div>
 
-                    <!-- ツール切替ドロワー -->
+                    <!-- 📱 スマホ表示用 カスタムドロップダウン (デザイン改善版) -->
+                    <div class="custom-select-wrapper" id="customSelectWrapper">
+                        <div class="custom-select-trigger" onclick="toggleCustomSelect()">
+                            <div class="custom-select-selected" id="customSelectSelected">
+                                <span class="material-icons">percent</span>
+                                <span>割引・消費税計算</span>
+                            </div>
+                            <span class="material-icons custom-select-arrow">expand_more</span>
+                        </div>
+                        <div class="custom-select-options">
+                            <div class="custom-opt-group">日常生活で使う</div>
+                            <div class="custom-option selected" onclick="selectTool('calc', 'percent', '割引・消費税計算')">
+                                <span class="material-icons">percent</span> 割引・消費税計算
+                            </div>
+                            <div class="custom-option" onclick="selectTool('dutch', 'groups', '割り勘計算機')">
+                                <span class="material-icons">groups</span> 割り勘計算機
+                            </div>
+                            <div class="custom-option" onclick="selectTool('recipe', 'restaurant', '料理の分量計算')">
+                                <span class="material-icons">restaurant</span> 料理の分量計算
+                            </div>
+                            <div class="custom-option" onclick="selectTool('memo', 'check_box', 'クイックメモ & Todo')">
+                                <span class="material-icons">check_box</span> クイックメモ & Todo
+                            </div>
+                            <div class="custom-option" onclick="selectTool('timer', 'timer', '簡易タイマー')">
+                                <span class="material-icons">timer</span> 簡易タイマー
+                            </div>
+
+                            <div class="custom-opt-group">文字・文章作成</div>
+                            <div class="custom-option" onclick="selectTool('char-count', 'description', '文字数カウント')">
+                                <span class="material-icons">description</span> 文字数カウント
+                            </div>
+                            <div class="custom-option" onclick="selectTool('replace', 'find_replace', 'テキスト置換')">
+                                <span class="material-icons">find_replace</span> テキスト置換
+                            </div>
+                            <div class="custom-option" onclick="selectTool('case', 'text_fields', '大文字・小文字変換')">
+                                <span class="material-icons">text_fields</span> 大文字・小文字変換
+                            </div>
+
+                            <div class="custom-opt-group">便利なツール</div>
+                            <div class="custom-option" onclick="selectTool('password', 'key', 'パスワード自動生成')">
+                                <span class="material-icons">key</span> パスワード自動生成
+                            </div>
+                            <div class="custom-option" onclick="selectTool('qr', 'qr_code_2', 'QRコード作成')">
+                                <span class="material-icons">qr_code_2</span> QRコード作成
+                            </div>
+                            <div class="custom-option" onclick="selectTool('unit', 'straighten', 'px / rem 単位変換')">
+                                <span class="material-icons">straighten</span> px / rem 単位変換
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 💻 PC表示用ツール切替ドロワー -->
                     <nav class="nav-drawer">
                         <div class="nav-section-title">日常生活で使う</div>
-                        <div class="nav-item active" onclick="switchTab(event, 'calc')">
+                        <div class="nav-item active" data-tab="calc" onclick="switchTab('calc')">
                             <span class="material-icons">percent</span> 割引・消費税計算
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'dutch')">
+                        <div class="nav-item" data-tab="dutch" onclick="switchTab('dutch')">
                             <span class="material-icons">groups</span> 割り勘計算機
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'recipe')">
+                        <div class="nav-item" data-tab="recipe" onclick="switchTab('recipe')">
                             <span class="material-icons">restaurant</span> 料理の分量計算
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'memo')">
+                        <div class="nav-item" data-tab="memo" onclick="switchTab('memo')">
                             <span class="material-icons">check_box</span> クイックメモ & Todo
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'timer')">
+                        <div class="nav-item" data-tab="timer" onclick="switchTab('timer')">
                             <span class="material-icons">timer</span> 簡易タイマー
                         </div>
 
                         <div class="nav-section-title">文字・文章作成</div>
-                        <div class="nav-item" onclick="switchTab(event, 'char-count')">
+                        <div class="nav-item" data-tab="char-count" onclick="switchTab('char-count')">
                             <span class="material-icons">description</span> 文字数カウント
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'replace')">
+                        <div class="nav-item" data-tab="replace" onclick="switchTab('replace')">
                             <span class="material-icons">find_replace</span> テキスト置換
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'case')">
+                        <div class="nav-item" data-tab="case" onclick="switchTab('case')">
                             <span class="material-icons">text_fields</span> 大文字・小文字変換
                         </div>
 
                         <div class="nav-section-title">便利なツール</div>
-                        <div class="nav-item" onclick="switchTab(event, 'password')">
+                        <div class="nav-item" data-tab="password" onclick="switchTab('password')">
                             <span class="material-icons">key</span> パスワード自動生成
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'qr')">
+                        <div class="nav-item" data-tab="qr" onclick="switchTab('qr')">
                             <span class="material-icons">qr_code_2</span> QRコード作成
                         </div>
-                        <div class="nav-item" onclick="switchTab(event, 'unit')">
+                        <div class="nav-item" data-tab="unit" onclick="switchTab('unit')">
                             <span class="material-icons">straighten</span> px / rem 単位変換
                         </div>
                     </nav>
@@ -758,19 +988,54 @@
     </button>
 
     <script>
-        /* --- タブ切替機能 --- */
-        function switchTab(e, tabId) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active'));
+        /* --- タブ切替機能（共通・同期処理） --- */
+        function switchTab(tabId) {
+            // PC用サイドバーのクラス切り替え
+            document.querySelectorAll('.nav-item').forEach(el => {
+                if (el.getAttribute('data-tab') === tabId) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
 
-            if (e && e.currentTarget) {
-                e.currentTarget.classList.add('active');
-            }
+            // メインコンテンツの切り替え
+            document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active'));
             const targetCard = document.getElementById(tabId);
             if (targetCard) {
                 targetCard.classList.add('active');
             }
         }
+
+        /* --- 📱 スマホ用カスタムドロップダウン制御 --- */
+        function toggleCustomSelect() {
+            const wrapper = document.getElementById('customSelectWrapper');
+            wrapper.classList.toggle('open');
+        }
+
+        function selectTool(tabId, iconName, labelText) {
+            // タブ切り替えを実行
+            switchTab(tabId);
+
+            // トリガー（選択表示）の見た目を更新
+            const selectedContainer = document.getElementById('customSelectSelected');
+            selectedContainer.innerHTML = `<span class="material-icons">${iconName}</span><span>${labelText}</span>`;
+
+            // オプション項目の selected クラス更新
+            document.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            // メニューを閉じる
+            document.getElementById('customSelectWrapper').classList.remove('open');
+        }
+
+        // ドロップダウンの外側をクリックした時にメニューを閉じる
+        document.addEventListener('click', (e) => {
+            const wrapper = document.getElementById('customSelectWrapper');
+            if (wrapper && !wrapper.contains(e.target)) {
+                wrapper.classList.remove('open');
+            }
+        });
 
         /* --- 🔝 トップに戻るボタンの制御 --- */
         const scrollTopBtn = document.getElementById('scrollTopBtn');
