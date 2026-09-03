@@ -400,11 +400,11 @@
 
         .tool-card.active {
             display: block;
-            animation: fadeIn 0.25s ease-in-out;
+            animation: toolReveal 0.38s cubic-bezier(.2,.8,.2,1);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+        @keyframes toolReveal {
+            from { opacity: 0; transform: translateY(12px) scale(.985); filter: blur(3px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -569,7 +569,14 @@
             border: 1px solid rgba(0,0,0,0.06);
             margin-top: 16px;
             min-height: 160px;
+            overflow: hidden;
         }
+        #qr-code-output img { animation: qrPop .4s cubic-bezier(.2,.8,.2,1); box-shadow: 0 8px 20px rgba(13, 17, 29, .12); }
+        @keyframes qrPop { from { opacity: 0; transform: scale(.72) rotate(-5deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+        .qr-tools { display: none; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+        .qr-tools.visible { display: flex; animation: qrToolsIn .25s ease; }
+        @keyframes qrToolsIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        .btn .material-icons { font-size: 18px; }
 
         /* ナビゲーションフッターリンク */
         .back-nav {
@@ -959,10 +966,15 @@
                             <input type="text" id="qr-input" placeholder="https://example.com">
                         </div>
                         <div class="btn-group">
-                            <button class="btn btn-primary" onclick="generateQR()">QRコード作成</button>
+                            <button class="btn btn-primary" onclick="generateQR()"><span class="material-icons">qr_code_2</span>QRコード作成</button>
+                            <button class="btn btn-outlined" onclick="useCurrentPageUrl()"><span class="material-icons">language</span>このページのURL</button>
                         </div>
                         <div id="qr-code-output">
                             <span style="color: var(--text-sub); font-size:12px;">ここにQRコードが表示されます</span>
+                        </div>
+                        <div class="qr-tools" id="qr-tools">
+                            <button class="btn btn-outlined" onclick="copyQRText(event)"><span class="material-icons">content_copy</span>内容をコピー</button>
+                            <a class="btn btn-outlined" id="qr-open-image" target="_blank" rel="noopener noreferrer"><span class="material-icons">open_in_new</span>画像を開く</a>
                         </div>
                     </div>
 
@@ -1298,14 +1310,39 @@ function hideToast() {
         }
 
         /* --- 10. QRコード作成 --- */
+        let currentQRText = '';
+        let currentQRImageUrl = '';
         function generateQR() {
-            const val = document.getElementById('qr-input').value;
+            const val = document.getElementById('qr-input').value.trim();
             const output = document.getElementById('qr-code-output');
             if (!val) {
                 output.innerHTML = '<span style="color: var(--text-sub); font-size:12px;">URLまたはテキストを入力してください</span>';
+                document.getElementById('qr-tools').classList.remove('visible');
                 return;
             }
-            output.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(val)}" alt="QR Code" style="border-radius:8px;">`;
+            currentQRText = val;
+            currentQRImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(val)}`;
+            output.innerHTML = `<img src="${currentQRImageUrl}" alt="入力内容のQRコード" width="150" height="150" style="border-radius:8px;">`;
+            document.getElementById('qr-open-image').href = currentQRImageUrl;
+            document.getElementById('qr-tools').classList.add('visible');
+        }
+
+        function useCurrentPageUrl() {
+            document.getElementById('qr-input').value = location.href;
+            generateQR();
+        }
+
+        async function copyQRText(event) {
+            if (!currentQRText) return;
+            const button = event.currentTarget;
+            const old = button.innerHTML;
+            try {
+                await navigator.clipboard.writeText(currentQRText);
+                button.innerHTML = '<span class="material-icons">check</span>コピーしました';
+            } catch {
+                button.textContent = 'コピーできませんでした';
+            }
+            setTimeout(() => { button.innerHTML = old; }, 1500);
         }
 
         /* --- 11. px / rem 単位変換 --- */

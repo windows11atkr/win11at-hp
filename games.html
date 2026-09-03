@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ミニゲーム | windows11at</title>
+    <title>NEON 2048 | windows11at</title>
     <style>
         /* Aero-SQUI 1.0 共通テーマ定義 */
         :root {
@@ -238,6 +238,44 @@
         }
         .game-btn:active { transform: scale(0.95); }
 
+        /* NEON 2048 */
+        #gameCanvas, #gameOverlay { display: none !important; }
+        .canvas-container { height: auto; min-height: 0; aspect-ratio: auto; padding: 14px; background: linear-gradient(145deg, #0a1124, #17204b); border: 1px solid rgba(95, 227, 255, .35); box-shadow: 0 15px 35px rgba(47, 106, 255, .25), inset 0 0 30px rgba(0,0,0,.3); }
+        .puzzle-game { width: 100%; }
+        .puzzle-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; color: #e9fbff; }
+        .puzzle-title { font-weight: 800; letter-spacing: 1px; font-size: 16px; }
+        .puzzle-score { display: flex; gap: 7px; }
+        .score-box { min-width: 66px; padding: 5px 8px; border-radius: 10px; background: rgba(255,255,255,.1); text-align: center; font-size: 10px; color: #a9c9dc; }
+        .score-box strong { display: block; color: #fff; font-size: 16px; }
+        .puzzle-board { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 8px; border-radius: 16px; background: rgba(255,255,255,.09); touch-action: none; user-select: none; overflow: hidden; }
+        .puzzle-board::after { content: attr(data-move); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: rgba(221, 251, 255, .92); font-size: 54px; font-weight: 800; opacity: 0; pointer-events: none; text-shadow: 0 0 20px #21d7ff; }
+        .puzzle-board.moving::after { animation: directionHint .36s ease-out; }
+        .puzzle-board.move-left { animation: slideLeft .2s ease-out; } .puzzle-board.move-right { animation: slideRight .2s ease-out; }
+        .puzzle-board.move-up { animation: slideUp .2s ease-out; } .puzzle-board.move-down { animation: slideDown .2s ease-out; }
+        @keyframes directionHint { 0% { opacity: 0; transform: scale(.65); } 35% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.18); } }
+        @keyframes slideLeft { 45% { transform: translateX(-12px); } 100% { transform: translateX(0); } } @keyframes slideRight { 45% { transform: translateX(12px); } 100% { transform: translateX(0); } }
+        @keyframes slideUp { 45% { transform: translateY(-12px); } 100% { transform: translateY(0); } } @keyframes slideDown { 45% { transform: translateY(12px); } 100% { transform: translateY(0); } }
+        .tile { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 11px; background: rgba(255,255,255,.08); color: #eafcff; font-weight: 800; font-size: clamp(20px, 7vw, 32px); transition: transform .12s ease, background .16s ease; }
+        .tile.cursor-target { outline: 2px solid #8bf4ff; outline-offset: 2px; transform: scale(1.04); box-shadow: 0 0 18px rgba(77, 224, 255, .82); z-index: 1; }
+        .cursor-guide { position: absolute; z-index: 3; width: 48px; height: 48px; display: none; align-items: center; justify-content: center; border: 2px solid rgba(180, 250, 255, .92); border-radius: 50%; background: rgba(14, 72, 106, .38); color: #fff; font-size: 24px; font-weight: 800; pointer-events: none; transform: translate(-50%, -50%); box-shadow: 0 0 18px rgba(59, 223, 255, .7); }
+        .puzzle-board.is-hovering .cursor-guide { display: flex; }
+        .tile.new { animation: tileIn .18s ease; }
+        .tile.v-2 { background: #1b638a; } .tile.v-4 { background: #1c869f; } .tile.v-8 { background: #297caf; }
+        .tile.v-16 { background: #5065cf; } .tile.v-32 { background: #754cd5; } .tile.v-64 { background: #b642c6; }
+        .tile.v-128, .tile.v-256 { background: #d25783; } .tile.v-512, .tile.v-1024, .tile.v-2048 { background: #edb12e; color: #171226; box-shadow: 0 0 18px rgba(255, 210, 68, .65); }
+        @keyframes tileIn { from { transform: scale(.62); opacity: .2; } to { transform: scale(1); opacity: 1; } }
+        .puzzle-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .puzzle-action { flex: 1; padding: 10px; border: 1px solid rgba(111, 230, 255, .38); border-radius: 12px; background: rgba(255,255,255,.08); color: #e9fbff; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: transform .15s, background .15s; }
+        .puzzle-action:hover { background: rgba(76, 207, 255, .22); transform: translateY(-1px); }
+        .puzzle-note { margin-top: 12px; text-align: center; color: #a9c9dc; font-size: 11px; }
+
+        .game-mode-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 auto 16px; max-width: 400px; }
+        .mode-btn { padding: 8px 12px; border: 1px solid rgba(56, 189, 248, .28); border-radius: 999px; background: #f5fbff; color: #466276; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: transform .2s, background .2s, color .2s; }
+        .mode-btn:hover, .mode-btn.active { background: #0c8fc4; color: #fff; transform: translateY(-1px); }
+        .game-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 400px; margin: 0 auto 14px; }
+        .game-stat { padding: 9px 6px; border-radius: 12px; background: rgba(56, 189, 248, .08); color: #4d687a; font-size: 11px; }
+        .game-stat strong { display: block; margin-top: 2px; color: #087da8; font-size: 15px; }
+
         /* 操作ヒント */
         .controls-guide {
             background: rgba(0, 0, 0, 0.02);
@@ -313,8 +351,8 @@
                         </svg>
                     </div>
                     
-                    <h1 class="app-name">ガジェットディフェンダー</h1>
-                    <p class="app-developer">Mini Game v1.0</p>
+                    <h1 class="app-name">NEON 2048</h1>
+                    <p class="app-developer">Puzzle Game v2.0</p>
                     <div class="store-store-status">
                         <span class="store-badge">HTML5 ゲーム</span>
                     </div>
@@ -324,11 +362,18 @@
             <!-- 右側：ゲームメイン画面 -->
             <main class="store-main">
                 <div class="store-main-panel">
-                    <h2 class="panel-title">ガジェット・ディフェンダー (Gadget Defender)</h2>
-                    <p class="panel-desc">迫りくる「バグ」や「水滴」の脅威から、画面中央の大切なメイン機（スマホ）を守り抜くシューティング・防衛ミニゲームです！</p>
+                    <h2 class="panel-title">NEON 2048</h2>
+                    <p class="panel-desc">数字をスワイプして重ね、2048を目指す定番パズル。考える楽しさと気持ちよい連鎖を、いつでも手軽に楽しめます。</p>
                     
                     <!-- ゲームキャンバス -->
                     <div class="canvas-container" id="gameContainer">
+                        <div class="puzzle-game" aria-label="NEON 2048 ゲーム">
+                            <div class="puzzle-top"><div class="puzzle-title">NEON 2048</div><div class="puzzle-score"><div class="score-box">SCORE<strong id="puzzle-score">0</strong></div><div class="score-box">BEST<strong id="puzzle-best">0</strong></div></div></div>
+                            <div class="puzzle-board" id="puzzle-board" aria-label="ゲーム盤面" data-move=""></div>
+                            <div class="puzzle-note" id="move-feedback" aria-live="polite">矢印キーまたはスワイプで、タイルを動かしてみよう</div>
+                            <div class="puzzle-actions"><button class="puzzle-action" id="puzzle-undo">↶ ひとつ戻す</button><button class="puzzle-action" id="puzzle-restart">↻ はじめから</button></div>
+                            <p class="puzzle-note">PC：矢印キー　スマホ：上下左右にスワイプ</p>
+                        </div>
                         <canvas id="gameCanvas" width="400" height="500"></canvas>
                         
                         <!-- スタート / ゲームオーバーオーバーレイ -->
@@ -336,8 +381,8 @@
                             <div class="game-title-large" id="overlayTitle">GADGET DEFENDER</div>
                             <div class="game-score-display" id="overlayScore" style="display: none;">Score: 0</div>
                             <div class="game-explanation" id="overlayDesc">
-                                画面中央のコア（スマートフォン）を狙って四方からウイルス（赤い弾）が迫ってきます。<br>
-                                画面をタップ/クリックして、迎撃電磁パルスを放ち、ガジェットを守り抜いてください！
+                                中央のコアを守りながら、迫るバグをタップで迎撃。<br>
+                                連続撃破でコンボ加点、<b>緑のアイテム</b>でHP回復、<b>黄色のアイテム</b>で一斉パルス！
                             </div>
                             <button class="game-btn" id="startBtn">ゲームスタート</button>
                         </div>
@@ -347,8 +392,9 @@
                     <div class="controls-guide">
                         <strong>遊び方・操作方法</strong>
                         <ul>
-                            <li><strong>タップ / クリック：</strong> タップした方向へ迎撃パルスを発射します。</li>
-                            <li><strong>防衛対象：</strong> 中央のスマートフォン（耐久値：5）。敵が到達すると減少します。</li>
+                            <li><strong>矢印キー / スワイプ：</strong> すべてのタイルを選んだ方向へ動かします。</li>
+                            <li><strong>同じ数字を重ねる：</strong> タイルが合体して数字とスコアが増えます。</li>
+                            <li><strong>ひとつ戻す：</strong> ミスした手を一度だけやり直せます。ベストスコアはこの端末に保存されます。</li>
                             <li><strong>ゲームオーバー：</strong> ガジェットの耐久値が0になるとゲーム終了です。</li>
                         </ul>
                     </div>
@@ -389,11 +435,17 @@
         let maxHp = 5;
         let lastEnemySpawn = 0;
         let spawnInterval = 1200; // ms
+        let gameMode = 'normal';
+        let combo = 0;
+        let lastKillAt = 0;
+        let bestScore = Number(localStorage.getItem('gadgetDefenderBest') || 0);
+        const modeSettings = { normal: { hp: 5, spawn: 1200, label: 'NORMAL' }, relax: { hp: 7, spawn: 1550, label: 'RELAX' }, challenge: { hp: 3, spawn: 820, label: 'HARD' } };
 
         // オブジェクト配列
         let bullets = [];
         let enemies = [];
         let particles = [];
+        let powerups = [];
 
         // 中心（プレイヤーコア＝スマートフォン）の位置
         const coreX = canvas.width / 2;
@@ -414,15 +466,27 @@
         // イベントリスナー
         startBtn.addEventListener('click', startGame);
         canvas.addEventListener('pointerdown', fireBullet);
+        const legacyBestScore = document.getElementById('bestScore');
+        if (legacyBestScore) legacyBestScore.textContent = bestScore;
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.addEventListener('click', () => {
+            if (gameState === 'PLAYING') return;
+            gameMode = btn.dataset.mode;
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+            document.getElementById('modeDisplay').textContent = modeSettings[gameMode].label;
+        }));
 
         function startGame() {
             gameState = 'PLAYING';
             score = 0;
+            maxHp = modeSettings[gameMode].hp;
             hp = maxHp;
             bullets = [];
             enemies = [];
             particles = [];
-            spawnInterval = 1200;
+            powerups = [];
+            combo = 0;
+            spawnInterval = modeSettings[gameMode].spawn;
+            document.getElementById('comboDisplay').textContent = '×0';
             lastEnemySpawn = performance.now();
             gameOverlay.style.opacity = 0;
             setTimeout(() => { gameOverlay.style.display = 'none'; }, 300);
@@ -431,7 +495,12 @@
         function gameOver() {
             gameState = 'GAMEOVER';
             overlayTitle.innerText = 'GAME OVER';
-            overlayScore.innerText = `最終スコア: ${score}`;
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('gadgetDefenderBest', bestScore);
+                document.getElementById('bestScore').textContent = bestScore;
+            }
+            overlayScore.innerText = `最終スコア: ${score}　ベスト: ${bestScore}`;
             overlayScore.style.display = 'block';
             overlayDesc.innerHTML = 'ガジェットのセキュリティが突破されました！<br>もう一度挑戦しますか？';
             startBtn.innerText = 'リトライ';
@@ -441,6 +510,10 @@
 
         function fireBullet(e) {
             if (gameState !== 'PLAYING') return;
+            if (timestamp - lastKillAt > 1800 && combo > 0) {
+                combo = 0;
+                document.getElementById('comboDisplay').textContent = '×0';
+            }
 
             // キャンバス内の相対座標を取得
             const rect = canvas.getBoundingClientRect();
@@ -544,9 +617,28 @@
                         createParticles(enemy.x, enemy.y, enemy.color, 8);
                         enemies.splice(eIndex, 1);
                         bullets.splice(bIndex, 1);
-                        score += 10;
+                        combo++;
+                        lastKillAt = timestamp;
+                        score += 10 + Math.min(combo, 15) * 2;
+                        document.getElementById('comboDisplay').textContent = `×${combo}`;
+                        if (Math.random() < 0.12) spawnPowerup(enemy.x, enemy.y);
                     }
                 });
+            });
+
+            powerups.forEach((item, index) => {
+                item.life -= 1;
+                const dist = Math.hypot(coreX - item.x, coreY - item.y);
+                if (dist < coreRadius + item.radius) {
+                    if (item.type === 'heal') hp = Math.min(maxHp, hp + 1);
+                    if (item.type === 'burst') {
+                        enemies.forEach(enemy => createParticles(enemy.x, enemy.y, '#facc15', 7));
+                        score += enemies.length * 8;
+                        enemies = [];
+                    }
+                    createParticles(item.x, item.y, item.color, 15);
+                    powerups.splice(index, 1);
+                } else if (item.life <= 0) powerups.splice(index, 1);
             });
 
             // パーティクルの更新
@@ -589,6 +681,11 @@
                 speed: isFast ? 1.8 : 1.0,
                 color: isFast ? '#a855f7' : '#ef4444', // 紫＝高速バグ、赤＝通常バグ
             });
+        }
+
+        function spawnPowerup(x, y) {
+            const type = Math.random() < .58 ? 'heal' : 'burst';
+            powerups.push({ x, y, radius: 10, type, color: type === 'heal' ? '#4ade80' : '#facc15', life: 420 });
         }
 
         function draw() {
@@ -668,6 +765,20 @@
                 ctx.shadowBlur = 0;
             });
 
+            powerups.forEach(item => {
+                ctx.fillStyle = item.color;
+                ctx.shadowColor = item.color;
+                ctx.shadowBlur = 15;
+                ctx.beginPath();
+                ctx.arc(item.x, item.y, item.radius + Math.sin(item.life / 12) * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 12px system-ui';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.type === 'heal' ? '+' : '⚡', item.x, item.y + 4);
+                ctx.shadowBlur = 0;
+            });
+
             // パーティクルの描画
             particles.forEach(p => {
                 ctx.fillStyle = p.color;
@@ -684,6 +795,11 @@
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = 'left';
                 ctx.fillText(`SCORE: ${score}`, 15, 25);
+                if (combo > 1) {
+                    ctx.fillStyle = '#facc15';
+                    ctx.fillText(`COMBO ×${combo}`, 15, 45);
+                    ctx.fillStyle = '#ffffff';
+                }
 
                 // HPバー
                 ctx.textAlign = 'right';
@@ -704,6 +820,142 @@
 
         // ループの開始
         requestAnimationFrame(loop);
+    </script>
+    <script>
+        /* NEON 2048: キーボード・スワイプ両対応の独立パズルゲーム */
+        (() => {
+            const boardEl = document.getElementById('puzzle-board');
+            const scoreEl = document.getElementById('puzzle-score');
+            const bestEl = document.getElementById('puzzle-best');
+            const noteEl = document.querySelector('.puzzle-note');
+            const feedbackEl = document.getElementById('move-feedback');
+            let grid, score, previous = null;
+            let best = Number(localStorage.getItem('neon2048Best') || 0);
+
+            const emptyGrid = () => Array.from({ length: 4 }, () => Array(4).fill(0));
+            const clone = value => JSON.parse(JSON.stringify(value));
+            function addTile() {
+                const spaces = [];
+                grid.forEach((row, r) => row.forEach((value, c) => { if (!value) spaces.push([r, c]); }));
+                if (!spaces.length) return;
+                const [r, c] = spaces[Math.floor(Math.random() * spaces.length)];
+                grid[r][c] = Math.random() < .9 ? 2 : 4;
+            }
+            function render() {
+                boardEl.innerHTML = '';
+                grid.flat().forEach(value => {
+                    const tile = document.createElement('div');
+                    tile.className = `tile ${value ? `v-${value} new` : ''}`;
+                    tile.textContent = value || '';
+                    tile.dataset.value = value || '空きマス';
+                    boardEl.appendChild(tile);
+                });
+                const guide = document.createElement('div');
+                guide.className = 'cursor-guide';
+                guide.setAttribute('aria-hidden', 'true');
+                guide.textContent = '＋';
+                boardEl.appendChild(guide);
+                scoreEl.textContent = score.toLocaleString();
+                bestEl.textContent = best.toLocaleString();
+            }
+            function merge(line) {
+                const compact = line.filter(Boolean);
+                const out = [];
+                let gained = 0;
+                for (let i = 0; i < compact.length; i++) {
+                    if (compact[i] === compact[i + 1]) { const value = compact[i] * 2; out.push(value); gained += value; i++; }
+                    else out.push(compact[i]);
+                }
+                while (out.length < 4) out.push(0);
+                return { line: out, gained };
+            }
+            function getLine(index, direction) {
+                const vertical = direction === 'up' || direction === 'down';
+                const line = vertical ? grid.map(row => row[index]) : [...grid[index]];
+                return (direction === 'right' || direction === 'down') ? line.reverse() : line;
+            }
+            function putLine(index, direction, line) {
+                const final = (direction === 'right' || direction === 'down') ? [...line].reverse() : line;
+                if (direction === 'up' || direction === 'down') final.forEach((value, r) => grid[r][index] = value);
+                else grid[index] = final;
+            }
+            function canMove() {
+                for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
+                    if (!grid[r][c] || grid[r][c] === grid[r + 1]?.[c] || grid[r][c] === grid[r]?.[c + 1]) return true;
+                }
+                return false;
+            }
+            function animateMove(direction) {
+                const labels = { left: ['←', '左へスライド'], right: ['→', '右へスライド'], up: ['↑', '上へスライド'], down: ['↓', '下へスライド'] };
+                const [arrow, label] = labels[direction];
+                boardEl.dataset.move = arrow;
+                feedbackEl.textContent = `${arrow} ${label}`;
+                boardEl.classList.remove('moving', 'move-left', 'move-right', 'move-up', 'move-down');
+                void boardEl.offsetWidth;
+                boardEl.classList.add('moving', `move-${direction}`);
+                setTimeout(() => boardEl.classList.remove('moving', `move-${direction}`), 400);
+            }
+            function move(direction) {
+                const before = clone(grid);
+                const scoreBefore = score;
+                let gain = 0;
+                for (let i = 0; i < 4; i++) { const result = merge(getLine(i, direction)); putLine(i, direction, result.line); gain += result.gained; }
+                if (JSON.stringify(before) === JSON.stringify(grid)) return;
+                previous = { grid: before, score: scoreBefore };
+                animateMove(direction);
+                score += gain;
+                if (score > best) { best = score; localStorage.setItem('neon2048Best', best); }
+                addTile();
+                if (!canMove()) noteEl.textContent = 'ゲームオーバー！「はじめから」で再挑戦できます。';
+                else noteEl.textContent = grid.flat().includes(2048) ? '2048達成！さらに上を目指せます。' : 'PC：矢印キー　スマホ：上下左右にスワイプ';
+                render();
+            }
+            function restart() { grid = emptyGrid(); score = 0; previous = null; addTile(); addTile(); noteEl.textContent = 'PC：矢印キー　スマホ：上下左右にスワイプ'; feedbackEl.textContent = '矢印キーまたはスワイプで、タイルを動かしてみよう'; render(); }
+            document.getElementById('puzzle-restart').addEventListener('click', restart);
+            document.getElementById('puzzle-undo').addEventListener('click', () => {
+                if (!previous) { noteEl.textContent = '戻せる手がありません。'; return; }
+                grid = previous.grid; score = previous.score; previous = null; noteEl.textContent = 'ひとつ前の状態に戻しました。'; feedbackEl.textContent = '↶ ひとつ前の手に戻しました'; render();
+            });
+            const keyMap = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
+            document.addEventListener('keydown', e => { if (keyMap[e.key]) { e.preventDefault(); move(keyMap[e.key]); } });
+            let startX = 0, startY = 0;
+            let pointerIsDown = false;
+            function previewDirection(dx, dy) {
+                if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return null;
+                return Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+            }
+            function updateCursorGuide(e) {
+                const rect = boardEl.getBoundingClientRect();
+                const guide = boardEl.querySelector('.cursor-guide');
+                if (!guide) return;
+                const tile = e.target.closest('.tile');
+                boardEl.querySelectorAll('.tile.cursor-target').forEach(el => el.classList.remove('cursor-target'));
+                if (tile) tile.classList.add('cursor-target');
+                guide.style.left = `${e.clientX - rect.left}px`;
+                guide.style.top = `${e.clientY - rect.top}px`;
+                boardEl.classList.add('is-hovering');
+                const direction = pointerIsDown && previewDirection(e.clientX - startX, e.clientY - startY);
+                const arrows = { left: '←', right: '→', up: '↑', down: '↓' };
+                guide.textContent = direction ? arrows[direction] : '＋';
+                if (direction) feedbackEl.textContent = `${arrows[direction]} この方向に離すと、盤面全体が動きます`;
+                else if (tile) feedbackEl.textContent = `${tile.dataset.value} のタイルを指しています。ここから好きな方向へスワイプできます`;
+            }
+            boardEl.addEventListener('pointerdown', e => { startX = e.clientX; startY = e.clientY; pointerIsDown = true; updateCursorGuide(e); });
+            boardEl.addEventListener('pointermove', updateCursorGuide);
+            boardEl.addEventListener('pointerleave', () => {
+                if (pointerIsDown) return;
+                boardEl.classList.remove('is-hovering');
+                boardEl.querySelectorAll('.tile.cursor-target').forEach(el => el.classList.remove('cursor-target'));
+            });
+            boardEl.addEventListener('pointerup', e => {
+                const dx = e.clientX - startX, dy = e.clientY - startY;
+                pointerIsDown = false;
+                const direction = previewDirection(dx, dy);
+                if (!direction) return;
+                move(direction);
+            });
+            restart();
+        })();
     </script>
 </body>
 </html>

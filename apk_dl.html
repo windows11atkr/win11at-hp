@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アプリダウンロード | windows11at</title>
+    <title>Leaf Meter ダウンロード | windows11at</title>
     <style>
-        /* Aero-SQUI 1.0 共通テーマ定義 */
+        /* Aero-SQUI 1.0 Leaf Meter カスタムテーマ */
         :root {
-            --bg-page: #f3f4f6;
-            --bg-card: rgba(255, 255, 255, 0.95);
+            --bg-page: #f0fdf4;
+            --bg-card: rgba(255, 255, 255, 0.85);
             --text-main: #1f2937;
-            --text-sub: #6b7280;
+            --text-sub: #4b5563;
             --highlight-line: rgba(255, 255, 255, 0.7);
-            --shadow-ambient: rgba(13, 17, 29, 0.06);
-            --aurora-start: #38bdf8;
-            --aurora-mid: #a5b4fc;
-            --aurora-end: #c084fc;
-            --glow-color: rgba(165, 180, 252, 0.35);
+            --shadow-ambient: rgba(4, 120, 87, 0.08);
+            /* リーフグリーン系のグラデーション */
+            --aurora-start: #34d399;
+            --aurora-mid: #10b981;
+            --aurora-end: #047857;
+            --glow-color: rgba(16, 185, 129, 0.4);
             
             --color-x: #000000;
             --color-youtube: #ff0000;
@@ -28,14 +29,24 @@
             padding: 0;
         }
 
+        /* 背景アニメーション */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-page);
+            background: linear-gradient(-45deg, #f0fdf4, #dcfce7, #ccfbf1, #e0e7ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
             padding: 20px 12px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
         }
 
         .container {
@@ -43,19 +54,34 @@
             max-width: 1100px;
         }
 
-        /* ヘッダー構造（index.htmlと統一） */
+        /* 登場アニメーション */
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         header {
             margin-bottom: 24px;
             padding: 0 4px;
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .blog-title {
             font-size: 24px;
-            font-weight: 600;
+            font-weight: 800;
             letter-spacing: -0.5px;
-            color: #0d111d;
+            color: #064e3b;
             text-decoration: none;
             display: inline-block;
+            background: linear-gradient(90deg, #064e3b, #10b981, #064e3b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 4s linear infinite;
+        }
+
+        @keyframes textShine {
+            to { background-position: 200% center; }
         }
 
         .blog-subtitle {
@@ -64,7 +90,6 @@
             margin-top: 2px;
         }
 
-        /* 💻 📱 PC・スマホ分岐レイアウト（Store風2カラム） */
         .store-layout {
             display: flex;
             flex-direction: column;
@@ -76,118 +101,276 @@
             header { margin-bottom: 32px; }
             .blog-title { font-size: 28px; }
             .store-layout { flex-direction: row; align-items: flex-start; gap: 32px; }
-            .store-sidebar { width: 300px; position: sticky; top: 40px; }
-            .store-main { flex: 1; }
+            .store-sidebar { width: 320px; position: sticky; top: 40px; }
+            .store-main { flex: 1; min-width: 0; }
         }
 
-        /* Microsoft Store風：左側/上部 アプリ情報カード */
-        .app-identity-card {
+        /* カードデザイン */
+        .app-identity-card, .store-main-panel {
             background: var(--bg-card);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-top: 1px solid var(--highlight-line);
             border-radius: 24px;
             padding: 24px;
-            box-shadow: 0 10px 30px var(--shadow-ambient);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            box-shadow: 0 10px 30px var(--shadow-ambient), inset 0 0 0 1px rgba(255,255,255,0.4);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
         }
 
-        /* ストア風カスタムアイコンコンテナ */
+        .app-identity-card { animation-delay: 0.1s; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .store-main-panel { animation-delay: 0.2s; margin-bottom: 24px; }
+        
+        .app-identity-card:hover, .store-main-panel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15), inset 0 0 0 1px rgba(255,255,255,0.6);
+        }
+
+        /* アイコンアニメーション */
+        @keyframes floatRotate {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); box-shadow: 0 20px 40px var(--glow-color); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
         .app-icon-placeholder {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
-            border-radius: 24px;
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end), var(--aurora-mid));
+            background-size: 200% 200%;
+            animation: floatRotate 5s ease-in-out infinite, gradientBG 6s ease infinite;
+            border-radius: 28px;
             margin-bottom: 20px;
             box-shadow: 0 12px 28px var(--glow-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* SVGの微調整 */
+        .app-icon-placeholder::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: glare 4s linear infinite;
+        }
+
+        @keyframes glare {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
         .app-icon-svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+            position: relative;
+            z-index: 1;
         }
 
-        .app-name {
-            font-size: 20px;
-            font-weight: 600;
-            color: #0d111d;
-            margin-bottom: 4px;
+        .app-name { font-size: 22px; font-weight: 700; color: #064e3b; margin-bottom: 4px; }
+        .app-developer { font-size: 13px; color: var(--text-sub); margin-bottom: 20px; }
+
+        /* バッジアニメーション */
+        @keyframes pulseBadge {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        .app-developer {
-            font-size: 13px;
-            color: var(--text-sub);
-            margin-bottom: 20px;
-        }
-
-        /* ストア風状態バッジ */
         .store-badge {
-            background: #e0f2fe;
-            color: #0369a1;
+            background: #d1fae5;
+            color: #047857;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulseBadge 2.5s infinite;
+        }
+
+        .store-badge svg { width: 14px; height: 14px; }
+
+        @media (min-width: 768px) { .store-main-panel { padding: 36px; } }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #064e3b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #ecfdf5;
+            padding-bottom: 8px;
+        }
+
+        /* ダウンロードボタン */
+        @keyframes megaPulse {
+            0% { transform: scale(1); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 15px 30px rgba(4, 120, 87, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+        }
+
+        .download-action-area {
+            text-align: center;
+            margin-bottom: 48px;
+            padding: 0 12px;
+        }
+
+        .btn-mega-download {
+            display: block;
+            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
+            background-size: 200% 200%;
+            color: white;
+            text-decoration: none;
+            padding: 24px;
+            border-radius: 24px;
+            animation: megaPulse 2s infinite, gradientBG 5s ease infinite;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-mega-download:hover {
+            transform: scale(1.03) translateY(-4px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-mega-download:active { transform: scale(0.97); }
+
+        .btn-mega-download .dl-icon {
+            margin-bottom: 8px;
+        }
+        .btn-mega-download .dl-text {
+            display: block;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .btn-mega-download .dl-sub {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0.95;
+            background: rgba(0,0,0,0.15);
             padding: 4px 12px;
             border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 24px;
             display: inline-block;
         }
 
-        /* Microsoft Store風：右側/下部 メインコンテンツ */
-        .store-main-panel {
-            background: var(--bg-card);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-top: 1px solid var(--highlight-line);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 10px 30px var(--shadow-ambient);
-            margin-bottom: 24px;
+        /* アプリ紹介（機能グリッド） */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        
+        @media (min-width: 640px) {
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        @media (min-width: 768px) {
-            .store-main-panel { padding: 32px; }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            padding: 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
         }
 
-        .panel-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #0d111d;
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.08);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: #dcfce7;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 12px;
+            color: #059669;
         }
 
-        /* Coming Soon セクション（ストアの製品説明風） */
-        .coming-soon-box {
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .coming-soon-text {
-            font-size: 24px;
+        .feature-title {
+            font-size: 15px;
             font-weight: 700;
-            background: linear-gradient(135deg, #0284c7, var(--aurora-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #064e3b;
             margin-bottom: 8px;
         }
 
-        .coming-soon-desc {
+        .feature-desc {
             font-size: 13px;
-            color: var(--text-sub);
-            max-width: 480px;
-            margin: 0 auto;
+            color: #4b5563;
             line-height: 1.6;
         }
+
+        /* インストール手順エリア */
+        .install-guide {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .install-guide ol {
+            margin-left: 20px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.8;
+        }
+
+        .install-guide li { margin-bottom: 8px; padding-left: 4px; }
+
+        .warning-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #92400e;
+            line-height: 1.6;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .warning-icon {
+            flex-shrink: 0;
+            color: #d97706;
+            margin-top: 2px;
+        }
+        
+        .warning-box a {
+            color: #d97706;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+            transition: color 0.2s;
+        }
+        .warning-box a:hover { color: #b45309; }
 
         /* SNSリンクボタン */
         .sns-button-list {
@@ -207,34 +390,31 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 12px;
+            padding: 14px;
             border-radius: 16px;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 600;
-            transition: transform 0.1s, background-color 0.2s;
-            -webkit-tap-highlight-color: transparent;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .btn-store-action:active { transform: scale(0.98); }
+        
+        .btn-store-action:hover { transform: translateY(-3px) scale(1.02); }
+        .btn-store-action:active { transform: scale(0.95); }
 
         .btn-x {
             background-color: var(--color-x);
             color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+        
         .btn-youtube {
-            background-color: rgba(0, 0, 0, 0.04);
-            color: var(--text-main);
+            background-color: white;
+            color: var(--color-youtube);
             border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-        .btn-youtube:hover {
-            background-color: rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 10px rgba(255,0,0,0.05);
         }
 
-        .btn-store-action svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
+        .btn-store-action svg { width: 18px; height: 18px; fill: currentColor; }
 
         /* ナビゲーションフッターリンク */
         .back-nav {
@@ -243,30 +423,38 @@
             gap: 8px;
             color: var(--text-sub);
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            padding: 4px;
-            transition: color 0.2s;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
         }
         .back-nav:hover {
-            color: #0284c7;
+            background: rgba(255,255,255,0.7);
+            color: #059669;
+            transform: translateX(-4px);
         }
 
-        /* フッター */
         footer {
             margin-top: 40px;
             padding: 20px 8px;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            font-size: 11px;
-            color: var(--text-sub);
+            border-top: 1px solid rgba(16, 185, 129, 0.15);
+            font-size: 12px;
+            color: #6b7280;
             text-align: center;
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- ヘッダー（index.htmlから統一） -->
+        <!-- ヘッダー -->
         <header>
             <a href="index.html" class="blog-title">windows11at</a>
             <div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
@@ -275,70 +463,141 @@
         <!-- ストアレイアウト -->
         <div class="store-layout">
             
-            <!-- 左側（PC時）：アプリのアイデンティティ -->
+            <!-- 左側：アプリ情報 -->
             <aside class="store-sidebar">
                 <div class="app-identity-card">
-                    <!-- カスタムSVGアプリアイコン -->
+                    <!-- リーフをモチーフにしたカスタムSVGアイコン -->
                     <div class="app-icon-placeholder">
                         <svg class="app-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- 外側のサイバーフレーム（スマートフォンのアスペクト比を抽象化） -->
-                            <rect x="16" y="10" width="68" height="80" rx="14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-dasharray="160 20" opacity="0.9"/>
-                            
-                            <!-- 中央のコア・シンボル（透過するガラスプレート風のサイバーインジケータ） -->
-                            <rect x="30" y="25" width="40" height="50" rx="8" fill="white" fill-opacity="0.15" stroke="white" stroke-width="2.5"/>
-                            <rect x="38" y="33" width="24" height="34" rx="4" stroke="white" stroke-width="1.5" opacity="0.7"/>
-                            
-                            <!-- 上下のデバイスギミック（スピーカーホールとホームインジケータ） -->
-                            <line x1="44" y1="16" x2="56" y2="16" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
-                            <circle cx="50" cy="80" r="3" fill="white" opacity="0.9"/>
-                            
-                            <!-- アクセント（ガジェットの画面の光沢を模した斜めのカッティングライン） -->
-                            <path d="M25 80L75 30" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                            <!-- 外側のサイバーウォレットフレーム -->
+                            <rect x="12" y="16" width="76" height="68" rx="20" fill="white" fill-opacity="0.15" stroke="white" stroke-width="3"/>
+                            <rect x="12" y="16" width="76" height="24" rx="20" fill="white" fill-opacity="0.2"/>
+                            <!-- 内部のリーフデザイン -->
+                            <path d="M50 72 C 28 72, 28 42, 28 28 C 42 28, 72 28, 72 50 C 72 72, 50 72, 50 72 Z" fill="white" fill-opacity="0.95"/>
+                            <path d="M28 72 L 72 28" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M42 58 L 56 44" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
                         </svg>
                     </div>
                     
-                    <h1 class="app-name">自作アプリ(仮)</h1>
+                    <h1 class="app-name">Leaf Meter</h1>
                     <p class="app-developer">@windows11at</p>
                     <div class="store-store-status">
-                        <span class="store-badge">Android アプリ配布準備中</span>
+                        <!-- 最新バージョンバッジ -->
+                        <span class="store-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            最新版 配信中
+                        </span>
                     </div>
                 </div>
             </aside>
 
-            <!-- 右側（PC時）：詳細パネル・ダウンロード情報 -->
+            <!-- 右側：メインコンテンツ -->
             <main class="store-main">
                 <div class="store-main-panel">
-                    <h2 class="panel-title">概要と配信ステータス</h2>
                     
-                    <!-- 製品準備中エリア -->
-                    <div class="coming-soon-box">
-                        <div class="coming-soon-text">Coming Soon...</div>
-                        <p class="coming-soon-desc">
-                            現在、快適なUIデザインと基本システムの開発を進めています。配信開始までもうしばらくお待ちください。最新の進捗やテスト配布の案内は各公式チャンネルで発信します。
-                        </p>
+                    <!-- 超目立つダウンロードエリア -->
+                    <div class="download-action-area">
+                        <a href="app1.zip" class="btn-mega-download" download>
+                            <svg class="dl-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span class="dl-text">APKをダウンロード</span>
+                            <span class="dl-sub">Version 1.3.5 / Android 10+ 対応</span>
+                        </a>
                     </div>
 
-                    <h2 class="panel-title">コミュニティ & 進捗状況</h2>
+                    <!-- アプリの機能紹介 -->
+                    <h2 class="panel-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        主な機能と特徴
+                    </h2>
+                    
+                    <div class="feature-grid">
+                        <!-- 機能1 -->
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-5 5"/></svg>
+                            </div>
+                            <h3 class="feature-title">家計をスコアで可視化</h3>
+                            <p class="feature-desc">現在の残高や「今日使える目安」を一目で確認。日々のペースを示す「リーフスコア」で、モチベーションを維持しながら無駄遣いを防止します。</p>
+                        </div>
+
+                        <!-- 機能2 -->
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
+                            </div>
+                            <h3 class="feature-title">購入シミュレーション予測</h3>
+                            <p class="feature-desc">「これ買ったらどうなる？」機能搭載。欲しいものの金額を入力すると、購入後の残金や未来の予測グラフを即座に計算し、衝動買いを抑制します。</p>
+                        </div>
+
+                        <!-- 機能3 -->
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M7 15h.01"/></svg>
+                            </div>
+                            <h3 class="feature-title">ICカード読み取り対応</h3>
+                            <p class="feature-desc">スマートフォンの背面に交通系ICカード（Suica/PASMO等）をかざすだけで、簡単に残高や履歴を読み取って家計簿に反映できます。</p>
+                        </div>
+
+                        <!-- 機能4 -->
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            </div>
+                            <h3 class="feature-title">高度なデータ管理・移行</h3>
+                            <p class="feature-desc">定期的な収支の自動化やカテゴリ別の履歴管理に加え、文字列でのエクスポート、USB接続による確実なデータ移行機能も備えています。</p>
+                        </div>
+                    </div>
+
+                    <!-- インストールガイド -->
+                    <h2 class="panel-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                        インストール手順
+                    </h2>
+                    <div class="install-guide">
+                        <ol>
+                            <li>上のダウンロードボタンをタップして、ZIPファイル（<code>app1.zip</code>）を保存します。</li>
+                            <li>ダウンロードしたZipファイルを解凍します。</li>
+                            <li>通知パネル、またはファイルマネージャーアプリからダウンロードしたAPKファイルを開きます。</li>
+                            <li>「不明なアプリのインストール」を求められた場合は、設定画面に進み、ブラウザやファイル管理アプリへのインストール権限を許可してください。</li>
+                            <li>画面の指示に従ってインストールを完了させます。</li>
+                        </ol>
+                        
+                        <!-- 警告文 -->
+                        <div class="warning-box">
+                            <svg class="warning-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            <div>
+                                <strong>【重要なお知らせ】</strong><br>
+                                一部デバイスでは、詐欺防止のために未認証のデベロッパーアプリがインストールできないようになっています。インストールに必要な制限が解除されるまで、最大24時間必要な場合があります。<br>
+                                <span style="display:inline-block; margin-top:6px;">詳しくは、以下のリンクを参照してください。<br>
+                                <a href="https://keepandroidopen.org/ja/" target="_blank" rel="noopener noreferrer">Keep Android Open</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="panel-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        コミュニティ & サポート
+                    </h2>
                     <div class="sns-button-list">
-                        <!-- X -->
                         <a href="https://x.com/windows11at" target="_blank" rel="noopener noreferrer" class="btn-store-action btn-x">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
-                            X で進捗を確認
+                            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            X で最新情報を見る
                         </a>
                         
-                        <!-- YouTube -->
                         <a href="https://youtube.com/@windows11at" target="_blank" rel="noopener noreferrer" class="btn-store-action btn-youtube">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.507 9.388.507 9.388.507s7.517 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.507 9.388.507 9.388.507s7.517 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                             YouTube チャンネル
                         </a>
                     </div>
                 </div>
 
-                <!-- ナビゲーション（戻るリンク） -->
+                <!-- 戻るリンク -->
                 <a href="index.html" class="back-nav">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -350,7 +609,6 @@
 
         </div>
 
-        <!-- フッター -->
         <footer>
             <div>© 2026 windows11at</div>
         </footer>
