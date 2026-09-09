@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Apple、新しいiPhoneを発表。iPhone 18 Pro / 18 Pro Maxと折りたたみ式iPhone Duoを、カメラ・A20 Pro・Siri AI・iOS 27まで詳しく解説。">
+<title>Apple、新しいiPhoneを発表 | windows11at</title>
+
+<style>
+:root {
+    --bg-page: #f3f4f6;
+    --bg-card: rgba(255,255,255,.95);
+    --text-main: #1f2937;
+    --text-sub: #6b7280;
+    --highlight-line: rgba(255,255,255,.7);
+    --shadow-ambient: rgba(13,17,29,.06);
+    --aurora-start: #0d6efd;
+    --aurora-mid: #0dcaf0;
+    --aurora-end: #20c997;
+    --glow-color: rgba(13,202,240,.35);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.8;
+    padding: 20px 12px;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+header {
+    margin-bottom: 24px;
+    padding: 0 4px;
+}
+
+.site-header-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.site-header-link header {
+    cursor: pointer;
+}
+
+.site-header-link header:hover {
+    filter: brightness(1.03);
+}
+
+.blog-title {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -.5px;
+    color: #0d111d;
+}
+
+.blog-subtitle {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-top: 2px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 18px;
+    color: #0d6efd;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.article-main {
+    background: var(--bg-card);
+    border: 1px solid rgba(0,0,0,.05);
+    border-top: 1px solid var(--highlight-line);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 10px 30px var(--shadow-ambient);
+}
+
+.kicker {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(13,110,253,.10);
+    color: #0d6efd;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.article-main h1 {
+    font-size: clamp(24px,4vw,36px);
+    line-height: 1.4;
+    letter-spacing: -.7px;
+    margin-bottom: 8px;
+}
+
+.date {
+    font-size: 13px;
+    color: var(--text-sub);
+    margin-bottom: 26px;
+}
+
+.lead {
+    font-size: 16px;
+    line-height: 1.95;
+    margin-bottom: 26px;
+}
+
+.article-body p {
+    font-size: 14px;
+    line-height: 1.95;
+    margin: 0 0 20px;
+}
+
+.article-body h2 {
+    font-size: 21px;
+    line-height: 1.5;
+    margin: 38px 0 14px;
+    padding-left: 12px;
+    border-left: 4px solid #0dcaf0;
+}
+
+.article-body h3 {
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 28px 0 10px;
+}
+
+.article-body ul {
+    margin: 0 0 22px 22px;
+}
+
+.article-body li {
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 5px;
+}
+
+.spec-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 20px 0 28px;
+}
+
+.spec {
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(0,0,0,.025);
+    border: 1px solid rgba(0,0,0,.04);
+}
+
+.spec b {
+    display: block;
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-bottom: 3px;
+}
+
+.spec span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.notice {
+    margin: 26px 0;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: linear-gradient(135deg,rgba(13,110,253,.07),rgba(32,201,151,.07));
+    border: 1px solid rgba(13,110,253,.12);
+    font-size: 13px;
+}
+
+.note {
+    margin: 20px 0;
+    padding: 15px 17px;
+    border-left: 4px solid #9ca3af;
+    background: rgba(0,0,0,.025);
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.marketing {
+    color: #374151;
+    font-style: italic;
+}
+
+.source-list {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0,0,0,.07);
+}
+
+.source-list a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.source-list li {
+    font-size: 12px;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 9px 15px;
+    border-radius: 14px;
+    background: var(--bg-card);
+    border: 1px solid rgba(0,0,0,.06);
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px var(--shadow-ambient);
+}
+
+.nav a.primary {
+    background: linear-gradient(135deg,var(--aurora-start),var(--aurora-end));
+    color: #fff;
+    border: 0;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px 8px;
+    border-top: 1px solid rgba(0,0,0,.05);
+    font-size: 11px;
+    color: var(--text-sub);
+    text-align: center;
+}
+
+body.is-dark-mode {
+    --bg-page: #070d1c;
+    --bg-card: rgba(14,25,47,.94);
+    --text-main: #edf6ff;
+    --text-sub: #a9bbd0;
+    --highlight-line: rgba(142,233,255,.17);
+    --shadow-ambient: rgba(0,0,0,.38);
+}
+
+body.is-dark-mode .blog-title {
+    color: #f5fbff;
+}
+
+@media (min-width: 600px) {
+    .spec-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        padding: 40px 20px;
+    }
+
+    header {
+        margin-bottom: 30px;
+    }
+
+    .blog-title {
+        font-size: 28px;
+    }
+
+    .article-main {
+        padding: 38px 42px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<a class="site-header-link" href="index.html">
+    <header>
+        <div class="blog-title">windows11at</div>
+        <div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
+    </header>
+</a>
+
+<a class="back-link" href="articles.html">← 記事一覧へ戻る</a>
+
+<main class="article-main">
+    <span class="kicker">APPLE · NEWS</span>
+
+    <h1>Apple、新しいiPhoneを発表</h1>
+
+    <div class="date">2026年9月10日</div>
+
+    <div class="article-body">
+
+        <p class="lead">
+            Appleは現地時間2026年9月9日（日本時間9月10日）、iPhone 18 Pro / iPhone 18 Pro Maxと、
+            Apple初の折りたたみ式iPhone「iPhone Duo」を発表した。
+            今回は単なる世代更新ではなく、A20 Proによる2nm世代の性能強化、
+            iPhone初の可変絞り、より本格的になったカメラのマニュアル操作、
+            Siri AI、そして折りたたみ機構まで、一気に新要素を投入している。
+        </p>
+
+        <div class="notice">
+            <strong>この記事について</strong><br>
+            Apple公式発表・Apple公式仕様を中心に整理し、発表資料の強いマーケティング表現や、
+            発表時点で確認できない情報については、その旨が分かるように記載している。
+        </div>
+
+        <h2>iPhone 18 Pro / iPhone 18 Pro Max</h2>
+
+        <p>
+            まずは従来型のProシリーズから。
+            iPhone 18 Pro / 18 Pro Maxは、外観の大枠では従来のiPhone Pro路線を維持しつつ、
+            中身を大きく強化したモデルだ。Appleが今回強く押し出しているのは、
+            カメラ、性能、バッテリー、そしてAI。
+            Apple自身が「これまでで最高のPro iPhone」「最も先進的なカメラ」といった
+            非常に強い表現を繰り返しているのも今回の発表の特徴だ。
+        </p>
+
+        <div class="spec-grid">
+            <div class="spec">
+                <b>ディスプレイ</b>
+                <span>18 Pro：6.3インチ / 18 Pro Max：6.9インチ</span>
+            </div>
+
+            <div class="spec">
+                <b>チップ</b>
+                <span>A20 Pro / 6コアCPU / 7コアGPU / Dual 16コアNeural Engine</span>
+            </div>
+
+            <div class="spec">
+                <b>メインカメラ</b>
+                <span>48MP Fusion Main / 可変絞り</span>
+            </div>
+
+            <div class="spec">
+                <b>発売</b>
+                <span>2026年9月18日</span>
+            </div>
+
+            <div class="spec">
+                <b>米国価格</b>
+                <span>18 Pro：$1,199〜 / 18 Pro Max：$1,299〜</span>
+            </div>
+
+            <div class="spec">
+                <b>ストレージ</b>
+                <span>256GB / 512GB / 1TB / 2TB</span>
+            </div>
+        </div>
+
+        <h3>iPhoneでついに「絞り」が動く</h3>
+
+        <p>
+            今回の最大のカメラアップデートが、48MP Fusionメインカメラの
+            <strong>可変絞り</strong>対応だ。
+            Appleによれば、これはiPhoneで初めての絞り制御となる。
+            6枚のレーザーカットされた薄い絞り羽根がローター機構によって動き、
+            絞りを切り替える。
+        </p>
+
+        <p>
+            絞り値は<strong>F1.48・F1.8・F2.8・F4.0</strong>の4段階。
+            暗い場所ではƒ/1.48まで開いて光を取り込み、ポートレートではƒ/1.8、
+            より広い範囲にピントを合わせたい場面ではƒ/4.0へ絞る、といった使い分けができる。
+            しかも自動調整だけではなく、Pro controlsからユーザーが手動で変更できる。
+        </p>
+
+        <p>
+            「写真の基本が絞り」というカメラユーザーからすると、
+            <strong>「今までそこ無かったんかい（笑）」</strong>という話でもある。
+            ただし、スマートフォンで物理的な可変絞り機構を入れたこと自体は大きな変更で、
+            被写界深度と光量を同時に扱える幅は確実に広がった。
+        </p>
+
+        <h3>ついにマニュアル露出に近い操作へ</h3>
+
+        <p>
+            カメラアプリには新しい<strong>Pro controls</strong>が追加される。
+            絞り値、シャッタースピード、ホワイトバランスを手動で変更でき、
+            ヒストグラムも表示可能。
+            つまり、従来の「スマホカメラだから基本は自動」という操作から、
+            少なくとも露出を自分で決める方向へ大きく踏み込んだ。
+        </p>
+
+        <p>
+            「SS調整できる」「WBも手動変更できる」「絞りも変えられる」ので、
+            実質的には<strong>マニュアル露出を意識した操作体系</strong>になった。
+            Appleはこれを「プロレベルのコントロール」と表現している。
+            シルエット写真、動体のブレ表現、被写界深度を意識した撮影など、
+            これまでスマートフォン側に任せていた部分を撮影者が決めやすくなる。
+        </p>
+
+        <p>
+            また、計算写真処理パイプラインも更新され、より細かいディテールを狙えるようになった。
+            Photographic Styles 3では、色やトーンだけでなく、テクスチャやグレインも調整できる。
+            「インテリジェントなカメラソフトウェア」と「最先端のハードウェア」の両方を
+            Appleがセットで押し出している形だ。
+        </p>
+
+        <h3>動画も本格化</h3>
+
+        <p>
+            動画では、撮影後にシネマティックエフェクトを最大60fpsの動画へ適用可能。
+            タイムラプスは4K Dolby Vision HDRに対応し、Audio Mixも新アルゴリズムによって
+            音声品質を高め、音楽を分離できるようになった。
+            4K Dolby Vision、音声処理、手動露出などを合わせると、
+            「プロの映像制作」をかなり意識した構成になっている。
+        </p>
+
+        <p>
+            さらに18 Proシリーズでは、Apple Reference Imageという新機能も搭載。
+            メインカメラのセンサーが見た画素情報に署名し、Private Cloud Computeが
+            改ざんできない参照画像を生成する。
+            通常の写真と並べて確認できるため、Appleはこれを<strong>「デジタルのネガ」</strong>
+            のようなものとして説明している。
+        </p>
+
+        <p>
+            つまり「撮った写真そのものを証拠として残したい」という方向にも踏み込んだ。
+            報道写真や写真の真正性を重視する用途では面白い機能だ。
+        </p>
+
+        <h3>A20 Pro――2nm世代の「デスクトップクラス（笑）」</h3>
+
+        <p>
+            SoCは<strong>A20 Pro</strong>。
+            Apple公式によれば、最新の<strong>2nmプロセス技術</strong>で製造され、
+            A19 Pro比でメモリ帯域幅が50%増加。
+            6コアCPU、7コアGPU、Dual 16コアNeural Engineを搭載する。
+        </p>
+
+        <p>
+            CPUは<strong>2つのスーパーコア＋4つの高効率コア</strong>という6コア構成。
+            いわゆる「Pコア2基＋Eコア4基」に近い見方はできるが、
+            Apple公式の日本語仕様では「スーパーコア」「高効率コア」と表現されている。
+            AppleはモバイルCPUとしてはかなり強気で、発表資料では競合より高速であることもアピールしている。
+        </p>
+
+        <p>
+            GPUは7コアで、A19 Pro比で最大40%高速。
+            Neural Engineは<strong>Dual 16コア、合計32コア</strong>となり、
+            AppleはA19 Pro比でAI処理性能が2倍と説明している。
+            なので「Neural Engine 32コアって本当に2倍なんか？」という疑問については、
+            <strong>Apple自身が2倍のAI処理性能と説明している</strong>のが答えになる。
+        </p>
+
+        <p>
+            「デスクトップクラス（笑）」という表現をしたくなるほどの数字だが、
+            もちろんスマートフォン向けSoCであり、PCのCPUそのものになったわけではない。
+            一方で、オンデバイスAIやゲームなどの処理をかなり意識した設計なのは間違いない。
+        </p>
+
+        <div class="note">
+            <strong>2nmについての注意：</strong>
+            Apple公式は「最新の2ナノメートルプロセス技術」としているが、
+            この発表資料では製造ファウンドリ名を明記していない。
+            したがって「TSMC製2nm」と断定するのはこの記事では避けた。
+        </div>
+
+        <h3>チップパッケージと冷却</h3>
+
+        <p>
+            A20 Proでは、MシリーズApple siliconに着想を得た新しいチップパッケージ構造を採用。
+            シリコンダイとメモリを横並びに配置し、メモリをチップの熱経路から外すことで、
+            A20 Proを次世代ベイパーチャンバーへ直接接続する構造になった。
+        </p>
+
+        <p>
+            次世代ベイパーチャンバーはiPhone 17 Pro世代比で<strong>表面積が3倍</strong>。
+            Appleはこれによって持続性能を最大40%向上できるとしている。
+            「ここ数年で最大のアップグレード（笑）」と言いたくなるような、
+            かなり大掛かりな冷却強化だ。
+        </p>
+
+        <p>
+            なお、前世代iPhone 17 ProのベイパーチャンバーについてAppleは
+            「脱イオン水」を封入した構造を説明していたが、
+            今回の18 Proの公式発表では同じ液体について具体的な記述は確認できない。
+            そのため、18 Proについて「脱イオン水を使っている」とは断定しない。
+        </p>
+
+        <h3>バッテリーと充電</h3>
+
+        <p>
+            バッテリーも強化された。
+            eSIM専用モデルではiPhone 18 Proが最大36時間、
+            iPhone 18 Pro Maxが最大45時間のビデオ再生に対応。
+            18 Pro MaxはiPhone史上最大級のバッテリー駆動時間向上をうたっている。
+        </p>
+
+        <p>
+            充電は有線で約15分で50%まで充電可能。
+            ワイヤレスでは約30分で50%まで充電できる。
+            ただし「30分で完全充電」ではなく、Apple公式にあるのは
+            <strong>50%まで約30分（ワイヤレス）</strong>という数字なので注意したい。
+        </p>
+
+        <h3>Siri AIとiOS 27</h3>
+
+        <p>
+            ソフトウェアは<strong>iOS 27</strong>。
+            Siri AIはApple Intelligenceを利用した「まったく新しい」Siriとして登場し、
+            パーソナルコンテキスト、画面上の内容の理解、Webからの情報取得、
+            アプリ間の操作などを行えるようになる。
+        </p>
+
+        <p>
+            さらに、ユーザーが自然な文章で説明するとショートカットを組み立てる
+            <strong>Describe a Shortcut</strong>にも対応。
+            「こういう自動化をしたい」と説明するだけでShortcutsが必要な処理を構成してくれる。
+            これは従来のショートカット作成よりもかなりAI寄りの仕組みだ。
+        </p>
+
+        <p>
+            写真では空間リフレーム、Extend、進化したClean Upなども利用できる。
+            「説明でショートカットを作る」「不要物をより大きく消す」といった機能が
+            システム全体へ入ってくる。
+        </p>
+
+        <p>
+            Siri AIはまず英語でベータ提供され、日本語は<strong>2026年10月</strong>に対応予定。
+            Apple Intelligence全体では日本語を含む複数言語がサポートされるが、
+            Siri AIそのものの言語対応時期とは分けて考える必要がある。
+        </p>
+
+        <h3>「全く新しい」が口癖？</h3>
+
+        <p>
+            今回のApple発表を見ていると、「まったく新しい」「これまでで最も先進的」
+            「かつてないほど万能」といった強い表現がかなり多い。
+            特にカメラについては「Apple史上最も先進的なカメラ」、
+            性能については「最高の持続性能」など、マーケティングワードが目立つ。
+            ここは<strong>「Apple、また『全く新しい』って言ってる（笑）」</strong>
+            と突っ込みたくなるところでもある。
+        </p>
+
+        <h3>iOS 27の細かな強化</h3>
+
+        <p>
+            iOS 27ではLiquid Glassの透明度や色の濃さをスライダーで調整できるなど、
+            デザインのカスタマイズ性も向上。
+            AirDropは最大80%高速化、モバイル通信とWi-Fiの切り替えもよりシームレスになる。
+            また、iPhone Handoffによって、対応キャリアでは同じ電話番号を2台のiPhone間で
+            切り替えて使えるようになる。
+        </p>
+
+        <p>
+            子どもの安全機能も強化され、保護者が利用できるアプリや連絡先、
+            アプリを使える時間などをより細かく管理できる。
+            「また子どもの安全機能（笑）」と思う部分ではあるが、
+            AppleとしてはiOS 27の重要なアップデートの一つとして位置付けている。
+        </p>
+
+        <h3>価格</h3>
+
+        <p>
+            米国価格はiPhone 18 Proが<strong>$1,199から</strong>、
+            iPhone 18 Pro Maxが<strong>$1,299から</strong>。
+            今回の発表では18 Pro Maxの$1,299が一つの基準となる。
+        </p>
+
+        <h2>iPhone Duo――Apple初の折りたたみiPhone</h2>
+
+        <p>
+            そしてもう一台が、今回最大のサプライズとも言える<strong>iPhone Duo</strong>。
+            Apple初の折りたたみiPhoneで、閉じると5.4インチ、開くと7.6インチになる。
+            閉じた状態はApple自身が「パスポートに近いサイズ」と説明しており、
+            大画面をポケットへ収めることを狙った製品だ。
+        </p>
+
+        <div class="spec-grid">
+            <div class="spec">
+                <b>ディスプレイ</b>
+                <span>5.4インチ外側 / 7.6インチ内側</span>
+            </div>
+
+            <div class="spec">
+                <b>カメラ</b>
+                <span>48MP Fusion Main + 48MP Fusion Ultra Wide</span>
+            </div>
+
+            <div class="spec">
+                <b>認証</b>
+                <span>Touch ID（サイドボタン）</span>
+            </div>
+
+            <div class="spec">
+                <b>素材</b>
+                <span>グレード5チタニウム</span>
+            </div>
+
+            <div class="spec">
+                <b>チップ</b>
+                <span>A20 Pro / 6コアCPU / 7コアGPU / Dual 16コアNeural Engine</span>
+            </div>
+
+            <div class="spec">
+                <b>米国価格</b>
+                <span>$1,999〜</span>
+            </div>
+        </div>
+
+        <h3>折りたためるデザイン</h3>
+
+        <p>
+            Duoは、閉じた状態で5.4インチの外側ディスプレイ、
+            開いた状態で7.6インチの内側ディスプレイを使う。
+            内側はiPhone 18 Pro Maxより50%大きく、外側は18 Proの画面面積の90%に相当する。
+            両方のディスプレイは同じアスペクト比を採用し、開閉してもコンテンツが自然につながる。
+        </p>
+
+        <p>
+            本体はグレード5チタニウム製で、Appleは精密ヒンジや内部補強構造も強調している。
+            「宇宙産業レベル（笑）」と呼びたくなるような素材アピールだが、
+            公式に確認できるのは<strong>グレード5チタニウム</strong>という点。
+            「宇宙産業レベル」という表現そのものはApple公式の仕様ではない。
+        </p>
+
+        <h3>Touch IDが復活</h3>
+
+        <p>
+            Duoでは<strong>Touch IDがサイドボタンに統合</strong>された。
+            開いた状態でも閉じた状態でも認証でき、Apple Watchによるロック解除にも対応する。
+            Face ID中心だった近年のiPhoneとは明確に違うポイントだ。
+        </p>
+
+        <h3>カメラは2眼</h3>
+
+        <p>
+            背面カメラは<strong>2眼構成</strong>。
+            48MP Fusion Mainと48MP Fusion Ultra Wideを搭載し、
+            メインカメラには光学品質2倍望遠相当も統合されている。
+            さらに折りたたみ構造を利用して、外側ディスプレイをプレビュー画面として使ったり、
+            Duo PreviewやSmart Takeなど、折りたたみだからこそ可能な撮影機能も用意された。
+        </p>
+
+        <p>
+            カメラの位置について「Galaxy S10っぽい？」という見方もできるが、
+            これは世代や端末の比較による印象であり、Apple公式がS10との類似性を説明しているわけではない。
+        </p>
+
+        <h3>動画・AIカメラ</h3>
+
+        <p>
+            Duoは48MP Fusion Mainで<strong>4K 120fps Dolby Vision</strong>を撮影可能。
+            Cinematicエフェクトは撮影後に最大60fpsで適用でき、Audio Mixも強化される。
+            さらに、A20 Pro上のオンデバイスAIを利用して、被写体の状態を解析して
+            自動的に撮影するSmart Takeなども搭載する。
+        </p>
+
+        <h3>A20 Proと冷却</h3>
+
+        <p>
+            DuoにもA20 Proを搭載。
+            6コアCPU、7コアGPU、Dual 16コアNeural Engine、
+            50%多いユニファイドメモリ帯域幅、2nmプロセスという基本構成は18 Proと共通する。
+            ただしDuoでは、折りたたみ大画面でのゲームやマルチタスクを想定し、
+            A20 Proとカスタムベイパーチャンバーを直接つなぐ新しいパッケージ構造を採用している。
+        </p>
+
+        <p>
+            Appleによれば、Duoの持続性能はiPhone 17 Pro比で最大35%向上。
+            GPUはA19 Pro比で最大40%高速、CPUは最大20%高速、
+            Neural EngineはオンデバイスAIモデル向けの演算能力が2倍とされている。
+        </p>
+
+        <h3>バッテリーは「普通の24時間」どころか条件付き</h3>
+
+        <p>
+            Duoは左右に1つずつ高エネルギー密度バッテリーを配置するデュアルバッテリー構造。
+            内側ディスプレイ使用時は最大31時間、外側ディスプレイ使用時は最大44時間の
+            ビデオ再生に対応し、両方のディスプレイを均等に使った場合は
+            1回の充電で最大24時間の使用が可能とされる。
+        </p>
+
+        <p>
+            充電は約20分で50%まで。
+            ワイヤレスでは約30分で50%までとなる。
+            18 Proの「15分で50%」よりは少し遅い。
+        </p>
+
+        <h3>iPhone Handoff――1つの番号を2台で使える</h3>
+
+        <p>
+            DuoもeSIM専用設計。
+            iOS 27のiPhone Handoffにより、対応キャリアでは
+            <strong>同じ電話番号を2台のiPhone間で切り替えて使える</strong>。
+            折りたたみiPhoneを追加端末として使いたいユーザーには、
+            地味ながらかなりインパクトの大きいアップグレードだ。
+        </p>
+
+        <h3>Siri AI、日本語、AI</h3>
+
+        <p>
+            DuoもiOS 27とApple Intelligence、Siri AIに対応。
+            Siri AIは英語からベータ提供され、日本語・韓国語・フランス語・
+            ポルトガル語・スペイン語は10月から対応予定。
+            「日本語は10月」という情報は、Siri AIについての話であり、
+            Apple Intelligence全体の日本語対応とは区別する必要がある。
+        </p>
+
+        <p>
+            Apple Intelligenceはオンデバイス処理とPrivate Cloud Computeを組み合わせる。
+            また、AppleはApple Foundation Modelsの開発でGoogleのGeminiモデルとの協業を明らかにしている。
+            ただし、これは「ユーザーが任意の他社製LLMを自由に実行できる」という意味ではない。
+            そのような機能をiPhone Duoの仕様としてAppleは公式に説明していない。
+        </p>
+
+        <h3>「かつてないほど万能」なのか</h3>
+
+        <p>
+            Appleの発表は今回も「まったく新しい」「かつてない」「最先端」
+            といった言葉が非常に多い。
+            DuoについてもAppleは「初代iPhone以来で最も変革的な変更」と表現している。
+            ここまで来ると、発表資料そのものがマーケティング用語集みたいになっている（笑）。
+        </p>
+
+        <h2>結局、今回のiPhoneは何が変わったのか</h2>
+
+        <p>
+            iPhone 18 Pro / Pro Maxの最大の変化は、単にカメラの画素数を増やしたことではない。
+            <strong>可変絞り、シャッタースピード、ホワイトバランス、ヒストグラム</strong>まで含めて、
+            スマートフォンカメラをより撮影者側へ開いたことが大きい。
+            さらにApple Reference Imageによる撮影データの真正性確認まで加わり、
+            写真を「撮る」だけでなく「どう撮ったか」「本物か」まで踏み込んでいる。
+        </p>
+
+        <p>
+            A20 Proも2nm、50%増のメモリ帯域、7コアGPU、32コアNeural Engine、
+            新パッケージ、3倍のベイパーチャンバー表面積と、かなり大規模な更新だ。
+            「デスクトップクラス（笑）」という煽りはさておき、
+            少なくともAppleが性能・AI・冷却をまとめて強化した世代なのは間違いない。
+        </p>
+
+        <p>
+            一方のiPhone Duoは、カメラやSoCだけではなく、
+            <strong>「iPhoneを折りたたむ」というフォームファクターそのもの</strong>が最大の変更。
+            5.4インチのポケットサイズから7.6インチへ展開でき、
+            Touch ID復活、2眼48MPカメラ、A20 Pro、デュアルバッテリー、
+            大画面を利用したマルチタスクまで一気に詰め込んだ。
+        </p>
+
+        <p>
+            つまり今回の2方向はかなり分かりやすい。
+            <strong>18 Pro / Pro Maxは「従来のiPhoneを徹底的に強化」、
+            Duoは「iPhoneそのものの形を変える」</strong>。
+            Appleが言う「インパクトの大きいアップグレード」という表現が、
+            今回は少なくともハードウェア面ではそれなりに当てはまる発表になった。
+        </p>
+
+        <div class="notice">
+            <strong>主な仕様まとめ</strong><br>
+            iPhone 18 Pro：$1,199〜 / 6.3インチ / A20 Pro / 可変絞り48MP / 9月18日発売<br>
+            iPhone 18 Pro Max：$1,299〜 / 6.9インチ / A20 Pro / 可変絞り48MP / 9月18日発売<br>
+            iPhone Duo：$1,999〜 / 5.4インチ外側＋7.6インチ内側 / A20 Pro / 48MP 2眼 / Touch ID / 10月23日発売
+        </div>
+
+        <div class="source-list">
+            <h3>情報源</h3>
+            <ul>
+                <li>
+                    <a href="https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max/" target="_blank" rel="noopener">
+                        Apple Newsroom：iPhone 18 Pro / iPhone 18 Pro Max
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.apple.com/jp/iphone-18-pro/specs/" target="_blank" rel="noopener">
+                        Apple 日本：iPhone 18 Pro / Pro Max 仕様
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.apple.com/newsroom/2026/09/apple-unveils-iphone-duo/" target="_blank" rel="noopener">
+                        Apple Newsroom：iPhone Duo
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.apple.com/jp/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/" target="_blank" rel="noopener">
+                        Apple 日本：次世代Apple Intelligence / Siri AI / iOS 27
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.apple.com/jp/newsroom/2026/06/apple-intelligence-brings-powerful-ai-capabilities-into-everyday-experiences/" target="_blank" rel="noopener">
+                        Apple：Apple Intelligence / Describe a Shortcut
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <p style="font-size:12px;color:var(--text-sub);margin-top:24px;">
+            ※価格は米国発表価格。機能・提供時期・仕様は地域やソフトウェアアップデートによって異なる場合があります。
+            Appleが公式に明記していない製造元・仕様については断定していません。
+        </p>
+
+    </div>
+</main>
+
+<nav class="nav">
+    <a class="primary" href="articles.html">← 記事一覧</a>
+    <a href="index.html">トップページ</a>
+</nav>
+
+<footer>© 2026 windows11at</footer>
+
+</div>
+
+<script>
+if (localStorage.getItem("windows11at-dark-mode") === "on") {
+    document.body.classList.add("is-dark-mode");
+}
+</script>
+
+</body>
+</html>
