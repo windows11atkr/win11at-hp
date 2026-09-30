@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Google DeepMindが次世代AIモデル「Gemini 4 Argon」を発表：100万トークン出力と高度推論がもたらすエンタープライズAIのパラダイムシフト"/>
+<title>Google DeepMindが次世代AIモデル「Gemini 4 Argon」を発表：100万トークン出力と高度推論がもたらすエンタープライズAIのパラダイムシフト | windows11at</title>
+<style>
+:root {
+    --bg-page:#f3f4f6;
+    --bg-card:rgba(255,255,255,.95);
+    --text-main:#1f2937;
+    --text-sub:#6b7280;
+    --highlight-line:rgba(255,255,255,.7);
+    --shadow-ambient:rgba(13,17,29,.06);
+    --aurora-start:#0d6efd;
+    --aurora-mid:#0dcaf0;
+    --aurora-end:#20c997;
+    --glow-color:rgba(13,202,240,.35);
+    --table-border:rgba(0,0,0,.08);
+    --table-head:rgba(13,110,253,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg-page);color:var(--text-main);line-height:1.7;
+    padding:20px 12px;overflow-x:hidden;
+}
+.container{width:100%;max-width:1100px;margin:auto}
+header{margin-bottom:24px;padding:0 4px}
+.blog-title{font-size:24px;font-weight:600;letter-spacing:-.5px;color:#0d111d}
+.blog-subtitle{font-size:12px;color:var(--text-sub);margin-top:2px}
+.site-header-link{display:block;color:inherit;text-decoration:none}
+.site-header-link header{cursor:pointer}
+.site-header-link header:hover{filter:brightness(1.03)}
+.back-link{
+    display:inline-flex;align-items:center;gap:7px;margin-bottom:18px;
+    color:#0d6efd;text-decoration:none;font-size:13px;font-weight:600;
+}
+.back-link:hover{text-decoration:underline}
+.article-card{
+    background:var(--bg-card);border:1px solid rgba(0,0,0,.05);
+    border-top:1px solid var(--highlight-line);border-radius:24px;
+    padding:28px;box-shadow:0 10px 30px var(--shadow-ambient);
+}
+.article-card h1{
+    font-size:clamp(24px,4vw,36px);line-height:1.4;
+    letter-spacing:-.7px;margin-bottom:26px;
+}
+.article-body h2{
+    font-size:21px;line-height:1.5;margin:34px 0 14px;
+    padding-left:12px;border-left:4px solid #0dcaf0;
+}
+.article-body h3{
+    font-size:17px;line-height:1.5;margin:28px 0 12px;
+}
+.article-body p{font-size:14px;line-height:1.95;margin:0 0 22px}
+.article-body p + p{margin-top:0}
+.ref{font-size:.72em;vertical-align:super;line-height:0;margin-left:1px}
+.ref a{text-decoration:none;font-weight:700}
+.article-body .table-wrap{width:100%;overflow-x:auto;margin:18px 0 30px;-webkit-overflow-scrolling:touch}
+.article-body .table-wrap table{margin:0;min-width:680px}
+.article-body .table-wrap th,.article-body .table-wrap td{white-space:normal}
+.references{margin-top:38px;padding-top:8px}
+.references h4{font-size:17px;margin:0 0 14px;padding-left:12px;border-left:4px solid #0dcaf0}
+.references ol{padding-left:24px}
+.references li{font-size:13px;line-height:1.8;margin-bottom:8px}
+.references a{overflow-wrap:anywhere}
+.article-body strong{font-weight:700}
+.article-body blockquote{
+    margin:0 0 20px;padding:10px 16px;
+    border-left:4px solid #0dcaf0;color:var(--text-sub);
+    background:rgba(13,202,240,.04);
+}
+.article-body table{
+    width:100%;border-collapse:collapse;margin:18px 0 28px;
+    font-size:13px;display:block;overflow-x:auto;
+}
+.article-body th,.article-body td{
+    border:1px solid var(--table-border);padding:10px 12px;
+    text-align:left;vertical-align:top;white-space:nowrap;
+}
+.article-body thead th{
+    background:var(--table-head);font-weight:700;
+}
+.article-body a{color:#0d6efd;overflow-wrap:anywhere}
+.footer-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.nav-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-height:42px;padding:9px 15px;border-radius:14px;
+    background:var(--bg-card);border:1px solid rgba(0,0,0,.06);
+    color:var(--text-main);text-decoration:none;font-size:13px;font-weight:600;
+    box-shadow:0 8px 20px var(--shadow-ambient);
+}
+.nav-btn.primary{background:linear-gradient(135deg,var(--aurora-start),var(--aurora-end));color:#fff;border:0}
+footer{margin-top:36px;padding:20px 8px;border-top:1px solid rgba(0,0,0,.05);font-size:11px;color:var(--text-sub);text-align:center}
+body.is-dark-mode{
+    --bg-page:#070d1c;--bg-card:rgba(14,25,47,.94);
+    --text-main:#edf6ff;--text-sub:#a9bbd0;
+    --highlight-line:rgba(142,233,255,.17);
+    --shadow-ambient:rgba(0,0,0,.38);
+    --table-border:rgba(142,233,255,.14);
+    --table-head:rgba(13,110,253,.13);
+}
+body.is-dark-mode .blog-title{color:#f5fbff}
+@media(min-width:768px){
+    body{padding:40px 20px}
+    header{margin-bottom:30px}
+    .blog-title{font-size:28px}
+    .article-card{padding:38px 42px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<a aria-label="トップページへ戻る" class="site-header-link" href="../index.html">
+<header>
+<div class="blog-title">windows11at</div>
+<div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
+</header>
+</a>
+<a class="back-link" href="../articles.html">← 記事一覧へ戻る</a>
+<main class="article-card">
+<div class="article-body">
+<h1><strong>Google DeepMindが次世代AIモデル「Gemini 4 Argon」を発表：100万トークン出力と高度推論がもたらすエンタープライズAIのパラダイムシフト</strong></h1>
+<p>Google DeepMindは2026年9月30日、同社の次世代フロンティア人工知能モデルとなる「Gemini 4 Argon」を発表した<sup class="ref"><a href="#ref-1" aria-label="引用文献 1">[1]</a></sup>。本モデルは、前世代のGemini 3以来となるメジャー世代更新であり、開発計画の途上で「Gemini 3.5 Pro」のリリースを取りやめ、「Gemini 3.8 Flash」を介したアーキテクチャの抜本的刷新を経て到達した新世代の旗艦AIシステムとして位置づけられている<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。発表を受け、親会社アルファベット（GOOGL）の株価は時間外取引で約2%の上昇を記録し、市場からも新世代モデルの実戦投入に対する高い評価が示された<sup class="ref"><a href="#ref-5" aria-label="引用文献 5">[5]</a></sup>。</p>
+<h2><strong>発表の概要と技術的進化の足跡</strong></h2>
+<p>Gemini 4 Argonの開発において主軸に据えられたのは、単なる知識応答や短文生成の域を超え、複雑かつ長時間の実行を伴う「自律型ワークフロー（Long-horizon workflows）」の完遂能力である<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。Google DeepMindは、本モデルの推論限界を広げるため、単一の要求から出力できるトークン数の上限を従来の最上位モデルにおける64,000トークンから一気に16倍となる100万トークン（1M Output Tokens）へ拡張した<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。また、入力文脈ウィンドウについても100万トークン規模の長文処理能力が実証されている<sup class="ref"><a href="#ref-1" aria-label="引用文献 1">[1]</a></sup>。</p>
+<p>出力トークン上限が100万規模へ到達したことの技術的メカニズムとその意義は、モデルが自律的に試行錯誤を繰り返し、長期的な自己修正プロセスを途切れさせることなく完遂できる点にある<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。従来の大規模言語モデルでは、コードベース全体のリファクタリングや多段階の法務・財務監査など複雑なタスクを実行する際、出力上限の制限から推論プロセスを途中で中断・分割せざるを得ず、コンテキストの消失や自律性の低下を招いていた<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。Gemini 4 Argonは、単一の思考軌跡（Trajectory）内で数十万から100万トークンに及ぶ連続推論を展開することで、多段階の問題解決を自己補正を交えながら一貫して実行する<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<p>モデルの提供開始に伴い、インプットおよびアウトプットのトークン単価、ならびに大規模処理の運用コストを抑える入力キャッシュ価格が設定された<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。初期導入段階におけるインセンティブ価格と、その後に適用される標準価格の体系は下表の通りである<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<h3><strong>表1：Gemini 4 Argon API料金構造体系（1,000,000トークンあたり）</strong></h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+  <th style="text-align:left">料金区分</th>
+  <th style="text-align:left">インプット価格</th>
+  <th style="text-align:left">アウトプット価格</th>
+  <th style="text-align:left">キャッシュ済みインプット価格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>初期導入価格（Introductory Rates）</strong></td>
+  <td style="text-align:left">$2.00</td>
+  <td style="text-align:left">$10.00</td>
+  <td style="text-align:left">$0.10（インプット比95%割引）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>標準価格（Standard Rates）</strong></td>
+  <td style="text-align:left">$4.00</td>
+  <td style="text-align:left">$20.00</td>
+  <td style="text-align:left">$0.20（インプット比95%割引）</td>
+</tr>
+</tbody>
+</table></div>
+<h2><strong>業界ベンチマークにおける競争力と客観的評価</strong></h2>
+<p>Google DeepMindが公開した19の主要ベンチマーク評価において、Gemini 4 Argonは13の項目で単独トップまたは首位タイを獲得し、競合するOpenAIの「GPT-6 Astra」やAnthropicの「Claude Fable 5.1」「Claude Opus 5.5」に対する優位性を提示している<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<p>評価結果の分析から、Gemini 4 Argonの真価は高度な業務プロセス自動化や長文・マルチモーダル解析において発揮されることが明らかになっている<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。長時間のソフトウェアエンジニアリング能力を測る「DeepSWE v1.1」では77.9%を記録し、Claude Opus 5.5の74.2%やGPT-6 Astraの74.1%を超え首位に立った<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。また、法務文書の調査・起草能力を評価する「Harvey’s Legal Agent Benchmark」では19.6%を獲得し、他モデル（Claude Fable 5.1の6.7%、GPT-6 Astraの5.4%）を大きく引き離している<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。多段階の財務リサーチを行う「Vals Finance Agent v2」でも65.4%でトップに立ち、長尺動画理解度を測定する「LVBench」では91.7%という最高スコアを記録した<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<p>一方で、すべての領域において他社モデルを圧倒しているわけではない<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。高度な科学計算や端末操作を必要とする「Terminal-Bench Science 0.1」では、GPT-6 Astraが68.1%を記録したのに対しArgonは57.6%にとどまった<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。同様に「FrontierSWE v2」においてもGPT-6 Astra（65.5%）やClaude Opus 5.5（62.3%）の後塵を拝しており（Argonは55.0%）、端末を介した探索的・実験的インタラクションの領域には課題を残している<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<h3><strong>表2：主要モデル間における領域別ベンチマーク比較</strong></h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+  <th style="text-align:left">評価指標（ベンチマーク）</th>
+  <th style="text-align:left">Gemini 4 Argon</th>
+  <th style="text-align:left">GPT-6 Astra</th>
+  <th style="text-align:left">Claude Opus 5.5</th>
+  <th style="text-align:left">Claude Fable 5.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>DeepSWE v1.1</strong> (長期ソフトウェア開発)</td>
+  <td style="text-align:left"><strong>77.9%</strong></td>
+  <td style="text-align:left">74.1%</td>
+  <td style="text-align:left">74.2%</td>
+  <td style="text-align:left">67.4%</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Harvey’s Legal Agent</strong> (法務解析・起草)</td>
+  <td style="text-align:left"><strong>19.6%</strong></td>
+  <td style="text-align:left">5.4%</td>
+  <td style="text-align:left">3.8%</td>
+  <td style="text-align:left">6.7%</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Vals Finance Agent v2</strong> (多段階財務調査)</td>
+  <td style="text-align:left"><strong>65.4%</strong></td>
+  <td style="text-align:left">53.5%</td>
+  <td style="text-align:left">58.6%</td>
+  <td style="text-align:left">58.9%</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>AutomationBench</strong> (業務自動化実行)</td>
+  <td style="text-align:left"><strong>51.3%</strong></td>
+  <td style="text-align:left">41.4%</td>
+  <td style="text-align:left">42.5%</td>
+  <td style="text-align:left">31.4%</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>LVBench</strong> (長尺動画理解)</td>
+  <td style="text-align:left"><strong>91.7%</strong></td>
+  <td style="text-align:left">87.5%</td>
+  <td style="text-align:left">83.7%</td>
+  <td style="text-align:left">非公表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>CWE-bench v1</strong> (脆弱性修正率)</td>
+  <td style="text-align:left"><strong>68.0%</strong>（タイ）</td>
+  <td style="text-align:left"><strong>68.0%</strong></td>
+  <td style="text-align:left">67.0%</td>
+  <td style="text-align:left">非公表</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>FrontierSWE v2</strong> (先端ソフトウェア開発)</td>
+  <td style="text-align:left">55.0%</td>
+  <td style="text-align:left"><strong>65.5%</strong></td>
+  <td style="text-align:left">62.3%</td>
+  <td style="text-align:left">56.3%</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Terminal-Bench Science 0.1</strong> (科学端末操作)</td>
+  <td style="text-align:left">57.6%</td>
+  <td style="text-align:left"><strong>68.1%</strong></td>
+  <td style="text-align:left">63.3%</td>
+  <td style="text-align:left">52.6%</td>
+</tr>
+</tbody>
+</table></div>
+<h2><strong>Google社内インフラにおける実効的検証</strong></h2>
+<p>Gemini 4 Argonの客観的信頼性を担保している要素として、公開前にGoogleの自社インフラストラクチャにおける大規模な実地検証（ドッグフーディング）が行われている点が挙げられる<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。</p>
+<p>大規模データセンター運用において、Argonエージェントはフリート全体のプロファイリング・テレメトリデータを分析し、メモリ配置の最適化ポイントを自律的に発見・適用した<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。この自動最適化により、すでに300 TiBを超える物理メモリが解放されており、最終的には500 TiBから1 PiB（ペタバイト）規模のメモリリソース削減が見込まれている<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。</p>
+<p>また、メモリ安全性の向上を目的としたC/C++からRustへの大規模コード移行タスクにおいても、Argonは中心的な役割を果たしている<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。コアライブラリ（re2やlibgav1）の書き換えのみならず、Fuchsia OSのZirconカーネルにおける80万行以上のソースコード移植を進行させている<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。オープンソースのビデオデコーダlibgav1の最適化作業では、3万2,000行に及ぶSIMDコードをプロファイル駆動型の自動実験によって安全なRustコードへ再構築し、出力精度を維持したまま従来のRust移植版比で<strong>2.7倍の動作速度</strong>を達成した<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。</p>
+<p>さらに量子コンピューティング分野においても、サブルーチンの時空間配置タスクにおいて、既存の論文基準（ベースライン）を数分間の推論で40%上回る配置案を導き出しており、先端科学領域のボトルネック解消においても実効性を示している<sup class="ref"><a href="#ref-6" aria-label="引用文献 6">[6]</a></sup>。</p>
+<h2><strong>サイバーセキュリティ機能と「Fairwindプログラム」の戦略的意義</strong></h2>
+<p>Gemini 4 Argonの機能展開において最も注目すべきイノベーションは、防御目的のサイバーセキュリティ機能と、それに伴う限定アクセスの枠組みである<sup class="ref"><a href="#ref-4" aria-label="引用文献 4">[4]</a></sup>。</p>
+<p>本モデルは、20のプログラミング言語にわたるソースコードの脆弱性発見率で85.8%を記録し、Wiz社による侵入テスト評価で70.9%のスコアを達成した<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。Wiz社が主導する「Scan for Good」イニシアチブでの実働テストでは、世界中の病院で稼働するヘルスケアソフトウェアに潜んでいた重篤なゼロデイ脆弱性を発見し、未然に修正へ繋げる成果を上げた<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<p>こうした高度なセキュリティ能力を防御側に活用するため、Googleは「Fairwindプログラム」と呼ばれる試みを開始した<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。このプログラムの核心は、信頼されたサイバー防御専門家（Trusted Cyber Defenders）や内部チームに対し、あえて<strong>サイバー防御セーフティのガードレールを解除した状態でArgonを提供</strong>する点にある<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。</p>
+<p>従来のAI安全枠組みにおいては、モデルが悪用されるリスクを防ぐために強力な出力制限が課されてきたが、これが同時に防御側専門家による侵入テストや脆弱性修正の自動化を阻害するという「防御の非対称性」を生み出していた。Fairwindプログラムは、制限のない推論能力を防御側に優先提供することで、攻撃者に先んじて複雑なセキュリティホールを検知・修正する構造を構築している<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<p>一方で、悪意あるサードパーティによる間接的プロンプトインジェクション攻撃（Indirect Prompt Injection）に対しては高い堅牢性を確保している<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。Gray Swanベンチマークにおいて、Argonの攻撃成功率はわずか0.7%に抑えられ、主要フロンティアモデルの中で最も強固な防御壁を示した<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。</p>
+<h3><strong>表3：間接的プロンプトインジェクション耐性（Gray Swanベンチマーク）</strong></h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+  <th style="text-align:left">対象AIモデル</th>
+  <th style="text-align:left">攻撃成功率（数値が低いほど堅牢）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Gemini 4 Argon</strong></td>
+  <td style="text-align:left"><strong>0.7%</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left">Claude Opus 5.5 / Fable 5.1</td>
+  <td style="text-align:left">1.0%</td>
+</tr>
+<tr>
+  <td style="text-align:left">GPT-6 Astra</td>
+  <td style="text-align:left">8.5%</td>
+</tr>
+<tr>
+  <td style="text-align:left">GPT-6 Sol</td>
+  <td style="text-align:left">27.0%</td>
+</tr>
+<tr>
+  <td style="text-align:left">GLM 5.3</td>
+  <td style="text-align:left">31.5%</td>
+</tr>
+<tr>
+  <td style="text-align:left">Grok 4.8</td>
+  <td style="text-align:left">51.8%</td>
+</tr>
+</tbody>
+</table></div>
+<p>あわせて、化学・生物・放射性物質・核（CBRN）兵器に関連する脅威検知アルゴリズムや、思考プロセス（Chain-of-Thought）の監視による偏向・不整合の自動停止システムが組み込まれており、安全性を重層的に担保している<sup class="ref"><a href="#ref-3" aria-label="引用文献 3">[3]</a></sup>。</p>
+<h2><strong>段階的リリースロードマップと市場インプリケーション</strong></h2>
+<p>Google DeepMindは、モデルの乱用を防ぎつつ段階的に社会的受容性を確認するため、慎重なロールアウト戦略を定めている<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<p>初期アクセスフェーズにおいては、Fairwindプログラムに参加するセキュリティ防御機関、Google内部の開発チーム、ならびに米国の枠組みに基づく事前公開リスク評価プロセスへ限定提供されている<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。これらの検証手順を経たのち、有料API契約者および個人向け最上位枠である「Google AI Ultra」サブスクライバーに向けて順次展開が行われる予定である<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<p>本発表が示唆する第2次・第3次の波及効果として、先端AI開発における定量的パラダイムの移行が挙げられる。これまでの「コンテキスト窓（入力）の広さ」を競うフェーズから、100万トークン規模の連続出力による「実効的推論能力と長時間に及ぶタスク完遂力」へと競争の軸がシフトした<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。エンタープライズ領域においては、レガシーシステムの自動言語移植や自律的セキュリティ監視が現実的な選択肢となったことで、ITインフラストラクチャの維持管理コスト構造が抜本的に見直される可能性がある<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<h2><strong>総括</strong></h2>
+<p>Gemini 4 Argonの登場は、Google DeepMindがAIの役割を単なる知識対話エンジンから、複雑な工学的課題を自律的に解決する「エンタープライズ・エージェント」へと再定義したことを物語っている<sup class="ref"><a href="#ref-1" aria-label="引用文献 1">[1]</a></sup>。100万トークンに及ぶ出力機能と高度な推論設計、さらにFairwindプログラムに代表される実戦的なサイバー防衛アプローチは、今後のフロンティアモデル開発における安全と性能のバランスモデルを提示している<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。端末操作などの一部領域に課題を残すものの、エンタープライズ領域における実用性と信頼性の面で、Gemini 4 ArgonはAI業界全体の新たなベンチマークとなる可能性を秘めている<sup class="ref"><a href="#ref-2" aria-label="引用文献 2">[2]</a></sup>。</p>
+<h4 id="references"><strong>引用文献</strong></h4>
+<blockquote>
+<ol><li id="ref-1">次世代AIモデル「Gemini 4 Argon」を発表、100万トークンに対応, <a href="https://sumahodigest.com/?p=72381">https://sumahodigest.com/?p=72381</a></li><li id="ref-2">Gemini 4 Argon: Specs, Benchmarks, Pricing and Model Comparisons, <a href="https://kingy.ai/blog/gemini-4-argon-specs-benchmarks-pricing/">https://kingy.ai/blog/gemini-4-argon-specs-benchmarks-pricing/</a></li><li id="ref-3">Google announces Gemini 4 Argon as its new frontier model, <a href="https://9to5google.com/2026/09/30/gemini-4-argon-announcement/">https://9to5google.com/2026/09/30/gemini-4-argon-announcement/</a></li><li id="ref-4">Google unveils Gemini 4 Argon, and cyber defenders get it first - TNW, <a href="https://thenextweb.com/news/google-gemini-4-argon-cyber-defenders-fairwind">https://thenextweb.com/news/google-gemini-4-argon-cyber-defenders-fairwind</a></li><li id="ref-5">グーグル、次世代AIモデル「Gemini 4 Argon」を発表 - Investing.com, <a href="https://jp.investing.com/news/stock-market-news/article-1697605">https://jp.investing.com/news/stock-market-news/article-1697605</a></li><li id="ref-6"><a href="https://venturebeat.com/technology/google-unveils-gemini-4-argon-retaking-benchmark-lead-over-openai-and-anthropic-but-in-limited-release">https://venturebeat.com/technology/google-unveils-gemini-4-argon-retaking-benchmark-lead-over-openai-and-anthropic-but-in-limited-release</a></li><li id="ref-7">「Gemini 4 Argon」登場で1Mトークン対応、ユーザー歓喜の声, <a href="https://search.yahoo.co.jp/realtime/search/matome/5e4d0e23084846b395f3a17d20948ea1-1790800200?rkf=1&amp;ifr=tl_matometl">https://search.yahoo.co.jp/realtime/search/matome/5e4d0e23084846b395f3a17d20948ea1-1790800200?rkf=1&amp;ifr=tl_matometl</a></li><li id="ref-8">Gemini 4 &quot;Argon&quot; unveiled, but not yet released: what's going on?, <a href="https://www.techzine.eu/news/applications/144683/gemini-4-argon-unveiled-but-not-yet-released-whats-going-on/">https://www.techzine.eu/news/applications/144683/gemini-4-argon-unveiled-but-not-yet-released-whats-going-on/</a></li><li id="ref-9">AI Google DeepMind、Gemini 4 Argonをテスター限定でリリースへ, <a href="https://search.yahoo.co.jp/realtime/search/matome/post/001-f4c8d993f2b78576191d28a1?rkf=1&amp;ifr=tl_matometl">https://search.yahoo.co.jp/realtime/search/matome/post/001-f4c8d993f2b78576191d28a1?rkf=1&amp;ifr=tl_matometl</a></li><li id="ref-10">Gemini 4 Argon: our next era of frontier intelligence - Reddit, <a href="https://www.reddit.com/r/GeminiAI/comments/1wufe46/gemini_4_argon_our_next_era_of_frontier/">https://www.reddit.com/r/GeminiAI/comments/1wufe46/gemini_4_argon_our_next_era_of_frontier/</a></li></ol>
+</blockquote>
+
+</div>
+</main>
+<nav aria-label="記事ナビゲーション" class="footer-nav">
+<a class="nav-btn primary" href="../index.html">← トップページ</a>
+<a class="nav-btn" href="../articles.html">記事一覧</a>
+<a class="nav-btn" href="../apk_dl.html">アプリ配布</a>
+<a class="nav-btn" href="../games.html">ミニゲーム</a>
+</nav>
+<footer>
+<div>© 2026 windows11at</div>
+</footer>
+</div>
+<script>
+const savedMode = localStorage.getItem('windows11at-dark-mode');
+if (savedMode === 'on') document.body.classList.add('is-dark-mode');
+</script>
+</body>
+</html>
