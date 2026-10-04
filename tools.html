@@ -3,659 +3,1058 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="windows11at Web Tool Kit">
     <title>Web Tool Kit | windows11at</title>
-    
-    <!-- Material Icons & Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
-        /* Aero-SQUI 1.0 共通テーマ定義 */
-        :root {
-            --bg-page: #f3f4f6;
-            --bg-card: rgba(255, 255, 255, 0.95);
-            --text-main: #1f2937;
-            --text-sub: #6b7280;
-            --highlight-line: rgba(255, 255, 255, 0.7);
-            --shadow-ambient: rgba(13, 17, 29, 0.06);
-            --aurora-start: #38bdf8;
-            --aurora-mid: #a5b4fc;
-            --aurora-end: #c084fc;
-            --glow-color: rgba(165, 180, 252, 0.35);
-            
-            --color-x: #000000;
-            --color-youtube: #ff0000;
-            --color-discord: #5865f2;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans+JP:wght@100..900&family=DotGothic16&display=swap');
 
-            --shadow-2dp: 0 4px 20px rgba(13, 17, 29, 0.05);
-            --shadow-4dp: 0 10px 30px rgba(13, 17, 29, 0.08);
+        :root {
+            --k-color-bg-base: #F3F8F6;
+            --k-color-lime: #00E6A1;
+            --k-color-cyan: #00A3FF;
+            --k-color-text-main: #0F172A;
+            --k-color-text-sub: #64748B;
+            --k-color-danger: #FF3B30;
+
+            --k-bg-aurora-gradient: linear-gradient(
+                135deg,
+                rgba(0, 230, 161, 0.16) 0%,
+                rgba(0, 163, 255, 0.14) 50%,
+                rgba(180, 255, 120, 0.12) 100%
+            );
+
+            --k-glass-bg: rgba(255, 255, 255, 0.65);
+            --k-glass-strong: rgba(255, 255, 255, 0.82);
+            --k-glass-blur: blur(32px) saturate(200%);
+            --k-glass-blur-heavy: blur(48px) saturate(220%);
+
+            --k-glass-border: 1px solid rgba(0, 200, 160, 0.22);
+            --k-glass-border-hover: 1px solid rgba(0, 163, 255, 0.5);
+            --k-glass-border-active: 1.5px solid rgba(0, 230, 161, 0.85);
+
+            --k-shadow-glass: 0 12px 40px rgba(0, 120, 255, 0.07);
+            --k-shadow-glow-lime: 0 0 16px rgba(0, 230, 161, 0.4);
+            --k-shadow-glow-cyan: 0 0 16px rgba(0, 163, 255, 0.4);
+
+            --k-radius-lg: 12px;
+            --k-radius-md: 8px;
+            --k-radius-sm: 4px;
+            --k-radius-full: 9999px;
+
+            --k-scale-press-action: scale(0.95);
+            --k-scale-press-container: scale(0.988);
+
+            --k-duration-press: 90ms;
+            --k-duration-spring: 140ms;
+            --k-duration-pixel-slide: 480ms;
+
+            --k-ease-press: cubic-bezier(0.2, 0, 0, 1);
+            --k-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --k-ease-slide: cubic-bezier(0.25, 1, 0.35, 1);
+
+            --k-font-body: 'Inter', 'Noto Sans JP', -apple-system, sans-serif;
+            --k-font-dot: 'DotGothic16', monospace;
         }
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html {
+            background: var(--k-color-bg-base);
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-page);
-            color: var(--text-main);
-            line-height: 1.5;
-            padding: 20px 12px;
-            display: flex;
-            justify-content: center;
+            margin: 0;
             min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--k-color-text-main);
+            background:
+                radial-gradient(circle at 8% 10%, rgba(0, 230, 161, 0.13), transparent 26%),
+                radial-gradient(circle at 92% 6%, rgba(0, 163, 255, 0.13), transparent 30%),
+                radial-gradient(circle at 65% 82%, rgba(180, 255, 120, 0.08), transparent 24%),
+                var(--k-color-bg-base);
+            font-family: var(--k-font-body);
+            font-size: 14px;
+            line-height: 1.5;
+            letter-spacing: -0.011em;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: -20%;
+            z-index: -1;
+            pointer-events: none;
+            background: var(--k-bg-aurora-gradient);
+            filter: blur(32px) saturate(200%);
+            opacity: 0.75;
+            animation: k-aurora 18s ease-in-out infinite alternate;
+        }
+
+        @keyframes k-aurora {
+            from {
+                transform: translate3d(-1%, 0, 0);
+            }
+            to {
+                transform: translate3d(1.5%, 1%, 0);
+            }
+        }
+
+        @keyframes k-soft-pixel-slide {
+            0% {
+                opacity: 0.7;
+                transform: translateX(18px);
+                filter: blur(4px);
+            }
+            30% {
+                opacity: 0.94;
+                filter: blur(2px);
+            }
+            65% {
+                opacity: 0.98;
+                transform: translateX(-4px);
+                filter: blur(1px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body,
+        button,
+        input,
+        textarea,
+        select {
+            font-family: var(--k-font-body);
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-size: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
         .container {
-            width: 100%;
-            max-width: 1100px;
-            display: flex;
-            flex-direction: column;
+            width: min(1160px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 16px 0 64px;
         }
 
-        /* ヘッダー構造（共通テーマ準拠） */
         header {
-            margin-bottom: 24px;
-            padding: 0 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 48px;
+            margin-bottom: 12px;
         }
 
         .blog-title {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            color: #0d111d;
-            text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--k-color-text-main);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .blog-title::before {
+            content: '⌂';
+            display: grid;
+            width: 36px;
+            height: 36px;
+            place-items: center;
+            color: var(--k-color-cyan);
+            background: var(--k-glass-bg);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-md);
+            box-shadow: var(--k-shadow-glass);
+            font-size: 18px;
+        }
+
+        .blog-title:active::before {
+            transform: var(--k-scale-press-action);
+            color: #008E68;
+            border: var(--k-glass-border-active);
+            box-shadow: var(--k-shadow-glow-lime);
         }
 
         .blog-subtitle {
-            font-size: 12px;
-            color: var(--text-sub);
-            margin-top: 2px;
+            color: var(--k-color-text-sub);
+            font: 400 10px/1 var(--k-font-dot);
+            letter-spacing: 0.06em;
         }
 
-        /* 📱 PC・スマホ分岐レイアウト */
-        .store-layout {
+        .beta-banner {
             display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        @media (min-width: 768px) {
-            body { padding: 40px 20px; }
-            header { margin-bottom: 32px; }
-            .blog-title { font-size: 28px; }
-            .store-layout { flex-direction: row; align-items: flex-start; gap: 32px; }
-            .store-sidebar { width: 300px; position: sticky; top: 40px; }
-            .store-main { flex: 1; min-width: 0; }
-        }
-
-        /* アプリ情報サイドバー・ナビゲーション */
-        .app-identity-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-top: 1px solid var(--highlight-line);
-            border-radius: 24px;
-            padding: 20px 16px;
-            box-shadow: 0 10px 30px var(--shadow-ambient);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            position: relative;
+            gap: 9px;
+            margin-bottom: 12px;
+            padding: 9px 12px;
+            background: rgba(255, 255, 255, 0.52);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-sm);
+            box-shadow: var(--k-shadow-glass);
+            backdrop-filter: var(--k-glass-blur);
+            -webkit-backdrop-filter: var(--k-glass-blur);
+        }
+
+        .beta-dot {
+            width: 7px;
+            height: 7px;
+            flex: 0 0 auto;
+            background: var(--k-color-lime);
+            border-radius: 50%;
+            box-shadow: var(--k-shadow-glow-lime);
+        }
+
+        .beta-copy {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .beta-copy strong {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .beta-copy span {
+            color: var(--k-color-text-sub);
+            font: 400 9px/1 var(--k-font-dot);
+            letter-spacing: 0.08em;
+        }
+
+        .store-layout {
+            display: grid;
+            grid-template-columns: 248px minmax(0, 1fr);
+            gap: 16px;
+            align-items: start;
+        }
+
+        .store-sidebar {
+            position: sticky;
+            top: 16px;
+            z-index: 20;
+            min-width: 0;
+        }
+
+        .app-identity-card,
+        .store-main-panel {
+            background: var(--k-glass-bg);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-md);
+            box-shadow: var(--k-shadow-glass);
+            backdrop-filter: var(--k-glass-blur);
+            -webkit-backdrop-filter: var(--k-glass-blur);
+        }
+
+        .app-identity-card {
+            padding: 12px;
         }
 
         .app-header-compact {
             display: flex;
             align-items: center;
-            gap: 12px;
-            width: 100%;
-        }
-
-        @media (min-width: 768px) {
-            .app-header-compact {
-                flex-direction: column;
-                justify-content: center;
-            }
+            gap: 10px;
+            min-width: 0;
         }
 
         .app-icon-placeholder {
-            width: 54px;
-            height: 54px;
-            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
-            border-radius: 16px;
-            box-shadow: 0 8px 20px var(--glow-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            color: var(--k-color-cyan);
+            background: rgba(255, 255, 255, 0.7);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-md);
         }
 
         .app-icon-placeholder .material-icons {
-            font-size: 28px;
-            color: #ffffff;
-        }
-
-        @media (min-width: 768px) {
-            .app-icon-placeholder {
-                width: 80px;
-                height: 80px;
-                border-radius: 20px;
-                margin-bottom: 12px;
-            }
-            .app-icon-placeholder .material-icons {
-                font-size: 40px;
-            }
+            font-size: 23px;
         }
 
         .app-title-group {
-            text-align: left;
-        }
-
-        @media (min-width: 768px) {
-            .app-title-group {
-                text-align: center;
-            }
+            min-width: 0;
         }
 
         .app-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #0d111d;
+            margin: 0;
+            color: var(--k-color-text-main);
+            font-size: 16px;
+            font-weight: 700;
             line-height: 1.2;
         }
 
-        @media (min-width: 768px) {
-            .app-name { font-size: 20px; margin-bottom: 4px; }
-        }
-
         .app-developer {
-            font-size: 12px;
-            color: var(--text-sub);
+            margin: 2px 0 0;
+            color: var(--k-color-text-sub);
+            font-size: 10px;
         }
 
         .store-badge {
-            background: #e0f2fe;
-            color: #0369a1;
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 4px;
+            display: inline-flex;
+            align-items: center;
+            min-height: 20px;
+            margin-top: 5px;
+            padding: 0 7px;
+            color: #008E68;
+            background: rgba(0, 230, 161, 0.09);
+            border: 1px solid rgba(0, 230, 161, 0.22);
+            border-radius: var(--k-radius-full);
+            font: 400 8px/1 var(--k-font-dot);
         }
 
-        @media (min-width: 768px) {
-            .store-badge {
-                padding: 4px 12px;
-                border-radius: 12px;
-                font-size: 12px;
-                margin-top: 8px;
-                margin-bottom: 16px;
-            }
+        .selector-label {
+            margin: 14px 4px 6px;
+            color: var(--k-color-text-sub);
+            font: 400 8px/1 var(--k-font-dot);
+            letter-spacing: 0.08em;
         }
 
-        /* 📱 スマホ表示用 カスタムドロップダウン (デザイン一新) */
         .custom-select-wrapper {
-            width: 100%;
-            margin-top: 16px;
             position: relative;
         }
 
-        @media (min-width: 768px) {
-            .custom-select-wrapper {
-                display: none; /* PCでは非表示 */
-            }
+        .custom-select-trigger {
+            width: 100%;
+            min-height: 48px;
+            display: grid;
+            grid-template-columns: 34px minmax(0, 1fr) 18px;
+            align-items: center;
+            gap: 8px;
+            padding: 6px;
+            color: var(--k-color-text-main);
+            text-align: left;
+            background: rgba(255, 255, 255, 0.56);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-sm);
+            transition: transform var(--k-duration-press) var(--k-ease-press),
+                border-color var(--k-duration-press) var(--k-ease-press),
+                box-shadow var(--k-duration-press) var(--k-ease-press);
         }
 
-        .custom-select-trigger {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 16px;
-            padding: 12px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-main);
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.08);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+        .custom-select-trigger:hover {
+            border: var(--k-glass-border-hover);
+            box-shadow: var(--k-shadow-glow-cyan);
         }
 
         .custom-select-trigger:active {
-            transform: scale(0.98);
+            transform: var(--k-scale-press-container);
+            border: var(--k-glass-border-active);
+            box-shadow: var(--k-shadow-glow-lime);
         }
 
-        .custom-select-selected {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .custom-selected-icon,
+        .custom-option-icon,
+        .nav-icon {
+            display: grid;
+            place-items: center;
+            color: var(--k-color-cyan);
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid rgba(0, 200, 160, 0.16);
+            border-radius: var(--k-radius-sm);
         }
 
-        .custom-select-selected .material-icons {
-            color: #0284c7;
-            font-size: 20px;
+        .custom-selected-icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        .custom-selected-icon .material-icons {
+            font-size: 19px;
+        }
+
+        .custom-select-label {
+            min-width: 0;
+            overflow: hidden;
+            font-size: 12px;
+            font-weight: 600;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .custom-select-arrow {
-            color: var(--text-sub);
-            transition: transform 0.25s ease;
-            font-size: 20px;
+            color: var(--k-color-cyan);
+            font-size: 18px;
+            transition: transform var(--k-duration-spring) var(--k-ease-spring);
         }
 
         .custom-select-wrapper.open .custom-select-arrow {
             transform: rotate(180deg);
         }
 
-        /* ドロップダウンのドロワーメニュー */
         .custom-select-options {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 18px;
-            box-shadow: 0 12px 30px rgba(13, 17, 29, 0.15);
-            max-height: 320px;
-            overflow-y: auto;
-            z-index: 100;
-            display: none;
-            padding: 8px;
-            animation: menuFadeIn 0.2s ease-out;
-        }
-
-        @keyframes menuFadeIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
+            position: fixed;
+            z-index: 9999;
+            width: min(320px, calc(100vw - 20px));
+            max-height: min(62vh, 480px);
+            overflow: auto;
+            padding: 7px;
+            background: rgba(248, 253, 251, 0.98);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-md);
+            box-shadow: 0 18px 48px rgba(0, 120, 255, 0.16);
+            backdrop-filter: var(--k-glass-blur-heavy);
+            -webkit-backdrop-filter: var(--k-glass-blur-heavy);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-5px);
+            transition: opacity 120ms var(--k-ease-slide),
+                visibility 120ms var(--k-ease-slide),
+                transform 120ms var(--k-ease-slide);
         }
 
         .custom-select-wrapper.open .custom-select-options {
-            display: block;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
         }
 
         .custom-opt-group {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-sub);
-            padding: 8px 12px 4px 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            padding: 9px 8px 5px;
+            color: var(--k-color-text-sub);
+            font: 400 8px/1 var(--k-font-dot);
+            letter-spacing: 0.08em;
         }
 
         .custom-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            font-size: 13.5px;
-            font-weight: 500;
-            color: var(--text-main);
-            cursor: pointer;
-            transition: background 0.15s ease;
-        }
-
-        .custom-option:hover, .custom-option.selected {
-            background-color: rgba(56, 189, 248, 0.12);
-            color: #0284c7;
-            font-weight: 600;
-        }
-
-        .custom-option .material-icons {
-            font-size: 18px;
-            color: var(--text-sub);
-        }
-
-        .custom-option.selected .material-icons {
-            color: #0284c7;
-        }
-
-        /* 💻 PCサイドバー メニューナビゲーション */
-        .nav-drawer {
-            display: none; /* スマホでは非表示 */
             width: 100%;
+            min-height: 44px;
+            display: grid;
+            grid-template-columns: 34px minmax(0, 1fr);
+            align-items: center;
+            gap: 8px;
+            padding: 5px;
+            color: var(--k-color-text-main);
             text-align: left;
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
-            padding-top: 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--k-radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            transition: background 90ms var(--k-ease-press),
+                border-color 90ms var(--k-ease-press),
+                transform 90ms var(--k-ease-press);
         }
 
-        @media (min-width: 768px) {
-            .nav-drawer {
-                display: block; /* PCでのみ表示 */
-            }
+        .custom-option:hover {
+            background: rgba(0, 163, 255, 0.06);
+            border-color: rgba(0, 163, 255, 0.14);
+        }
+
+        .custom-option:active {
+            transform: var(--k-scale-press-container);
+        }
+
+        .custom-option.selected {
+            color: #008E68;
+            background: rgba(0, 230, 161, 0.1);
+            border-color: rgba(0, 230, 161, 0.27);
+        }
+
+        .custom-option-icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        .custom-option-icon .material-icons {
+            font-size: 19px;
+        }
+
+        .nav-drawer {
+            display: grid;
+            gap: 2px;
+            margin-top: 12px;
         }
 
         .nav-section-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-sub);
-            padding: 10px 12px 4px 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            margin-top: 7px;
+            padding: 5px 7px 4px;
+            color: var(--k-color-text-sub);
+            font: 400 8px/1 var(--k-font-dot);
+            letter-spacing: 0.08em;
         }
 
         .nav-item {
-            display: flex;
+            width: 100%;
+            min-height: 41px;
+            display: grid;
+            grid-template-columns: 32px minmax(0, 1fr);
             align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            cursor: pointer;
-            color: var(--text-main);
-            font-size: 13.5px;
+            gap: 8px;
+            padding: 4px;
+            color: var(--k-color-text-main);
+            text-align: left;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--k-radius-sm);
+            font-size: 11.5px;
             font-weight: 500;
-            border-radius: 14px;
-            margin-bottom: 4px;
-            transition: all 0.2s ease;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+            transition: transform var(--k-duration-press) var(--k-ease-press),
+                background var(--k-duration-press) var(--k-ease-press),
+                border-color var(--k-duration-press) var(--k-ease-press),
+                box-shadow var(--k-duration-press) var(--k-ease-press);
         }
 
         .nav-item:hover {
-            background-color: rgba(0, 0, 0, 0.04);
+            background: rgba(0, 163, 255, 0.06);
+            border-color: rgba(0, 163, 255, 0.14);
+        }
+
+        .nav-item:active {
+            transform: var(--k-scale-press-container);
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(192, 132, 252, 0.15));
-            color: #0284c7;
-            font-weight: 600;
+            color: #008E68;
+            background: rgba(0, 230, 161, 0.1);
+            border-color: rgba(0, 230, 161, 0.26);
+            box-shadow: inset 2px 0 0 var(--k-color-lime);
         }
 
-        .nav-item .material-icons {
+        .nav-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-icon .material-icons {
             font-size: 18px;
-            color: var(--text-sub);
         }
 
-        .nav-item.active .material-icons {
-            color: #0284c7;
-        }
-
-        /* メインパネル */
         .store-main-panel {
-            background: var(--bg-card);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-top: 1px solid var(--highlight-line);
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 10px 30px var(--shadow-ambient);
-            margin-bottom: 24px;
+            min-width: 0;
+            padding: 22px;
         }
 
-        @media (min-width: 768px) {
-            .store-main-panel { padding: 32px; }
-        }
-
-        /* カード・コンテンツ切替 */
         .tool-card {
             display: none;
         }
 
         .tool-card.active {
             display: block;
-            animation: toolReveal 0.38s cubic-bezier(.2,.8,.2,1);
-        }
-
-        @keyframes toolReveal {
-            from { opacity: 0; transform: translateY(12px) scale(.985); filter: blur(3px); }
-            to { opacity: 1; transform: translateY(0); }
+            animation: k-soft-pixel-slide var(--k-duration-pixel-slide) var(--k-ease-slide) both;
         }
 
         .panel-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #0d111d;
-            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-bottom: 8px;
+            color: var(--k-color-text-main);
+            font-size: 22px;
+            line-height: 1.25;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .panel-title .material-icons {
-            color: #0284c7;
-            font-size: 24px;
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            color: var(--k-color-cyan);
+            background: rgba(255, 255, 255, 0.7);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-md);
+            font-size: 22px;
         }
 
         .panel-desc {
-            font-size: 13px;
-            color: var(--text-sub);
-            margin-bottom: 24px;
+            margin: 0 0 18px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            line-height: 1.6;
-        }
-
-        /* フォームコントロール */
-        .form-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            color: var(--k-color-text-sub);
+            font-size: 12px;
+            border-bottom: 1px solid rgba(0, 200, 160, 0.13);
         }
 
         label {
-            font-size: 12px;
-            color: var(--text-sub);
-            font-weight: 600;
+            color: var(--k-color-text-sub);
+            font-size: 11px;
+            font-weight: 500;
         }
 
-        input[type="text"],
-        input[type="number"],
+        input[type='text'],
+        input[type='number'],
         textarea,
         select {
             width: 100%;
-            padding: 12px 14px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 14px;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.2s;
-            background-color: rgba(0, 0, 0, 0.02);
-            color: var(--text-main);
+            min-height: 42px;
+            padding: 9px 11px;
+            color: var(--k-color-text-main);
+            background: rgba(255, 255, 255, 0.6);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-sm);
+            outline: 0;
+            transition: border-color var(--k-duration-press) var(--k-ease-press),
+                box-shadow var(--k-duration-press) var(--k-ease-press),
+                background var(--k-duration-press) var(--k-ease-press);
         }
 
-        input:focus, textarea:focus, select:focus {
-            border-color: var(--aurora-start);
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        input[type='text']:focus,
+        input[type='number']:focus,
+        textarea:focus,
+        select:focus {
+            background: rgba(255, 255, 255, 0.86);
+            border: var(--k-glass-border-hover);
+            box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1);
         }
 
-        /* ボタン */
+        textarea {
+            resize: vertical;
+        }
+
+        input[type='checkbox'] {
+            accent-color: var(--k-color-lime);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
         .btn-group {
             display: flex;
-            gap: 10px;
             flex-wrap: wrap;
+            gap: 8px;
             margin: 16px 0;
         }
 
         .btn {
-            height: 42px;
-            padding: 0 20px;
-            border-radius: 21px;
-            border: none;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+            min-height: 40px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: all 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
+            padding: 0 14px;
+            color: var(--k-color-text-main);
+            background: rgba(255, 255, 255, 0.58);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            transition: transform var(--k-duration-press) var(--k-ease-press),
+                border-color var(--k-duration-press) var(--k-ease-press),
+                box-shadow var(--k-duration-press) var(--k-ease-press),
+                background var(--k-duration-press) var(--k-ease-press);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border: var(--k-glass-border-hover);
+        }
+
+        .btn:active {
+            transform: var(--k-scale-press-action);
+            border: var(--k-glass-border-active);
+            box-shadow: var(--k-shadow-glow-lime);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
-        }
-
-        .btn-primary:hover {
-            opacity: 0.92;
-            transform: translateY(-1px);
-        }
-
-        .btn-primary:active {
-            transform: scale(0.97);
+            color: #05382D;
+            background: linear-gradient(135deg, rgba(0, 230, 161, 0.9), rgba(0, 163, 255, 0.84));
+            border-color: rgba(0, 200, 160, 0.28);
         }
 
         .btn-outlined {
-            background-color: transparent;
-            border: 1px solid rgba(0, 0, 0, 0.12);
-            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.42);
         }
 
-        .btn-outlined:hover {
-            background-color: rgba(0, 0, 0, 0.04);
+        .grid-2,
+        .grid-3 {
+            display: grid;
+            gap: 12px;
         }
 
-        /* グリッド ＆ 表示ボックス */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
 
-        @media (max-width: 600px) {
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
         .stat-box {
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: 16px;
-            padding: 16px;
+            min-width: 0;
+            padding: 15px;
             text-align: center;
+            background: rgba(255, 255, 255, 0.52);
+            border: 1px solid rgba(0, 200, 160, 0.13);
+            border-radius: var(--k-radius-md);
         }
 
         .stat-val {
+            overflow-wrap: anywhere;
+            color: #007EA9;
             font-size: 1.5rem;
+            line-height: 1.2;
             font-weight: 700;
-            background: linear-gradient(135deg, #0284c7, var(--aurora-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         .stat-lbl {
-            font-size: 12px;
-            color: var(--text-sub);
             margin-top: 4px;
+            color: var(--k-color-text-sub);
+            font-size: 11px;
         }
 
-        /* Todoリスト アイテム */
         .todo-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: 14px;
+            gap: 10px;
+            padding: 10px 11px;
             margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 200, 160, 0.13);
+            border-radius: var(--k-radius-sm);
         }
 
-        /* QRコード表示エリア */
         #qr-code-output {
+            min-height: 180px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             padding: 20px;
-            background: #ffffff;
-            border-radius: 16px;
-            border: 1px solid rgba(0,0,0,0.06);
             margin-top: 16px;
-            min-height: 160px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 200, 160, 0.13);
+            border-radius: var(--k-radius-md);
             overflow: hidden;
         }
-        #qr-code-output img { animation: qrPop .4s cubic-bezier(.2,.8,.2,1); box-shadow: 0 8px 20px rgba(13, 17, 29, .12); }
-        @keyframes qrPop { from { opacity: 0; transform: scale(.72) rotate(-5deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
-        .qr-tools { display: none; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-        .qr-tools.visible { display: flex; animation: qrToolsIn .25s ease; }
-        @keyframes qrToolsIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
-        .btn .material-icons { font-size: 18px; }
 
-        /* ナビゲーションフッターリンク */
+        #qr-code-output img {
+            max-width: 180px;
+            height: auto;
+            border-radius: var(--k-radius-sm);
+        }
+
+        .qr-tools {
+            display: none;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .qr-tools.visible {
+            display: flex;
+        }
+
+        #pass-len {
+            --range-value: 45.45%;
+            width: 100%;
+            height: 34px;
+            margin: 4px 0;
+            padding: 0;
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            accent-color: transparent !important;
+            cursor: pointer;
+        }
+
+        #pass-len::-webkit-slider-runnable-track {
+            height: 7px;
+            border: 1px solid rgba(0, 163, 255, 0.18);
+            border-radius: var(--k-radius-full);
+            background: linear-gradient(
+                90deg,
+                var(--k-color-cyan) 0%,
+                var(--k-color-lime) var(--range-value),
+                rgba(0, 163, 255, 0.11) var(--range-value),
+                rgba(0, 163, 255, 0.11) 100%
+            );
+        }
+
+        #pass-len::-webkit-slider-thumb {
+            width: 18px;
+            height: 18px;
+            margin-top: -6px;
+            appearance: none;
+            -webkit-appearance: none;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            background: var(--k-color-cyan);
+            box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.12), 0 0 12px rgba(0, 163, 255, 0.24);
+        }
+
+        #pass-len::-moz-range-track {
+            height: 7px;
+            border: 1px solid rgba(0, 163, 255, 0.18);
+            border-radius: var(--k-radius-full);
+            background: rgba(0, 163, 255, 0.11);
+        }
+
+        #pass-len::-moz-range-progress {
+            height: 7px;
+            border-radius: var(--k-radius-full);
+            background: linear-gradient(90deg, var(--k-color-cyan), var(--k-color-lime));
+        }
+
+        #pass-len::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            background: var(--k-color-cyan);
+        }
+
+        #pass-len-val {
+            display: inline-flex;
+            min-width: 34px;
+            justify-content: center;
+            margin-left: 2px;
+            padding: 3px 7px;
+            color: #007EA9;
+            background: rgba(0, 163, 255, 0.08);
+            border: 1px solid rgba(0, 163, 255, 0.18);
+            border-radius: var(--k-radius-full);
+            font: 500 10px/1 var(--k-font-dot);
+        }
+
+        .workspace-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(0, 200, 160, 0.13);
+        }
+
         .back-nav {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: var(--text-sub);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            padding: 4px;
-            transition: color 0.2s;
+            gap: 7px;
+            color: var(--k-color-cyan);
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        .back-nav:hover {
-            color: #0284c7;
-        }
-
-        /* 🔝 トップに戻るボタン */
         .scroll-top-btn {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--aurora-start), var(--aurora-end));
-            color: #ffffff;
-            border: none;
-            box-shadow: 0 6px 20px var(--glow-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            right: 16px;
+            bottom: 16px;
+            z-index: 900;
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            color: var(--k-color-cyan);
+            background: rgba(255, 255, 255, 0.76);
+            border: var(--k-glass-border);
+            border-radius: var(--k-radius-md);
+            box-shadow: var(--k-shadow-glass);
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            -webkit-tap-highlight-color: transparent;
+            transform: translateY(8px);
+            transition: opacity 140ms var(--k-ease-press),
+                visibility 140ms var(--k-ease-press),
+                transform 140ms var(--k-ease-press);
         }
 
         .scroll-top-btn.visible {
             opacity: 1;
             visibility: visible;
-        }
-
-        .scroll-top-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
+            transform: translateY(0);
         }
 
         .scroll-top-btn:active {
-            transform: scale(0.92);
+            transform: var(--k-scale-press-action);
+            border: var(--k-glass-border-active);
+            box-shadow: var(--k-shadow-glow-lime);
         }
 
-        /* フッター */
         footer {
-            margin-top: 40px;
-            padding: 20px 8px;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            font-size: 11px;
-            color: var(--text-sub);
+            margin-top: 18px;
+            padding: 16px 4px;
+            color: var(--k-color-text-sub);
+            border-top: 1px solid rgba(0, 200, 160, 0.13);
             text-align: center;
+            font-size: 10px;
+        }
+
+        @media (max-width: 860px) {
+            .container {
+                width: min(100% - 20px, 760px);
+            }
+
+            .store-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .store-sidebar {
+                position: relative;
+                top: auto;
+            }
+
+            .nav-drawer {
+                display: none;
+            }
+
+            .custom-select-wrapper {
+                display: block;
+            }
+        }
+
+        @media (min-width: 861px) {
+            .custom-select-wrapper {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: calc(100% - 16px);
+                padding-top: 8px;
+            }
+
+            header {
+                min-height: 44px;
+            }
+
+            .blog-title {
+                font-size: 19px;
+            }
+
+            .blog-subtitle {
+                display: none;
+            }
+
+            .beta-banner {
+                margin-bottom: 10px;
+            }
+
+            .app-identity-card {
+                padding: 10px;
+            }
+
+            .app-icon-placeholder {
+                width: 42px;
+                height: 42px;
+            }
+
+            .app-name {
+                font-size: 15px;
+            }
+
+            .custom-select-trigger {
+                min-height: 50px;
+                grid-template-columns: 36px minmax(0, 1fr) 18px;
+            }
+
+            .custom-selected-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .custom-select-options {
+                width: min(340px, calc(100vw - 16px));
+                max-height: min(68vh, 520px);
+            }
+
+            .custom-option {
+                min-height: 46px;
+            }
+
+            .store-main-panel {
+                padding: 15px;
+            }
+
+            .panel-title {
+                font-size: 20px;
+            }
+
+            .panel-title .material-icons {
+                width: 36px;
+                height: 36px;
+                font-size: 21px;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                flex: 1 1 auto;
+            }
+
+            .workspace-footer {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            body::before,
+            .tool-card.active {
+                animation: none !important;
+            }
+
+            .tool-card.active {
+                opacity: 1;
+                transform: none;
+                filter: none;
+            }
         }
     </style>
-</head>
-<body>
 
+</head>
+
+<body>
     <div class="container">
-        <!-- ヘッダー (共通定義) -->
         <header>
             <a href="index.html" class="blog-title">windows11at</a>
             <div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
         </header>
 
-        <!-- ストアレイアウト -->
+        <div class="beta-banner" role="status">
+            <span class="beta-dot" aria-hidden="true"></span>
+            <div class="beta-copy">
+                <strong>新しいデザインをテスト中です。</strong>
+                <span>K-UI 2.0 BETA</span>
+            </div>
+        </div>
+
         <div class="store-layout">
-            
-            <!-- 左側/上部：アプリ・ツールキット情報とナビゲーション -->
             <aside class="store-sidebar">
                 <div class="app-identity-card">
                     <div class="app-header-compact">
@@ -665,106 +1064,135 @@
                         <div class="app-title-group">
                             <h1 class="app-name">便利ツール集</h1>
                             <p class="app-developer">@windows11at</p>
-                            <div><span class="store-badge">Web Tool Kit v1.0</span></div>
+                            <span class="store-badge">Web Tool Kit v1.0</span>
                         </div>
                     </div>
 
-                    <!-- 📱 スマホ表示用 カスタムドロップダウン (デザイン改善版) -->
+                    <div class="selector-label">TOOL SELECT</div>
+
                     <div class="custom-select-wrapper" id="customSelectWrapper">
-                        <div class="custom-select-trigger" onclick="toggleCustomSelect()">
-                            <div class="custom-select-selected" id="customSelectSelected">
+                        <button
+                            type="button"
+                            class="custom-select-trigger"
+                            id="customSelectTrigger"
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                            aria-controls="customToolOptions"
+                        >
+                            <span class="custom-selected-icon" id="customSelectedIcon">
                                 <span class="material-icons">percent</span>
-                                <span>割引・消費税計算</span>
-                            </div>
-                            <span class="material-icons custom-select-arrow">expand_more</span>
-                        </div>
-                        <div class="custom-select-options">
+                            </span>
+                            <span class="custom-select-label" id="customSelectLabel">割引・消費税計算</span>
+                            <span class="material-icons custom-select-arrow" aria-hidden="true">expand_more</span>
+                        </button>
+
+                        <div class="custom-select-options" id="customToolOptions" role="listbox">
                             <div class="custom-opt-group">日常生活で使う</div>
-                            <div class="custom-option selected" onclick="selectTool('calc', 'percent', '割引・消費税計算')">
-                                <span class="material-icons">percent</span> 割引・消費税計算
-                            </div>
-                            <div class="custom-option" onclick="selectTool('dutch', 'groups', '割り勘計算機')">
-                                <span class="material-icons">groups</span> 割り勘計算機
-                            </div>
-                            <div class="custom-option" onclick="selectTool('recipe', 'restaurant', '料理の分量計算')">
-                                <span class="material-icons">restaurant</span> 料理の分量計算
-                            </div>
-                            <div class="custom-option" onclick="selectTool('memo', 'check_box', 'クイックメモ & Todo')">
-                                <span class="material-icons">check_box</span> クイックメモ & Todo
-                            </div>
-                            <div class="custom-option" onclick="selectTool('timer', 'timer', '簡易タイマー')">
-                                <span class="material-icons">timer</span> 簡易タイマー
-                            </div>
+                            <button class="custom-option selected" type="button" data-tab="calc" data-icon="percent" data-label="割引・消費税計算" role="option" aria-selected="true">
+                                <span class="custom-option-icon"><span class="material-icons">percent</span></span>
+                                <span>割引・消費税計算</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="dutch" data-icon="groups" data-label="割り勘計算機" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">groups</span></span>
+                                <span>割り勘計算機</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="recipe" data-icon="restaurant" data-label="料理の分量計算" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">restaurant</span></span>
+                                <span>料理の分量計算</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="memo" data-icon="check_box" data-label="クイックメモ & Todo" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">check_box</span></span>
+                                <span>クイックメモ &amp; Todo</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="timer" data-icon="timer" data-label="簡易タイマー" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">timer</span></span>
+                                <span>簡易タイマー</span>
+                            </button>
 
                             <div class="custom-opt-group">文字・文章作成</div>
-                            <div class="custom-option" onclick="selectTool('char-count', 'description', '文字数カウント')">
-                                <span class="material-icons">description</span> 文字数カウント
-                            </div>
-                            <div class="custom-option" onclick="selectTool('replace', 'find_replace', 'テキスト置換')">
-                                <span class="material-icons">find_replace</span> テキスト置換
-                            </div>
-                            <div class="custom-option" onclick="selectTool('case', 'text_fields', '大文字・小文字変換')">
-                                <span class="material-icons">text_fields</span> 大文字・小文字変換
-                            </div>
+                            <button class="custom-option" type="button" data-tab="char-count" data-icon="description" data-label="文字数カウント" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">description</span></span>
+                                <span>文字数カウント</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="replace" data-icon="find_replace" data-label="テキスト置換" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">find_replace</span></span>
+                                <span>テキスト置換</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="case" data-icon="text_fields" data-label="大文字・小文字変換" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">text_fields</span></span>
+                                <span>大文字・小文字変換</span>
+                            </button>
 
                             <div class="custom-opt-group">便利なツール</div>
-                            <div class="custom-option" onclick="selectTool('password', 'key', 'パスワード自動生成')">
-                                <span class="material-icons">key</span> パスワード自動生成
-                            </div>
-                            <div class="custom-option" onclick="selectTool('qr', 'qr_code_2', 'QRコード作成')">
-                                <span class="material-icons">qr_code_2</span> QRコード作成
-                            </div>
-                            <div class="custom-option" onclick="selectTool('unit', 'straighten', 'px / rem 単位変換')">
-                                <span class="material-icons">straighten</span> px / rem 単位変換
-                            </div>
+                            <button class="custom-option" type="button" data-tab="password" data-icon="key" data-label="パスワード自動生成" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">key</span></span>
+                                <span>パスワード自動生成</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="qr" data-icon="qr_code_2" data-label="QRコード作成" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">qr_code_2</span></span>
+                                <span>QRコード作成</span>
+                            </button>
+                            <button class="custom-option" type="button" data-tab="unit" data-icon="straighten" data-label="px / rem 単位変換" role="option" aria-selected="false">
+                                <span class="custom-option-icon"><span class="material-icons">straighten</span></span>
+                                <span>px / rem 単位変換</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- 💻 PC表示用ツール切替ドロワー -->
-                    <nav class="nav-drawer">
+                    <nav class="nav-drawer" aria-label="ツール一覧">
                         <div class="nav-section-title">日常生活で使う</div>
-                        <div class="nav-item active" data-tab="calc" onclick="switchTab('calc')">
-                            <span class="material-icons">percent</span> 割引・消費税計算
-                        </div>
-                        <div class="nav-item" data-tab="dutch" onclick="switchTab('dutch')">
-                            <span class="material-icons">groups</span> 割り勘計算機
-                        </div>
-                        <div class="nav-item" data-tab="recipe" onclick="switchTab('recipe')">
-                            <span class="material-icons">restaurant</span> 料理の分量計算
-                        </div>
-                        <div class="nav-item" data-tab="memo" onclick="switchTab('memo')">
-                            <span class="material-icons">check_box</span> クイックメモ & Todo
-                        </div>
-                        <div class="nav-item" data-tab="timer" onclick="switchTab('timer')">
-                            <span class="material-icons">timer</span> 簡易タイマー
-                        </div>
+                        <button class="nav-item active" type="button" data-tab="calc" onclick="switchTab('calc')">
+                            <span class="nav-icon"><span class="material-icons">percent</span></span>
+                            <span>割引・消費税計算</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="dutch" onclick="switchTab('dutch')">
+                            <span class="nav-icon"><span class="material-icons">groups</span></span>
+                            <span>割り勘計算機</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="recipe" onclick="switchTab('recipe')">
+                            <span class="nav-icon"><span class="material-icons">restaurant</span></span>
+                            <span>料理の分量計算</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="memo" onclick="switchTab('memo')">
+                            <span class="nav-icon"><span class="material-icons">check_box</span></span>
+                            <span>クイックメモ &amp; Todo</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="timer" onclick="switchTab('timer')">
+                            <span class="nav-icon"><span class="material-icons">timer</span></span>
+                            <span>簡易タイマー</span>
+                        </button>
 
                         <div class="nav-section-title">文字・文章作成</div>
-                        <div class="nav-item" data-tab="char-count" onclick="switchTab('char-count')">
-                            <span class="material-icons">description</span> 文字数カウント
-                        </div>
-                        <div class="nav-item" data-tab="replace" onclick="switchTab('replace')">
-                            <span class="material-icons">find_replace</span> テキスト置換
-                        </div>
-                        <div class="nav-item" data-tab="case" onclick="switchTab('case')">
-                            <span class="material-icons">text_fields</span> 大文字・小文字変換
-                        </div>
+                        <button class="nav-item" type="button" data-tab="char-count" onclick="switchTab('char-count')">
+                            <span class="nav-icon"><span class="material-icons">description</span></span>
+                            <span>文字数カウント</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="replace" onclick="switchTab('replace')">
+                            <span class="nav-icon"><span class="material-icons">find_replace</span></span>
+                            <span>テキスト置換</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="case" onclick="switchTab('case')">
+                            <span class="nav-icon"><span class="material-icons">text_fields</span></span>
+                            <span>大文字・小文字変換</span>
+                        </button>
 
                         <div class="nav-section-title">便利なツール</div>
-                        <div class="nav-item" data-tab="password" onclick="switchTab('password')">
-                            <span class="material-icons">key</span> パスワード自動生成
-                        </div>
-                        <div class="nav-item" data-tab="qr" onclick="switchTab('qr')">
-                            <span class="material-icons">qr_code_2</span> QRコード作成
-                        </div>
-                        <div class="nav-item" data-tab="unit" onclick="switchTab('unit')">
-                            <span class="material-icons">straighten</span> px / rem 単位変換
-                        </div>
+                        <button class="nav-item" type="button" data-tab="password" onclick="switchTab('password')">
+                            <span class="nav-icon"><span class="material-icons">key</span></span>
+                            <span>パスワード自動生成</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="qr" onclick="switchTab('qr')">
+                            <span class="nav-icon"><span class="material-icons">qr_code_2</span></span>
+                            <span>QRコード作成</span>
+                        </button>
+                        <button class="nav-item" type="button" data-tab="unit" onclick="switchTab('unit')">
+                            <span class="nav-icon"><span class="material-icons">straighten</span></span>
+                            <span>px / rem 単位変換</span>
+                        </button>
                     </nav>
                 </div>
             </aside>
 
-            <!-- 右側/下部：メインツールパネル -->
             <main class="store-main">
                 <div class="store-main-panel">
 
@@ -872,12 +1300,6 @@
     </div>
 </div>
 
-<style>
-@keyframes toastIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
 
                     <!-- 6. 文字数カウント -->
                     <div id="char-count" class="tool-card">
@@ -1008,60 +1430,170 @@
         </footer>
     </div>
 
-    <!-- 🔝 トップに戻るボタン -->
-    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" aria-label="トップに戻る">
-        <span class="material-icons">arrow_upward</span>
-    </button>
+
+
+        <button class="scroll-top-btn" id="scrollTopBtn" type="button" onclick="scrollToTop()" aria-label="トップに戻る">
+            <span class="material-icons">arrow_upward</span>
+        </button>
+
+        <footer>© 2026 windows11at</footer>
+    </div>
 
     <script>
-        /* --- タブ切替機能（共通・同期処理） --- */
-        function switchTab(tabId) {
-            // PC用サイドバーのクラス切り替え
-            document.querySelectorAll('.nav-item').forEach(el => {
-                if (el.getAttribute('data-tab') === tabId) {
-                    el.classList.add('active');
-                } else {
-                    el.classList.remove('active');
-                }
+
+        /* =========================================================
+           Tool selection
+        ========================================================= */
+
+        const customSelectWrapper = document.getElementById('customSelectWrapper');
+        const customSelectTrigger = document.getElementById('customSelectTrigger');
+        const customToolOptions = document.getElementById('customToolOptions');
+        const customSelectedIcon = document.getElementById('customSelectedIcon');
+        const customSelectLabel = document.getElementById('customSelectLabel');
+
+        const TOOL_META = {
+            calc: { icon: 'percent', label: '割引・消費税計算' },
+            dutch: { icon: 'groups', label: '割り勘計算機' },
+            recipe: { icon: 'restaurant', label: '料理の分量計算' },
+            memo: { icon: 'check_box', label: 'クイックメモ & Todo' },
+            timer: { icon: 'timer', label: '簡易タイマー' },
+            'char-count': { icon: 'description', label: '文字数カウント' },
+            replace: { icon: 'find_replace', label: 'テキスト置換' },
+            case: { icon: 'text_fields', label: '大文字・小文字変換' },
+            password: { icon: 'key', label: 'パスワード自動生成' },
+            qr: { icon: 'qr_code_2', label: 'QRコード作成' },
+            unit: { icon: 'straighten', label: 'px / rem 単位変換' }
+        };
+
+        function setSelectedTool(tabId) {
+            const meta = TOOL_META[tabId];
+            if (!meta) {
+                return;
+            }
+
+            customSelectedIcon.innerHTML = `<span class="material-icons">${meta.icon}</span>`;
+            customSelectLabel.textContent = meta.label;
+
+            document.querySelectorAll('.custom-option').forEach(option => {
+                const selected = option.dataset.tab === tabId;
+                option.classList.toggle('selected', selected);
+                option.setAttribute('aria-selected', String(selected));
             });
 
-            // メインコンテンツの切り替え
-            document.querySelectorAll('.tool-card').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.tab === tabId);
+            });
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tool-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
             const targetCard = document.getElementById(tabId);
             if (targetCard) {
+                void targetCard.offsetWidth;
                 targetCard.classList.add('active');
             }
+
+            setSelectedTool(tabId);
+            closeToolPicker();
         }
 
-        /* --- 📱 スマホ用カスタムドロップダウン制御 --- */
+        function positionToolPicker() {
+            if (!customSelectWrapper || !customToolOptions) {
+                return;
+            }
+
+            const rect = customSelectTrigger.getBoundingClientRect();
+            const gap = 6;
+            const margin = 8;
+            const menuWidth = Math.min(340, window.innerWidth - margin * 2);
+            const maxHeight = Math.min(window.innerHeight * 0.68, 520);
+
+            customToolOptions.style.width = `${menuWidth}px`;
+            customToolOptions.style.maxHeight = `${maxHeight}px`;
+            customToolOptions.style.left = `${Math.max(margin, Math.min(rect.left, window.innerWidth - menuWidth - margin))}px`;
+
+            const menuHeight = Math.min(customToolOptions.scrollHeight || maxHeight, maxHeight);
+            const below = rect.bottom + gap;
+            const above = rect.top - gap - menuHeight;
+
+            customToolOptions.style.top = `${
+                below + menuHeight <= window.innerHeight - margin || above < margin
+                    ? below
+                    : above
+            }px`;
+        }
+
+        function openToolPicker() {
+            if (!customSelectWrapper || !customSelectTrigger) {
+                return;
+            }
+
+            customSelectWrapper.classList.add('open');
+            customSelectTrigger.setAttribute('aria-expanded', 'true');
+            requestAnimationFrame(positionToolPicker);
+        }
+
+        function closeToolPicker() {
+            if (!customSelectWrapper || !customSelectTrigger) {
+                return;
+            }
+
+            customSelectWrapper.classList.remove('open');
+            customSelectTrigger.setAttribute('aria-expanded', 'false');
+        }
+
         function toggleCustomSelect() {
-            const wrapper = document.getElementById('customSelectWrapper');
-            wrapper.classList.toggle('open');
+            if (customSelectWrapper.classList.contains('open')) {
+                closeToolPicker();
+            } else {
+                openToolPicker();
+            }
         }
 
-        function selectTool(tabId, iconName, labelText) {
-            // タブ切り替えを実行
+        function selectTool(tabId) {
             switchTab(tabId);
-
-            // トリガー（選択表示）の見た目を更新
-            const selectedContainer = document.getElementById('customSelectSelected');
-            selectedContainer.innerHTML = `<span class="material-icons">${iconName}</span><span>${labelText}</span>`;
-
-            // オプション項目の selected クラス更新
-            document.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
-
-            // メニューを閉じる
-            document.getElementById('customSelectWrapper').classList.remove('open');
         }
 
-        // ドロップダウンの外側をクリックした時にメニューを閉じる
-        document.addEventListener('click', (e) => {
-            const wrapper = document.getElementById('customSelectWrapper');
-            if (wrapper && !wrapper.contains(e.target)) {
-                wrapper.classList.remove('open');
+        customSelectTrigger?.addEventListener('click', event => {
+            event.stopPropagation();
+            toggleCustomSelect();
+        });
+
+        customToolOptions?.querySelectorAll('.custom-option').forEach(option => {
+            option.addEventListener('click', event => {
+                event.stopPropagation();
+                switchTab(option.dataset.tab);
+            });
+        });
+
+        document.addEventListener('click', event => {
+            if (customSelectWrapper && !customSelectWrapper.contains(event.target)) {
+                closeToolPicker();
             }
         });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeToolPicker();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (customSelectWrapper?.classList.contains('open')) {
+                positionToolPicker();
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            if (customSelectWrapper?.classList.contains('open')) {
+                closeToolPicker();
+            }
+        }, { passive: true });
+
+        setSelectedTool('calc');
 
         /* --- 🔝 トップに戻るボタンの制御 --- */
         const scrollTopBtn = document.getElementById('scrollTopBtn');
@@ -1338,7 +1870,7 @@ function hideToast() {
             const old = button.innerHTML;
             try {
                 await navigator.clipboard.writeText(currentQRText);
-                button.innerHTML = '<span class="material-icons">check</span>コピーしました';
+                button.innerHTML = '<span class="material-icons">check</span> コピーしました';
             } catch {
                 button.textContent = 'コピーできませんでした';
             }
@@ -1363,6 +1895,7 @@ function hideToast() {
                 document.getElementById('unit-px').value = '';
             }
         }
+
     </script>
 </body>
 </html>
