@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月における国内企業・機関の情報漏洩事案に関する包括的分析報告書 | windows11at</title>
+  <meta name="description" content="2026年10月に入り、日本国内の民間企業、主要インフラ事業者、および行政関連組織において、不正アクセスに伴う情報漏洩事案が極めて高い頻度で公表されている1。2026年9月下旬から10月初頭の僅か1週間余りで公表された個人情報の流出件数および流出懸念件数は、判明分だけでも累計2,600万件を超過しており、近年のセキュリティインシデント事例と比較しても極めて異">
+
+  <!-- K-UI 2.0 統一ウェブフォント -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===================================================
+       K-UI 2.0 Design Tokens Specification
+       =================================================== */
+    :root {
+      --k-font-body: 'Inter', 'Noto Sans JP', -apple-system, sans-serif;
+      --k-font-dot: 'DotGothic16', monospace;
+
+      --k-tracking-tight: -0.02em;
+      --k-tracking-body: -0.011em;
+      --k-tracking-dot: 0.06em;
+
+      --k-color-bg-base: #F3F8F6;
+      --k-bg-aurora: linear-gradient(135deg, rgba(0, 230, 161, 0.14) 0%, rgba(0, 163, 255, 0.12) 50%, rgba(180, 255, 120, 0.10) 100%);
+
+      --k-glass-bg: rgba(255, 255, 255, 0.72);
+      --k-glass-blur: blur(28px) saturate(190%);
+      --k-glass-blur-heavy: blur(40px) saturate(210%);
+
+      --k-glass-border: 1px solid rgba(0, 200, 160, 0.22);
+      --k-glass-border-hover: 1px solid rgba(0, 163, 255, 0.5);
+
+      --k-color-lime: #00E6A1;
+      --k-color-cyan: #00A3FF;
+      --k-color-text-main: #0F172A;
+      --k-color-text-sub: #64748B;
+
+      --k-shadow-glass: 0 12px 36px rgba(0, 120, 255, 0.06);
+      --k-shadow-glow-lime: 0 0 16px rgba(0, 230, 161, 0.35);
+
+      --k-radius-lg: 14px;
+      --k-radius-md: 10px;
+      --k-radius-sm: 6px;
+
+      --k-duration-press: 90ms;
+      --k-ease-press: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--k-font-body);
+      letter-spacing: var(--k-tracking-body);
+      background-color: var(--k-color-bg-base);
+      background-image: var(--k-bg-aurora);
+      background-attachment: fixed;
+      color: var(--k-color-text-main);
+      line-height: 1.8;
+      padding-top: 68px;
+      padding-bottom: 90px;
+      overflow-x: hidden;
+    }
+
+    /* 上部固定バー & 読了進捗ライン */
+    .k-header-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur);
+      backdrop-filter: var(--k-glass-blur);
+      border-bottom: var(--k-glass-border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .k-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2.5px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--k-color-lime), var(--k-color-cyan));
+      transition: width 0.1s ease-out;
+    }
+
+    .k-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--k-color-text-main);
+    }
+
+    .k-brand-logo {
+      font-family: var(--k-font-dot);
+      font-size: 16px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-text-main);
+      font-weight: bold;
+    }
+
+    .k-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .k-btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.6);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-sm);
+      color: var(--k-color-text-main);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform var(--k-duration-press) var(--k-ease-press), border-color 0.2s;
+    }
+
+    .k-btn-icon:active {
+      transform: scale(0.95);
+      border-color: var(--k-color-lime);
+      box-shadow: var(--k-shadow-glow-lime);
+    }
+
+    .k-btn-icon svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* レイアウト構造 */
+    .k-container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .k-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    @media (min-width: 860px) {
+      .k-layout {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .k-main-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .k-sidebar {
+        width: 310px;
+        position: sticky;
+        top: 80px;
+        flex-shrink: 0;
+      }
+      .k-bottom-bar { display: none !important; }
+    }
+
+    /* カード・記事構造 */
+    .k-card {
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur);
+      backdrop-filter: var(--k-glass-blur);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-md);
+      box-shadow: var(--k-shadow-glass);
+      padding: 24px;
+      position: relative;
+    }
+
+    .k-card::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 6px;
+      height: 6px;
+      background-image: radial-gradient(var(--k-color-lime) 1.5px, transparent 0);
+      background-size: 3px 3px;
+      opacity: 0.75;
+    }
+
+    .k-article-header {
+      margin-bottom: 24px;
+      border-bottom: 1px dashed rgba(0, 200, 160, 0.25);
+      padding-bottom: 16px;
+    }
+
+    .k-tag-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--k-font-dot);
+      font-size: 11px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-cyan);
+      background: rgba(0, 163, 255, 0.08);
+      border: 1px solid rgba(0, 163, 255, 0.25);
+      padding: 3px 8px;
+      border-radius: var(--k-radius-sm);
+      margin-bottom: 12px;
+    }
+
+    .k-article-title {
+      font-size: clamp(22px, 3.5vw, 30px);
+      line-height: 1.35;
+      letter-spacing: var(--k-tracking-tight);
+      font-weight: 700;
+      color: var(--k-color-text-main);
+      margin-bottom: 10px;
+    }
+
+    .k-article-meta {
+      font-size: 12px;
+      color: var(--k-color-text-sub);
+      display: flex;
+      gap: 16px;
+    }
+
+    /* 記事本文スタイル */
+    .k-article-body h2 {
+      font-size: 19px;
+      font-weight: 700;
+      margin: 32px 0 14px;
+      padding-left: 10px;
+      border-left: 3px solid var(--k-color-cyan);
+      color: var(--k-color-text-main);
+    }
+
+    .k-article-body h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 10px;
+      color: var(--k-color-text-main);
+    }
+
+    .k-article-body p {
+      font-size: 14.5px;
+      margin-bottom: 18px;
+      color: #1E293B;
+    }
+
+    .k-notice {
+      background: rgba(0, 230, 161, 0.06);
+      border: 1px solid rgba(0, 230, 161, 0.3);
+      border-radius: var(--k-radius-sm);
+      padding: 14px 16px;
+      font-size: 13.5px;
+      margin: 20px 0;
+    }
+
+    /* 自動目次（Table of Contents） */
+    .k-toc-container {
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur);
+      backdrop-filter: var(--k-glass-blur);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-md);
+      padding: 18px;
+      box-shadow: var(--k-shadow-glass);
+    }
+
+    .k-toc-title {
+      font-family: var(--k-font-dot);
+      font-size: 13px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-text-main);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .k-toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .k-toc-list a {
+      color: var(--k-color-text-sub);
+      text-decoration: none;
+      transition: color 0.15s;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .k-toc-list a:hover {
+      color: var(--k-color-cyan);
+    }
+
+    .k-toc-list .toc-h3 {
+      padding-left: 14px;
+      font-size: 12px;
+    }
+
+    /* モバイル向けインライン目次（Accordion） */
+    .k-mobile-toc {
+      margin-bottom: 20px;
+    }
+
+    .k-mobile-toc summary {
+      cursor: pointer;
+      font-family: var(--k-font-dot);
+      font-size: 13px;
+      color: var(--k-color-text-main);
+      padding: 10px 14px;
+      background: rgba(0, 163, 255, 0.05);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-sm);
+    }
+
+    @media (min-width: 860px) {
+      .k-mobile-toc { display: none; }
+    }
+
+    /* モバイル専用 ボトム固定バー */
+    .k-bottom-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      height: 54px;
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur-heavy);
+      backdrop-filter: var(--k-glass-blur-heavy);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-lg);
+      box-shadow: var(--k-shadow-glass);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 1000;
+      padding: 0 8px;
+    }
+
+    footer {
+      text-align: center;
+      font-family: var(--k-font-dot);
+      font-size: 11px;
+      color: var(--k-color-text-sub);
+      margin-top: 40px;
+    }
+
+    .k-table-wrap{overflow-x:auto;margin:22px 0 28px;border:var(--k-glass-border);border-radius:var(--k-radius-sm);background:rgba(255,255,255,.48);-webkit-overflow-scrolling:touch}.k-data-table{width:100%;min-width:920px;border-collapse:collapse;font-size:12.5px;line-height:1.65}.k-data-table th,.k-data-table td{padding:10px 11px;border-bottom:1px solid rgba(0,163,255,.12);border-right:1px solid rgba(0,163,255,.08);text-align:left;vertical-align:top}.k-data-table th{background:rgba(0,163,255,.07);font-weight:700;white-space:nowrap}.k-data-table th:last-child,.k-data-table td:last-child{border-right:0}.k-article-body a{color:var(--k-color-cyan);text-decoration:underline;text-underline-offset:2px}.k-bullet-list{margin:8px 0 22px 1.4em;padding-left:1em;font-size:14.5px;color:#1E293B}.k-bullet-list li{margin:6px 0}.k-diagram{overflow-x:auto;margin:18px 0 24px;padding:16px;border:var(--k-glass-border);border-radius:var(--k-radius-sm);background:rgba(15,23,42,.035);font-family:var(--k-font-dot);font-size:12px;line-height:1.65;white-space:pre}.k-reference-list{margin:8px 0 22px 1.6em;padding-left:1em;font-size:13px;color:#334155}.k-reference-list li{margin:8px 0;overflow-wrap:anywhere}.k-reference-list a{word-break:break-all}
+  </style>
+</head>
+<body>
+
+  <!-- 上部ナビゲーションバー -->
+  <header class="k-header-nav">
+    <div class="k-progress-bar" id="progressBar"></div>
+    <a href="../index.html" class="k-header-brand">
+      <span class="k-brand-logo">windows11at</span>
+    </a>
+    <div class="k-header-actions">
+      <a href="../articles.html" class="k-btn-icon">記事一覧</a>
+      <button type="button" class="k-btn-icon" id="shareBtnTop" aria-label="共有">
+        <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="k-container">
+    <div class="k-layout">
+
+      <!-- メイン記事エリア -->
+      <main class="k-main-content">
+        <article class="k-card">
+          <header class="k-article-header">
+            <span class="k-tag-dot">[NEWS / SECURITY]</span>
+            <h1 class="k-article-title">2026年10月における国内企業・機関の情報漏洩事案に関する包括的分析報告書</h1>
+            <div class="k-article-meta">
+              <span>DATE: 2026/10/09</span>
+            </div>
+          </header>
+
+          <!-- モバイル用インライン目次 -->
+          <details class="k-mobile-toc" id="mobileTocWrapper">
+            <summary>[TOC] 目次を開く</summary>
+            <div style="padding: 12px 0 0 0;" id="mobileTocList"></div>
+          </details>
+
+          <div class="k-article-body" id="articleBody">
+<h2>概要および発生背景</h2>
+
+<p>2026年10月に入り、日本国内の民間企業、主要インフラ事業者、および行政関連組織において、不正アクセスに伴う情報漏洩事案が極めて高い頻度で公表されている1。2026年9月下旬から10月初頭の僅か1週間余りで公表された個人情報の流出件数および流出懸念件数は、判明分だけでも累計2,600万件を超過しており、近年のセキュリティインシデント事例と比較しても極めて異常な高水準に達している1。</p>
+
+<p>本時期における被害の突出した特徴は、金融、製造、交通・物流、外食、医療・製薬、メディア、サービス業に至るまで、業種や企業規模を問わず広範な産業基盤において同時多発的に被害が顕在化した点に求められる1。</p>
+
+<p>こうした急増の背景には、攻撃者側における自動化ツールや高度なAIモデルの普及による攻撃サイクルの劇的な高速化と、防衛側である企業・組織における構造的弱点が複合的に作用している1。長年放置されてきたレガシーシステムの脆弱性、パスワード認証への依存、過去の退会者データの過剰保持、ならびに業務委託先やSaaS基盤といったサプライチェーン上の盲点が連鎖し、一過性の侵入が組織全体の壊滅的なデータ流出へと拡大する構造が定着している1。</p>
+
+<h2>2026年10月1日以降の公表事案一覧</h2>
+
+<p>2026年10月1日から本日に至る期間に公表あるいは報道された主要な情報漏洩事案および不正アクセス事案について、事案の公表日順に整理し、以下に網羅的一覧として提示する。</p>
+
+<div class="k-table-wrap"><table class="k-data-table"><thead><tr>
+<th><strong>公表日</strong></th>
+<th><strong>対象組織名</strong></th>
+<th><strong>対象サービス / システム</strong></th>
+<th><strong>被害規模 / 対象件数</strong></th>
+<th><strong>侵害手口および流出データの概要</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>10月1日</td>
+<td>アフラック生命保険株式会社</td>
+<td>契約者サイト「アフラック よりそうネット」等</td>
+<td>約440万人（うち約22万人は口座情報含む）</td>
+<td>システムへの不正アクセス。保有データのアクセス制御および保護状態の不備が影響7。</td>
+</tr>
+<tr>
+<td>10月1日 / 2日</td>
+<td>佐川急便株式会社</td>
+<td>お荷物問い合わせサービス</td>
+<td>非公表（調査継続中）</td>
+<td>不正アクセスの検知に伴い、Webサイト上のお荷物問い合わせサービスの一部機能を緊急停止9。</td>
+</tr>
+<tr>
+<td>10月2日</td>
+<td>第一生命保険株式会社</td>
+<td>内部システム等</td>
+<td>約12万人</td>
+<td>第三者による不正アクセスが発生。詳細な侵入経路および流出範囲については継続調査4。</td>
+</tr>
+<tr>
+<td>10月2日</td>
+<td>ヤマト運輸株式会社</td>
+<td>「クロネコ代金後払いサービス」</td>
+<td>非公表（利用顧客・加盟店・社員）</td>
+<td>9月28日に不正アクセスを検知・遮断。利用者の氏名、住所、電話番号、メールアドレス、請求金額、商品明細等の流出可能性を発表（第2報）10。</td>
+</tr>
+<tr>
+<td>10月4日</td>
+<td>株式会社日本経済新聞社</td>
+<td>クラウド基盤（Microsoft 365 / Google Workspace）</td>
+<td>不審メール約9,000件 / 個人情報1,646人分</td>
+<td>社員アカウントへの不正ログイン。侵害されたアカウントから社内外へ大量の不審メールを送信、連絡先やメール本文の一部が流出4。</td>
+</tr>
+<tr>
+<td>10月4日</td>
+<td>株式会社日経BP</td>
+<td>従業員メールアカウント</td>
+<td>26件</td>
+<td>従業員メールアカウントへの不正アクセスに伴い、メール送受信先に関する個人情報が流出した恐れ16。</td>
+</tr>
+<tr>
+<td>10月5日</td>
+<td>大和証券株式会社</td>
+<td>顧客問い合わせ管理システム</td>
+<td>約11万人（延べ約22万件）</td>
+<td>委託先スカラコミュニケーションズのFAQシステム「i-ask」への不正アクセス。氏名、メールアドレス、口座番号等の閲覧・取得形跡を確認3。</td>
+</tr>
+<tr>
+<td>10月5日</td>
+<td>GMOリサーチ&amp;AI株式会社</td>
+<td>アンケートサイト「infoQ」</td>
+<td>最大94万8,498件</td>
+<td>使用ソフトウェアの脆弱性を突かれた不正アクセス。全会員情報（氏名、住所、暗号化パスワード等）持ち出し、約287万円相当のポイント不正交換被害が発生9。</td>
+</tr>
+<tr>
+<td>10月5日</td>
+<td>ホワイトエッセンス株式会社</td>
+<td>予約サイトおよび基幹システム</td>
+<td>約105万アカウント</td>
+<td>予約サイトのプログラム脆弱性を起点に基幹システムへ不正アクセス。顧客・加盟院関係者・社員等の個人情報持ち出しを確認（8月発生事案の追跡調査）4。</td>
+</tr>
+<tr>
+<td>10月5日</td>
+<td>株式会社物語コーポレーション</td>
+<td>「焼肉きんぐ」公式アプリ会員管理システム</td>
+<td>約1,079万件</td>
+<td>公式アプリ会員管理システムに対する第三者からの不正アクセス。10月2日に異常検知、10月3日に会員情報の流出を確認4。</td>
+</tr>
+<tr>
+<td>10月5日</td>
+<td>大起水産株式会社</td>
+<td>「大起水産公式アプリ」</td>
+<td>17万4,933人（退会者含む）</td>
+<td>アプリシステムへの不正アクセス（9月15日発覚）。氏名、電話番号、メールアドレス、住所、生年月日等の流出可能性。パスワードは別サーバー管理26。</td>
+</tr>
+<tr>
+<td>10月6日</td>
+<td>株式会社スカラコミュニケーションズ</td>
+<td>FAQシステム「i-ask」管理サイト</td>
+<td>複数利用企業（大和証券、シチズン時計、損保ジャパン等）</td>
+<td>10月2日〜3日に管理サイトへ不正ログインが発生し、不正プログラムが設置される。利用企業の顧客問い合わせデータが漏洩3。</td>
+</tr>
+<tr>
+<td>10月6日</td>
+<td>シチズン時計株式会社</td>
+<td>Webサイト問い合わせフォーム</td>
+<td>約10万人分</td>
+<td>委託先スカラコミュニケーションズの「i-ask」サーバーへの不正アクセス。ブランドWebサイト経由の氏名、住所、電話番号、メールアドレス等流出可能性3。</td>
+</tr>
+<tr>
+<td>10月6日</td>
+<td>旭化成セラピューティクス株式会社</td>
+<td>医療従事者向けWeb「Pharma DIGITAL」</td>
+<td>医療従事者最大約55万8,000人 / 社員約700人</td>
+<td>運営・情報管理委託先（医薬情報ネット）の会員データベースがサイバー攻撃を受け受託データが不正閲覧・流出可能性6。</td>
+</tr>
+<tr>
+<td>10月7日</td>
+<td>損害保険ジャパン株式会社</td>
+<td>事業者向けドラレコ「SMILING ROAD」FAQ/問い合わせ機能</td>
+<td>延べ約6万件</td>
+<td>委託先スカラコミュニケーションズの「i-ask」不正アクセス。問い合わせに記載された氏名、住所、電話番号、勤務先情報、ドライバーID等流出可能性3。</td>
+</tr>
+<tr>
+<td>10月7日</td>
+<td>東武鉄道株式会社</td>
+<td>お客さまセンター問い合わせフォーム</td>
+<td>調査中（取得形跡は未確認）</td>
+<td>スカラコミュニケーションズ提供サービスの利用を公表。現時点でデータの閲覧・取得形跡は確認されず3。</td>
+</tr>
+<tr>
+<td>10月7日</td>
+<td>株式会社エイチ・アイ・エス</td>
+<td>タイ現地法人（H.I.S. TOURS CO., LTD.）ファイルサーバー</td>
+<td>最大627名</td>
+<td>タイ現地法人ネットワークへの不正アクセス。タイ渡航顧客のパスポート情報（番号・署名・有効期限等）およびアレルギー情報が流出34。</td>
+</tr>
+<tr>
+<td>10月7日</td>
+<td>戸田建設株式会社</td>
+<td>取引先支払い管理システム等</td>
+<td>取引先メール最大7,200件 / 取引データ最大6,000件 / 従業員4,778人</td>
+<td>支払い管理システム等への外部不正アクセス（10月5日検知、10月1〜5日に流出痕跡）。口座情報含む取引データおよび従業員の氏名・住所・電話番号等流出5。</td>
+</tr>
+<tr>
+<td>10月8日</td>
+<td>株式会社八十二長野銀行</td>
+<td>職員受信用電子メール等</td>
+<td>非公表（調査継続中）</td>
+<td>10月7日に職員が受信した不審な電子メールの開封・操作に起因する不正アクセス。顧客情報が流出した可能性を公表39。</td>
+</tr>
+</tbody></table></div>
+
+<h2>被害構造および侵入経路の分析</h2>
+
+<p>2026年10月に表面化した一連のインシデント群を横断的に分析すると、攻撃者の侵入パターンと被害の波及経路には明確な構造的特徴が観察できる。</p>
+
+<h3>サプライチェーンおよびSaaS基盤を経由した多層的漏洩</h3>
+
+<p>単一のSaaSベンダーやITサービス委託先への不正アクセスが、同システムを利用する複数の企業へと波及し、被害が水平展開する構造が極めて顕著に現れている1。</p>
+
+<p>スカラコミュニケーションズが提供するFAQシステム「i-ask」の管理サイトに対する不正アクセス事案は、その典型例と言える3。2026年10月2日夜間から3日早朝にかけて、第三者が管理サイトに不正ログインし、不正プログラムを配備・実行した3。この結果、大和証券においては顧客問い合わせ管理システムから約11万人分の氏名や口座番号などの閲覧・取得形跡が確認された3。さらにシチズン時計の各ブランド問い合わせ業務で約10万人分、損害保険ジャパンの事業者向けドライブレコーダー関連問い合わせ機能で延べ約6万件の個人データが流出した可能性が順次発覚した3。東武鉄道も同社サービスの利用事実を公表するに至り、1つの委託先システム侵害が社会インフラや金融、製造へと瞬時に連鎖する脅威が裏付けられた3。</p>
+
+<p>同様に、旭化成セラピューティクスの事例でも、医療関係者向けサイト「Pharma DIGITAL」の運営および情報管理を委託していた医薬情報ネットの会員データベースが攻撃を受けたことで、最大で約55万8,000人に上る医療従事者の個人情報が不正閲覧された可能性が生じている6。</p>
+
+<h3>Webアプリケーションおよび会員プラットフォームの脆弱性悪用</h3>
+
+<p>企業が管理するWebサイトやモバイルアプリのプログラムに存在する脆弱性を直接突かれ、データベース内部の個人データが持ち出される事案も相次いだ4。</p>
+
+<p>GMOリサーチ&amp;AIが運営するアンケートサイト「infoQ」では、使用ソフトウェアの脆弱性を突いた不正アクセスにより、同社が保有する全会員データに相当する最大94万8,498件の情報が外部へ流出した9。本件では情報流出のみならず、一部会員の保有ポイントから計286万9,500円分がAmazonギフトコードへ不正交換されるという直接的な金銭被害へ繋がった9。</p>
+
+<p>ホワイトエッセンスの事例では、予約サイトのプログラム上に存在した脆弱性が侵入の起点となり、内部の基幹システムへ攻撃が拡大した結果、顧客や加盟院関係者ら約105万アカウントの持ち出しが確定判明した4。さらに、物語コーポレーションが展開する「焼肉きんぐ」公式アプリ会員管理システムにおける約1,079万件の大規模漏洩や、大起水産公式アプリでの17万4,933人分の流出懸念、ヤマト運輸「クロネコ代金後払いサービス」での決済・取引データ流出懸念など、生活に密着したサービス基盤が相次いで標的となった4。</p>
+
+<h3>クラウドグループウェア・アカウント侵害と連鎖的フィッシング</h3>
+
+<p>企業が導入しているクラウド型グループウェアやメール基盤の認証が突破され、侵入された正規アカウントが悪用されるインシデントも顕著である4。</p>
+
+<p>日本経済新聞社および日経BPの事例では、社員の「Microsoft 365」や「Google Workspace」のアカウントがサイバー攻撃により侵害された4。乗っ取られた正規アカウントを送信元として、社内外の取材先や取引先に対し、悪性サイトへ誘導する精巧になりすました不審メール約9,000件が一斉送信された13。この過程で、送信先の氏名やアドレス、メール本文の一部が外部に露呈した16。八十二長野銀行においても、職員が受信した不審な外部電子メールを開封・操作したことに起因して不正アクセスが発生し、顧客情報の漏洩懸念が報告されている39。</p>
+
+<h3>社内業務基盤および海外拠点への不正侵入</h3>
+
+<p>社内の基幹業務システムや海外子会社のサーバーに直接侵入し、内部データを取得する攻撃も発生している34。</p>
+
+<p>戸田建設では、取引先への支払いを管理するシステム等に対し外部からの不正アクセスが敢行された5。その結果、取引先担当者のメールアドレス最大7,200件、振込口座情報を含む取引データ最大6,000件、および従業員4,778人分のアドレスや住所、所属部署などの個人データが流出した5。また、エイチ・アイ・エスのタイ現地法人においては、ファイルサーバーへの不正アクセスにより、過去にタイへ渡航した顧客最大627名分のパスポート情報やアレルギー情報という高度にセンシティブなデータが漏洩したことが判明している34。</p>
+
+<h2>攻撃手法の進化と組織的背景</h2>
+
+<p>2026年10月に見られた漏洩事案の激増は、単一の偶発的要素ではなく、サイバー攻撃技術の変化と企業側の構造的な管理不備が合致した結果として捉えることができる1。</p>
+
+<pre class="k-diagram">【攻撃者側の進化要因】
+・生成AIによるエクスプロイト自動作成と攻撃試行の高速化
+・公開脆弱性に対する探索ボットの高頻度稼働
+・精巧な日本語文面によるフィッシング・BECの増加
+          │
+          ├───────────────────► 【2026年10月における大規模漏洩の頻発】
+          │
+【企業・組織側の管理不備】
+・退会者情報や本人確認画像の不必要な長期保持（過剰保持）
+・サードパーティやSaaSに対する権限・アクセス制御の形骸化
+・単一のID/パスワード認証依存および多要素認証（MFA）の未徹底
+・許可されていない個人向け生成AIツールの業務利用（シャドーAI）</pre>
+
+<p>攻撃者側においては、高度な生成AIモデルや自動化スクリプトの普及により、公開された脆弱性情報（CVE）を解析してから実際の攻撃コード（エクスプロイト）を作成し、標的サーバーへ打ち込むまでの猶予期間が大幅に短縮されている1。警察庁の観測データが示す通り、インターネット上からの脆弱性探索アクセスは1日1IPアドレスあたり1万3,000件を超えており、企業側が手動で修正パッチを当てる前にボットによって侵入される構造が定着している4。さらに、生成AIによって作成された不審メールは文法的誤りがなく、従来の「不自然な日本語を見抜く」という注意喚起のみでは防ぎきれないレベルに達している1。</p>
+
+<p>一方、企業側の管理不備として最も深刻な問題は、データの過剰保持（データ・リテンション問題）である1。大起水産の事例のように退会済みの会員データがサーバー内にそのまま保存されていたケースや、解約後の顧客の運転免許証画像が長期間削除されずに残されていたケースなど、本来保持する必要のない個人情報が侵入時の被害規模を無駄に膨らませている1。また、社内の正式な承認を経ずに従業員が個人用生成AIツールに業務データを入力する「シャドーAI」の存在も、新たなデータ流出経路として急速に台頭している1。</p>
+
+<h2>社会的波及効果と規制動向</h2>
+
+<p>一連の情報流出は、二次被害の発生可能性を通じて消費者心理および企業の事業活動に多大なリスクをもたらしている。</p>
+
+<p>直接的な金銭被給のリスクとしては、暗号化が不十分な認証情報やポイント管理機能が悪用され、即座に電子ギフト券などへ換金される犯罪モデルが確立していることが挙げられる9。さらに、運転免許証画像やパスポート番号といった「一度流出すると容易に変更できない情報」が露呈した場合、なりすましによる金融口座の不正開設や偽装契約、国際的な身元詐欺へ悪用される危険性が長期にわたり残留する1。加えて、戸田建設や日経新聞社のように取引先口座情報や担当者連絡先が流出した場合、実在の取引を模倣した精巧なビジネスメール詐欺（BEC）へ発展する可能性が高い13。</p>
+
+<p>こうした事態を受け、個人情報保護委員会（PPC）は2026年10月7日、全産業界に向けた緊急の注意喚起を発令した45。委員会は、個人情報保護法に基づく迅速な報告義務の遵守のみならず、不要データの確実な消去、アクセス制御の見直し、および技術的安全管理措置の厳格な再点検を強く要請している46。JPCERT/CCや警察庁も、相次ぐ国内組織への不正アクセスに関する技術的注意喚起を発行し、主要インフラおよび主要企業に対する緊急のログ点検・設定見直しを促している4。</p>
+
+<h2>結論および組織が講ずべき防衛戦略</h2>
+
+<p>2026年10月に相次いだ広範な情報漏洩事案の分析から導き出される本質的な結論は、サイバー攻撃の自動化・高速化により、企業が抱えてきた長年の管理上の弱点が一気に露呈したという点である1。これ以上の被害拡大を防ぎ、社会的な信用を維持するためには、従来の境界型防御に依存する姿勢を改め、ゼロトラスト思想を軸とした多角的な防衛戦略へと直ちに舵を切らなければならない1。</p>
+
+<p>第一に推進すべきは、データ保持の最小化原則（データ・ミニマイゼーション）の徹底である1。目的を終えた顧客データや退会者の個人情報を自動的に消去するライフサイクル管理プログラムをシステムに実装し、万が一サーバーが侵害された場合でも流出するデータが存在しない環境を作り上げることが最も確実な防衛策となる1。また、運転免許証などの本人確認書類画像を不必要にデータベースへ蓄積する運用を改め、マイナンバーカードのICチップを活用した非保持型認証への移行を急ぐ必要がある1。</p>
+
+<p>第二に、パスワード依存からの脱却と認証基盤の強固化が求められる1。IDとパスワードのみによる単一認証を全社的に全廃し、FIDO2規格に準拠したパスキーの導入や、全社システムにおける多要素認証（MFA）の適用を必須化しなければならない1。同時に、クラウドグループウェアにおけるIP制限や端末認証の設定を見直し、不正ログインの兆候を即座に検知・遮断する運用体制の確立が不可欠である4。</p>
+
+<p>第三に、サードパーティおよびサプライチェーン・リスク管理（TPRM）の再構築である1。FAQシステムや問い合わせフォーム、業務委託先の管理体制を定期的に技術評価し、外部に公開されたWebシステムと社内の基幹データベースとの間に適切なネットワークセグメンテーション（隔離）を施すことで、委託先経由の横移動（ラテラルムーブメント）を遮断する構成に改めるべきである1。</p>
+
+<p>最後に、組織内における生成AI利用の安全なガバナンス設計と脆弱性管理の高速化である1。シャドーAIの全滅を狙って生成AIを一律に禁止することは隠れ利用を誘発するため、データが学習に使われない法人向け環境を会社側で用意し、入力禁止情報の明確化と全社員教育を並行して実施することが実効性の高い対策となる1。また、ASM（Attack Surface Management）ツールを導入して自社の公開資産を網羅的に把握し、重大な脆弱性情報が公開された際には数日以内に更新・対処を完了する高速運用サイクルを定着させることが、今後の猛攻に耐え得る組織防衛の根幹となる1。</p>
+
+<h3>引用文献</h3>
+
+<ol class="k-reference-list"><li>【2026年最新】情報漏えいが急増したのはAIのせい？直近の事例と, <a href="https://horiemon.ai/school/column/ai-joho-roei-2026/" target="_blank" rel="noopener noreferrer">https://horiemon.ai/school/column/ai-joho-roei-2026/</a></li><li>古川大臣記者会見（令和8年10月6日） - デジタル庁, <a href="https://www.digital.go.jp/speech/minister-261006-01" target="_blank" rel="noopener noreferrer">https://www.digital.go.jp/speech/minister-261006-01</a></li><li>スカラコミュニケーションズへの不正アクセスについてまとめてみた, <a href="https://piyolog.hatenadiary.jp/entry/2026/10/07/120750" target="_blank" rel="noopener noreferrer">https://piyolog.hatenadiary.jp/entry/2026/10/07/120750</a></li><li>2026年9〜10月の情報漏洩19件、公表文を全部読んで考えたこと, <a href="https://zenn.dev/bita/articles/1616afdb93c4a6" target="_blank" rel="noopener noreferrer">https://zenn.dev/bita/articles/1616afdb93c4a6</a></li><li>戸田建設／支払い管理システム等個人情報インシデントの概要と評価, <a href="https://ai.itokoba.com/security-tier/incidents/incident-112/" target="_blank" rel="noopener noreferrer">https://ai.itokoba.com/security-tier/incidents/incident-112/</a></li><li>旭化成セラピューティクス／Pharma DIGITALの個人情報インシデント, <a href="https://ai.itokoba.com/security-tier/incidents/incident-106/" target="_blank" rel="noopener noreferrer">https://ai.itokoba.com/security-tier/incidents/incident-106/</a></li><li>2026年の情報漏洩を手口で分類してみた - Qiita, <a href="https://qiita.com/yama3133/items/071119dfea9ed24d0948" target="_blank" rel="noopener noreferrer">https://qiita.com/yama3133/items/071119dfea9ed24d0948</a></li><li>当社システムに対する不正アクセスの発生および情報漏えい, <a href="https://www.aflac.co.jp/info/yorisou_maintenance.html" target="_blank" rel="noopener noreferrer">https://www.aflac.co.jp/info/yorisou_maintenance.html</a></li><li>GMOリサーチ&amp;AIのアンケート「infoQ」で不正アクセス、最大約95, <a href="https://internet.watch.impress.co.jp/docs/news/2145989.html" target="_blank" rel="noopener noreferrer">https://internet.watch.impress.co.jp/docs/news/2145989.html</a></li><li>2026年10月 「ヤマト後払いサービス」不正アクセスに関するお詫び, <a href="https://blog.phoenix-shop.jp/archives/38232" target="_blank" rel="noopener noreferrer">https://blog.phoenix-shop.jp/archives/38232</a></li><li>ヤマト運輸のクロネコ代金後払いサービスへの不正アクセス, <a href="https://piyolog.hatenadiary.jp/entry/2026/10/05/023139" target="_blank" rel="noopener noreferrer">https://piyolog.hatenadiary.jp/entry/2026/10/05/023139</a></li><li>ヤマト運輸、2026年9月29日「クロネコ代金後払い ... - ECのミカタ, <a href="https://ecnomikata.com/ecnews/eclogistics/51854/" target="_blank" rel="noopener noreferrer">https://ecnomikata.com/ecnews/eclogistics/51854/</a></li><li>日本経済新聞社へのサイバー攻撃となりすましメール送信について, <a href="https://piyolog.hatenadiary.jp/entry/2026/10/05/115509" target="_blank" rel="noopener noreferrer">https://piyolog.hatenadiary.jp/entry/2026/10/05/115509</a></li><li>日経新聞社、Microsoft 365アカウントの情報漏えいと, <a href="https://internet.watch.impress.co.jp/docs/news/2145512.html" target="_blank" rel="noopener noreferrer">https://internet.watch.impress.co.jp/docs/news/2145512.html</a></li><li>日経で相次ぐ不正アクセス 1646人分の個人情報漏えい - ITmedia, <a href="https://www.itmedia.co.jp/business/articles/2610/05/news074.html" target="_blank" rel="noopener noreferrer">https://www.itmedia.co.jp/business/articles/2610/05/news074.html</a></li><li>日経グループへのサイバー攻撃のまとめ―相次ぐインシデント, <a href="https://rocket-boys.co.jp/security-measures-lab/nikkei-group-cyberattacks-cloud-account-incidents-20261005/" target="_blank" rel="noopener noreferrer">https://rocket-boys.co.jp/security-measures-lab/nikkei-group-cyberattacks-cloud-account-incidents-20261005/</a></li><li>日経BP、従業員メールに不正アクセス 個人情報26件漏えいの恐れ, <a href="https://venture-solution.jp/security/cs-117013/" target="_blank" rel="noopener noreferrer">https://venture-solution.jp/security/cs-117013/</a></li><li>日経BP従業員のメールアカウントに不正アクセス - ScanNetSecurity, <a href="https://s.netsecurity.ne.jp/article/2026/10/07/56402.html" target="_blank" rel="noopener noreferrer">https://s.netsecurity.ne.jp/article/2026/10/07/56402.html</a></li><li>GMO系アンケートサイトinfoQに不正アクセス 最大94万件流出, <a href="https://act1.co.jp/2026-10-06-05/" target="_blank" rel="noopener noreferrer">https://act1.co.jp/2026-10-06-05/</a></li><li>当社が運営するアンケートサイト「infoQ」への不正アクセスによる, <a href="https://gmo-research.ai/pressroom/notice/notice-20261005" target="_blank" rel="noopener noreferrer">https://gmo-research.ai/pressroom/notice/notice-20261005</a></li><li>サイバー攻撃で情報漏えい急増、ＡＩ悪用で「短時間・広範囲に」…会員ポイントが不正交換される「二次被害」も, <a href="https://www.yomiuri.co.jp/national/20261006-GYT1T00386/" target="_blank" rel="noopener noreferrer">https://www.yomiuri.co.jp/national/20261006-GYT1T00386/</a></li><li>[Ｇ－ＧＭＯ－ＰＰ 3695.T] 連結子会社運営サイト「infoQ」への不正, <a href="https://finance.biggo.jp/news/jpx_tdnet_140120261006546782" target="_blank" rel="noopener noreferrer">https://finance.biggo.jp/news/jpx_tdnet_140120261006546782</a></li><li>ホワイトエッセンスで約105万アカウントの個人情報漏えい, <a href="https://pirorin.com/whiteessence-personal-data-leak-2026/" target="_blank" rel="noopener noreferrer">https://pirorin.com/whiteessence-personal-data-leak-2026/</a></li><li>ホワイトエッセンス、不正アクセスによるサイバー攻撃で約105万, <a href="https://rocket-boys.co.jp/security-measures-lab/white-essence-data-breach-1-05m/" target="_blank" rel="noopener noreferrer">https://rocket-boys.co.jp/security-measures-lab/white-essence-data-breach-1-05m/</a></li><li>『焼肉きんぐ』公式アプリ 会員管理システムへの第三者からの不正, <a href="https://www.monogatari.co.jp/news/261005_news/" target="_blank" rel="noopener noreferrer">https://www.monogatari.co.jp/news/261005_news/</a></li><li>大起水産 公式アプリへ不正アクセスによるサイバー攻撃、17万, <a href="https://rocket-boys.co.jp/security-measures-lab/daiki-suisan-app-unauthorized-access-174933/" target="_blank" rel="noopener noreferrer">https://rocket-boys.co.jp/security-measures-lab/daiki-suisan-app-unauthorized-access-174933/</a></li><li>大起水産公式アプリに不正アクセス 17万4933人の個人情報漏えいの, <a href="https://sakai-times.com/20261006-2/" target="_blank" rel="noopener noreferrer">https://sakai-times.com/20261006-2/</a></li><li>不正アクセスによる個人情報漏えいのおそれに関するお 詫びと, <a href="https://www.daiki-suisan.co.jp/files/optionallink/00000164_file.pdf" target="_blank" rel="noopener noreferrer">https://www.daiki-suisan.co.jp/files/optionallink/00000164_file.pdf</a></li><li>委託先事業者に対する不正アクセスによるお客様情報の漏えいの, <a href="https://www.citizen.co.jp/release/news/detail/2026/20261006.html" target="_blank" rel="noopener noreferrer">https://www.citizen.co.jp/release/news/detail/2026/20261006.html</a></li><li>医療従事者向け情報提供ウェブサイト「Pharma DIGITAL」への不正, <a href="https://www.asahi-kasei.co.jp/pharma/oshirase_20261006.html" target="_blank" rel="noopener noreferrer">https://www.asahi-kasei.co.jp/pharma/oshirase_20261006.html</a></li><li>旭化成セラピューティクス「Pharma DIGITAL」に不正アクセス, <a href="https://rocket-boys.co.jp/security-measures-lab/asahi-kasei-pharma-digital-data-breach/" target="_blank" rel="noopener noreferrer">https://rocket-boys.co.jp/security-measures-lab/asahi-kasei-pharma-digital-data-breach/</a></li><li>旭化成セラピューティクス「Pharma DIGITAL」に不正アクセス 最大, <a href="https://novaist.jp/articles/pharma-digital-data-breach/" target="_blank" rel="noopener noreferrer">https://novaist.jp/articles/pharma-digital-data-breach/</a></li><li>旭化成セラピューティクスに不正アクセス 医療従事者約51万人分, <a href="https://act1.co.jp/2026-10-07-01/" target="_blank" rel="noopener noreferrer">https://act1.co.jp/2026-10-07-01/</a></li><li>お客様各位 2026/10/07 子会社ファイルサーバへの不正アクセス, <a href="https://www.his.co.jp/assets/20261007.pdf" target="_blank" rel="noopener noreferrer">https://www.his.co.jp/assets/20261007.pdf</a></li><li>戸田建設、管理システムに不正アクセス 取引先・従業員の個人情報, <a href="https://biznews365.jp/business/service/9789/" target="_blank" rel="noopener noreferrer">https://biznews365.jp/business/service/9789/</a></li><li>戸田建設へ不正アクセスによるサイバー攻撃-取引先と従業員の個人, <a href="https://rocket-boys.co.jp/security-measures-lab/toda-construction-data-breach-2026/" target="_blank" rel="noopener noreferrer">https://rocket-boys.co.jp/security-measures-lab/toda-construction-data-breach-2026/</a></li><li>戸田建設 個人情報漏洩 取引先口座情報など最大6000件 ... - エキサイト, <a href="https://www.excite.co.jp/news/article/TBSNews_1480493225156789053/" target="_blank" rel="noopener noreferrer">https://www.excite.co.jp/news/article/TBSNews_1480493225156789053/</a></li><li>戸田建設が情報漏えいを公表 取引先メール最大7200件・従業員4778, <a href="https://himanekoblog.hatenablog.com/entry/2026/10/08/093213" target="_blank" rel="noopener noreferrer">https://himanekoblog.hatenablog.com/entry/2026/10/08/093213</a></li><li>不正アクセスによるお客さま情報漏えいのお詫びとお知らせ - 長野銀行, <a href="https://bank.82group.jp/file.jsp?id=release/2026/pdf/news20261008.pdf" target="_blank" rel="noopener noreferrer">https://bank.82group.jp/file.jsp?id=release/2026/pdf/news20261008.pdf</a></li><li>GMOアンケートサイトに不正アクセス - 個人情報が流出、ポイント, <a href="https://www.security-next.com/191138" target="_blank" rel="noopener noreferrer">https://www.security-next.com/191138</a></li><li>【解説】焼肉きんぐ・大和証券など不正アクセス11件、10月2〜5日, <a href="https://innovatopia.jp/cyber-security/cyber-security-news/118602/" target="_blank" rel="noopener noreferrer">https://innovatopia.jp/cyber-security/cyber-security-news/118602/</a></li><li>日経新聞に不正ログイン なりすましメール9000件・1646人分漏えい, <a href="https://act1.co.jp/2026-10-05-01/" target="_blank" rel="noopener noreferrer">https://act1.co.jp/2026-10-05-01/</a></li><li>日本経済新聞社へのサイバー攻撃と情報漏洩, <a href="https://london3.jp/2026/10/nikkei-incident2026/" target="_blank" rel="noopener noreferrer">https://london3.jp/2026/10/nikkei-incident2026/</a></li><li>個人情報漏洩に関するお知らせとお詫び | 新着情報 - 戸田建設, <a href="https://www.toda.co.jp/news/2026/20261007_006350.html" target="_blank" rel="noopener noreferrer">https://www.toda.co.jp/news/2026/20261007_006350.html</a></li><li>不正アクセスで「大量の個人データが漏えい」 個人情報保護委員会, <a href="https://www.itmedia.co.jp/business/articles/2610/08/news066.html" target="_blank" rel="noopener noreferrer">https://www.itmedia.co.jp/business/articles/2610/08/news066.html</a></li><li>個人情報保護委員会の10月7日の注意喚起を、自社の確認項目に, <a href="https://note.com/zephel01/n/nbfb54cb384d6" target="_blank" rel="noopener noreferrer">https://note.com/zephel01/n/nbfb54cb384d6</a></li><li>不正アクセスによる個人情報漏えい｜2026年9月の事案に見る初動, <a href="https://legalagent.co.jp/column/c327-unauthorized-access-data-breach-2026/" target="_blank" rel="noopener noreferrer">https://legalagent.co.jp/column/c327-unauthorized-access-data-breach-2026/</a></li><li>相次ぐWEBシステムからの情報漏洩事案について, <a href="https://security.macnica.co.jp/blog/2026/10/web-incidents2026.html" target="_blank" rel="noopener noreferrer">https://security.macnica.co.jp/blog/2026/10/web-incidents2026.html</a></li></ol>
+          </div>
+        </article>
+      </main>
+
+      <!-- サイドバー（PC目次固定） -->
+      <aside class="k-sidebar">
+        <div class="k-toc-container" id="pcTocContainer">
+          <div class="k-toc-title">[TABLE OF CONTENTS]</div>
+          <ul class="k-toc-list" id="pcTocList"></ul>
+        </div>
+      </aside>
+
+    </div>
+
+    <footer>
+      © 2026 windows11at | K-UI 2.0 Clean Architecture
+    </footer>
+  </div>
+
+  <!-- モバイル用ボトム固定操作バー -->
+  <div class="k-bottom-bar">
+    <a href="../index.html" class="k-btn-icon">トップ</a>
+    <a href="#mobileTocWrapper" class="k-btn-icon">目次</a>
+    <button type="button" class="k-btn-icon" id="shareBtnBottom">シェア</button>
+    <button type="button" class="k-btn-icon" onclick="window.scrollTo({top:0, behavior:'smooth'})">▲ 上へ</button>
+  </div>
+
+  <script>
+    // 1. スクロール読了進捗バー
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // 2. 目次（Table of Contents）自動抽出スクリプト
+    document.addEventListener('DOMContentLoaded', () => {
+      const articleBody = document.getElementById('articleBody');
+      const headings = articleBody.querySelectorAll('h2, h3');
+      const pcTocList = document.getElementById('pcTocList');
+      const mobileTocList = document.getElementById('mobileTocList');
+
+      if (headings.length === 0) return;
+
+      const mobileUl = document.createElement('ul');
+      mobileUl.className = 'k-toc-list';
+
+      headings.forEach((heading, index) => {
+        const id = 'heading-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        if (heading.tagName.toLowerCase() === 'h3') {
+          li.className = 'toc-h3';
+        }
+
+        const a = document.createElement('a');
+        a.href = '#' + id;
+        a.textContent = heading.textContent;
+
+        li.appendChild(a);
+        pcTocList.appendChild(li);
+
+        const mobileLi = li.cloneNode(true);
+        mobileUl.appendChild(mobileLi);
+      });
+
+      mobileTocList.appendChild(mobileUl);
+    });
+
+    // 3. 共有ボタン機能
+    const shareAction = async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: document.title,
+            url: window.location.href
+          });
+        } catch (e) {}
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('記事のURLをコピーしました！');
+      }
+    };
+
+    document.getElementById('shareBtnTop')?.addEventListener('click', shareAction);
+    document.getElementById('shareBtnBottom')?.addEventListener('click', shareAction);
+  </script>
+</body>
+</html>

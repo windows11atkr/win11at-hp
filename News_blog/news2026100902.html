@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【速報】Google、個人向けGemini無料版を「Flash-Lite」のみに制限へ | windows11at</title>
+  <meta name="description" content="Googleが個人向けGeminiアプリの無料ユーザーに提供するモデルを、2026年10月9日からFlash-Liteのみに制限すると発表。AI Plus、AI Pro、AI Ultraの利用可能モデルも変更されます。">
+
+  <!-- K-UI 2.0 統一ウェブフォント -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===================================================
+       K-UI 2.0 Design Tokens Specification
+       =================================================== */
+    :root {
+      --k-font-body: 'Inter', 'Noto Sans JP', -apple-system, sans-serif;
+      --k-font-dot: 'DotGothic16', monospace;
+
+      --k-tracking-tight: -0.02em;
+      --k-tracking-body: -0.011em;
+      --k-tracking-dot: 0.06em;
+
+      --k-color-bg-base: #F3F8F6;
+      --k-bg-aurora: linear-gradient(135deg, rgba(0, 230, 161, 0.14) 0%, rgba(0, 163, 255, 0.12) 50%, rgba(180, 255, 120, 0.10) 100%);
+
+      --k-glass-bg: rgba(255, 255, 255, 0.72);
+      --k-glass-blur: blur(28px) saturate(190%);
+      --k-glass-blur-heavy: blur(40px) saturate(210%);
+
+      --k-glass-border: 1px solid rgba(0, 200, 160, 0.22);
+      --k-glass-border-hover: 1px solid rgba(0, 163, 255, 0.5);
+
+      --k-color-lime: #00E6A1;
+      --k-color-cyan: #00A3FF;
+      --k-color-text-main: #0F172A;
+      --k-color-text-sub: #64748B;
+
+      --k-shadow-glass: 0 12px 36px rgba(0, 120, 255, 0.06);
+      --k-shadow-glow-lime: 0 0 16px rgba(0, 230, 161, 0.35);
+
+      --k-radius-lg: 14px;
+      --k-radius-md: 10px;
+      --k-radius-sm: 6px;
+
+      --k-duration-press: 90ms;
+      --k-ease-press: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--k-font-body);
+      letter-spacing: var(--k-tracking-body);
+      background-color: var(--k-color-bg-base);
+      background-image: var(--k-bg-aurora);
+      background-attachment: fixed;
+      color: var(--k-color-text-main);
+      line-height: 1.8;
+      padding-top: 68px;
+      padding-bottom: 90px;
+      overflow-x: hidden;
+    }
+
+    /* 上部固定バー & 読了進捗ライン */
+    .k-header-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur);
+      backdrop-filter: var(--k-glass-blur);
+      border-bottom: var(--k-glass-border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .k-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2.5px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--k-color-lime), var(--k-color-cyan));
+      transition: width 0.1s ease-out;
+    }
+
+    .k-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--k-color-text-main);
+    }
+
+    .k-brand-logo {
+      font-family: var(--k-font-dot);
+      font-size: 16px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-text-main);
+      font-weight: bold;
+    }
+
+    .k-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .k-btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.6);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-sm);
+      color: var(--k-color-text-main);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform var(--k-duration-press) var(--k-ease-press), border-color 0.2s;
+    }
+
+    .k-btn-icon:active {
+      transform: scale(0.95);
+      border-color: var(--k-color-lime);
+      box-shadow: var(--k-shadow-glow-lime);
+    }
+
+    .k-btn-icon svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* レイアウト構造 */
+    .k-container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .k-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    @media (min-width: 860px) {
+      .k-layout {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .k-main-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .k-sidebar {
+        width: 310px;
+        position: sticky;
+        top: 80px;
+        flex-shrink: 0;
+      }
+      .k-bottom-bar { display: none !important; }
+    }
+
+    /* カード・記事構造 */
+    .k-card {
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur);
+      backdrop-filter: var(--k-glass-blur);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-md);
+      box-shadow: var(--k-shadow-glass);
+      padding: 24px;
+      position: relative;
+    }
+
+    .k-card::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 6px;
+      height: 6px;
+      background-image: radial-gradient(var(--k-color-lime) 1.5px, transparent 0);
+      background-size: 3px 3px;
+      opacity: 0.75;
+    }
+
+    .k-article-header {
+      margin-bottom: 24px;
+      border-bottom: 1px dashed rgba(0, 200, 160, 0.25);
+      padding-bottom: 16px;
+    }
+
+    .k-tag-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--k-font-dot);
+      font-size: 11px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-cyan);
+      background: rgba(0, 163, 255, 0.08);
+      border: 1px solid rgba(0, 163, 255, 0.25);
+      padding: 3px 8px;
+      border-radius: var(--k-radius-sm);
+      margin-bottom: 12px;
+    }
+
+    .k-article-title {
+      font-size: clamp(22px, 3.5vw, 30px);
+      line-height: 1.35;
+      letter-spacing: var(--k-tracking-tight);
+      font-weight: 700;
+      color: var(--k-color-text-main);
+      margin-bottom: 10px;
+    }
+
+    .k-article-meta {
+      font-size: 12px;
+      color: var(--k-color-text-sub);
+      display: flex;
+      gap: 16px;
+    }
+
+    /* 記事本文スタイル */
+    .k-article-body h2 {
+      font-size: 19px;
+      font-weight: 700;
+      margin: 32px 0 14px;
+      padding-left: 10px;
+      border-left: 3px solid var(--k-color-cyan);
+      color: var(--k-color-text-main);
+    }
+
+    .k-article-body h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 10px;
+      color: var(--k-color-text-main);
+    }
+
+    .k-article-body p {
+      font-size: 14.5px;
+      margin-bottom: 18px;
+      color: #1E293B;
+    }
+
+    .k-notice {
+      background: rgba(0, 230, 161, 0.06);
+      border: 1px solid rgba(0, 230, 161, 0.3);
+      border-radius: var(--k-radius-sm);
+      padding: 14px 16px;
+      font-size: 13.5px;
+      margin: 20px 0;
+    }
+
+
+    /* 記事内データテーブル */
+    .k-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 20px 0 24px;
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-md);
+      background: rgba(255, 255, 255, 0.48);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .k-data-table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--k-color-text-main);
+    }
+
+    .k-data-table th,
+    .k-data-table td {
+      padding: 12px 14px;
+      text-align: center;
+      border-right: 1px solid rgba(0, 200, 160, 0.16);
+      border-bottom: 1px solid rgba(0, 200, 160, 0.16);
+      white-space: nowrap;
+    }
+
+    .k-data-table th:last-child,
+    .k-data-table td:last-child {
+      border-right: 0;
+    }
+
+    .k-data-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .k-data-table thead th {
+      background: rgba(0, 163, 255, 0.08);
+      color: var(--k-color-text-main);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(0, 163, 255, 0.28);
+    }
+
+    .k-data-table tbody tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .k-data-table tbody td:first-child {
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .k-data-table tbody td:not(:first-child) {
+      font-weight: 700;
+    }
+
+    .k-reference-list {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      font-size: 13.5px;
+    }
+
+    .k-reference-list li {
+      margin-bottom: 8px;
+    }
+
+    .k-reference-list a {
+      color: #0369A1;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .k-reference-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* 自動目次（Table of Contents） */
+    .k-toc-container {
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur);
+      backdrop-filter: var(--k-glass-blur);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-md);
+      padding: 18px;
+      box-shadow: var(--k-shadow-glass);
+    }
+
+    .k-toc-title {
+      font-family: var(--k-font-dot);
+      font-size: 13px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-text-main);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .k-toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .k-toc-list a {
+      color: var(--k-color-text-sub);
+      text-decoration: none;
+      transition: color 0.15s;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .k-toc-list a:hover {
+      color: var(--k-color-cyan);
+    }
+
+    .k-toc-list .toc-h3 {
+      padding-left: 14px;
+      font-size: 12px;
+    }
+
+    /* モバイル向けインライン目次（Accordion） */
+    .k-mobile-toc {
+      margin-bottom: 20px;
+    }
+
+    .k-mobile-toc summary {
+      cursor: pointer;
+      font-family: var(--k-font-dot);
+      font-size: 13px;
+      color: var(--k-color-text-main);
+      padding: 10px 14px;
+      background: rgba(0, 163, 255, 0.05);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-sm);
+    }
+
+    @media (min-width: 860px) {
+      .k-mobile-toc { display: none; }
+    }
+
+    /* モバイル専用 ボトム固定バー */
+    .k-bottom-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      height: 54px;
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur-heavy);
+      backdrop-filter: var(--k-glass-blur-heavy);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-lg);
+      box-shadow: var(--k-shadow-glass);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 1000;
+      padding: 0 8px;
+    }
+
+    footer {
+      text-align: center;
+      font-family: var(--k-font-dot);
+      font-size: 11px;
+      color: var(--k-color-text-sub);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 上部ナビゲーションバー -->
+  <header class="k-header-nav">
+    <div class="k-progress-bar" id="progressBar"></div>
+    <a href="../index.html" class="k-header-brand">
+      <span class="k-brand-logo">windows11at</span>
+    </a>
+    <div class="k-header-actions">
+      <a href="../articles.html" class="k-btn-icon">記事一覧</a>
+      <button type="button" class="k-btn-icon" id="shareBtnTop" aria-label="共有">
+        <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="k-container">
+    <div class="k-layout">
+
+      <!-- メイン記事エリア -->
+      <main class="k-main-content">
+        <article class="k-card">
+          <header class="k-article-header">
+            <span class="k-tag-dot">[NEWS / AI]</span>
+            <h1 class="k-article-title">【速報】Google、個人向けGemini無料版を「Flash-Lite」のみに制限へ</h1>
+            <div class="k-article-meta">
+              <span>DATE: 2026/10/09</span>
+            </div>
+          </header>
+
+          <!-- モバイル用インライン目次 -->
+          <details class="k-mobile-toc" id="mobileTocWrapper">
+            <summary>[TOC] 目次を開く</summary>
+            <div style="padding: 12px 0 0 0;" id="mobileTocList"></div>
+          </details>
+
+          <div class="k-article-body" id="articleBody">
+            <p>Googleは、個人向け「Gemini」アプリで利用できるAIモデルの提供条件を変更すると案内しています。無料ユーザーへの変更は2026年10月9日から適用され、サブスクリプションに加入していないユーザーが利用できるモデルは「Flash-Lite」のみに限定されます。</p>
+
+            <div class="k-notice">
+              <strong>【重要】</strong> 今回の変更はGeminiアプリそのものが無料で使えなくなるというものではなく、無料ユーザーが選択できるAIモデルが変更されるものです。
+            </div>
+
+            <h2>無料ユーザーは「Flash-Lite」のみに</h2>
+            <p>これまで個人向けの無料版では、条件付きで「Flash」など複数のモデルを利用できました。今回の変更後、Google AIのサブスクリプションに加入していないユーザーが利用できるモデルは「Flash-Lite」のみとなります。</p>
+
+            <p>「Flash-Lite」は、Googleが提供する軽量・高速モデルです。日常的な質問や文章作成など、一般的な用途では引き続きGeminiを無料で利用できます。</p>
+
+            <h2>各プランで利用できるモデル</h2>
+            <p>変更後のモデル提供範囲は、Google AIのプランによって異なります。</p>
+
+            <div class="k-table-wrap">
+              <table class="k-data-table">
+                <thead>
+                  <tr>
+                    <th>プラン</th>
+                    <th>Flash-Lite</th>
+                    <th>Flash</th>
+                    <th>Pro</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>プランなし（無料）</td>
+                    <td>○</td>
+                    <td>×</td>
+                    <td>×</td>
+                  </tr>
+                  <tr>
+                    <td>Google AI Plus</td>
+                    <td>○</td>
+                    <td>○</td>
+                    <td>×</td>
+                  </tr>
+                  <tr>
+                    <td>Google AI Pro</td>
+                    <td>○</td>
+                    <td>○</td>
+                    <td>○</td>
+                  </tr>
+                  <tr>
+                    <td>Google AI Ultra</td>
+                    <td>○</td>
+                    <td>○</td>
+                    <td>○</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>無料版から「Flash」を使うには</h3>
+            <p>「Flash」を利用するには、Google AI Plus以上のプランが必要になります。「Pro」を利用する場合は、Google AI ProまたはGoogle AI Ultraへの加入が必要です。</p>
+
+            <h2>変更は2026年10月9日から</h2>
+            <p>無料ユーザーへの変更は2026年10月9日から適用されます。一方、Google AI Plus加入者については、変更時期がメールで案内されるとされています。</p>
+
+            <h2>Gemini自体が無料で使えなくなるわけではない</h2>
+            <p>今回の変更で、無料版のGeminiアプリが終了するわけではありません。無料ユーザーは引き続き「Flash-Lite」を利用できます。</p>
+
+            <p>そのため、文章の要約や作成、日常的な質問など、一般的な用途でGeminiを利用しているユーザーは、無料版でも引き続き利用できます。一方、より上位の「Flash」や「Pro」を利用しているユーザーには、今回の変更による影響が大きくなります。</p>
+
+            <h2>参考・引用元</h2>
+            <ul class="k-reference-list">
+              <li><a href="https://gigazine.net/news/20261006-google-gemini-ai-subscription/" target="_blank" rel="noopener noreferrer">GIGAZINE「Googleが無料・下位プランで使えるGeminiのモデルを制限」</a></li>
+              <li><a href="https://forest.watch.impress.co.jp/docs/news/2145483.html" target="_blank" rel="noopener noreferrer">窓の杜「『Gemini』アプリ、個人で無償利用できるモデルは『Flash-Lite』のみに ～10月9日より」</a></li>
+              <li><a href="https://support.google.com/gemini/answer/17004136" target="_blank" rel="noopener noreferrer">Google Gemini アプリ ヘルプ「Gemini モデルへのアクセスと使用量上限の変更」</a></li>
+            </ul>
+          </div>
+        </article>
+      </main>
+
+      <!-- サイドバー（PC目次固定） -->
+      <aside class="k-sidebar">
+        <div class="k-toc-container" id="pcTocContainer">
+          <div class="k-toc-title">[TABLE OF CONTENTS]</div>
+          <ul class="k-toc-list" id="pcTocList"></ul>
+        </div>
+      </aside>
+
+    </div>
+
+    <footer>
+      © 2026 windows11at | K-UI 2.0 Clean Architecture
+    </footer>
+  </div>
+
+  <!-- モバイル用ボトム固定操作バー -->
+  <div class="k-bottom-bar">
+    <a href="../index.html" class="k-btn-icon">トップ</a>
+    <a href="#mobileTocWrapper" class="k-btn-icon">目次</a>
+    <button type="button" class="k-btn-icon" id="shareBtnBottom">シェア</button>
+    <button type="button" class="k-btn-icon" onclick="window.scrollTo({top:0, behavior:'smooth'})">▲ 上へ</button>
+  </div>
+
+  <script>
+    // 1. スクロール読了進捗バー
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // 2. 目次（Table of Contents）自動抽出スクリプト
+    document.addEventListener('DOMContentLoaded', () => {
+      const articleBody = document.getElementById('articleBody');
+      const headings = articleBody.querySelectorAll('h2, h3');
+      const pcTocList = document.getElementById('pcTocList');
+      const mobileTocList = document.getElementById('mobileTocList');
+
+      if (headings.length === 0) return;
+
+      const mobileUl = document.createElement('ul');
+      mobileUl.className = 'k-toc-list';
+
+      headings.forEach((heading, index) => {
+        const id = 'heading-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        if (heading.tagName.toLowerCase() === 'h3') {
+          li.className = 'toc-h3';
+        }
+
+        const a = document.createElement('a');
+        a.href = '#' + id;
+        a.textContent = heading.textContent;
+
+        li.appendChild(a);
+        pcTocList.appendChild(li);
+
+        const mobileLi = li.cloneNode(true);
+        mobileUl.appendChild(mobileLi);
+      });
+
+      mobileTocList.appendChild(mobileUl);
+    });
+
+    // 3. 共有ボタン機能
+    const shareAction = async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: document.title,
+            url: window.location.href
+          });
+        } catch (e) {}
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('記事のURLをコピーしました！');
+      }
+    };
+
+    document.getElementById('shareBtnTop')?.addEventListener('click', shareAction);
+    document.getElementById('shareBtnBottom')?.addEventListener('click', shareAction);
+  </script>
+</body>
+</html>

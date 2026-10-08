@@ -1,33 +1,297 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="description" content="記事一覧 | windows11at"><title>記事一覧 | windows11at | windows11at</title><style>
-:root{--bg-page:#f3f4f6;--bg-card:rgba(255,255,255,.95);--text-main:#1f2937;--text-sub:#6b7280;--highlight-line:rgba(255,255,255,.7);--shadow-ambient:rgba(13,17,29,.06);--aurora-start:#0d6efd;--aurora-mid:#0dcaf0;--aurora-end:#20c997;--glow-color:rgba(13,202,240,.35)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg-page);color:var(--text-main);line-height:1.7;padding:20px 12px;overflow-x:hidden}
-.container{width:100%;max-width:1100px;margin:auto}
-header{margin-bottom:24px;padding:0 4px}.site-header-link{display:block;color:inherit;text-decoration:none}.site-header-link header{cursor:pointer}.site-header-link header:hover{filter:brightness(1.03)}
-.blog-title{font-size:24px;font-weight:600;letter-spacing:-.5px;color:#0d111d}.blog-subtitle{font-size:12px;color:var(--text-sub);margin-top:2px}
-.section-title{font-size:13px;font-weight:600;color:var(--text-sub);text-transform:uppercase;letter-spacing:1px;margin:0 0 12px;padding-left:4px}
-.card{background:var(--bg-card);border:1px solid rgba(0,0,0,.05);border-top:1px solid var(--highlight-line);border-radius:24px;padding:24px;box-shadow:0 10px 30px var(--shadow-ambient);margin-bottom:24px}
-.hero{background:linear-gradient(135deg,var(--aurora-start),var(--aurora-mid),var(--aurora-end));color:#fff;border-radius:24px;padding:28px 26px;margin-bottom:24px;box-shadow:0 10px 32px var(--glow-color)}
-.hero h1{font-size:clamp(25px,5vw,38px);line-height:1.3;margin-bottom:8px}.hero p{font-size:14px;opacity:.94}
-.article-card{background:var(--bg-card);border:1px solid rgba(0,0,0,.05);border-top:1px solid var(--highlight-line);border-radius:24px;padding:24px;box-shadow:0 10px 30px var(--shadow-ambient);margin-bottom:18px}
-.kicker{display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;background:rgba(13,110,253,.10);color:#0d6efd;font-size:11px;font-weight:700;margin-bottom:10px}
-.article-card h2{font-size:20px;line-height:1.45;margin-bottom:8px}.meta{font-size:12px;color:var(--text-sub);margin-bottom:12px}.summary{font-size:13px;color:var(--text-sub);line-height:1.7;margin-bottom:16px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 16px;border-radius:14px;background:linear-gradient(135deg,var(--aurora-start),var(--aurora-end));color:#fff;text-decoration:none;font-size:13px;font-weight:600;box-shadow:0 4px 15px var(--glow-color);transition:.2s}.btn:hover{transform:translateY(-2px)}
-.quick-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.quick-action{min-height:90px;padding:15px;border:1px solid rgba(13,110,253,.1);border-radius:18px;background:var(--bg-card);box-shadow:0 8px 20px var(--shadow-ambient);color:var(--text-main);text-decoration:none;transition:.2s}.quick-action:hover{transform:translateY(-2px);border-color:rgba(13,202,240,.45)}.quick-action-icon{display:block;margin-bottom:6px;font-size:20px}.quick-action strong{display:block;font-size:13px}.quick-action small{display:block;margin-top:2px;color:var(--text-sub);font-size:11px}
-footer{margin-top:40px;padding:20px 8px;border-top:1px solid rgba(0,0,0,.05);font-size:11px;color:var(--text-sub);text-align:center}
-.back-link{display:inline-flex;align-items:center;gap:7px;margin-bottom:18px;color:#0d6efd;text-decoration:none;font-size:13px;font-weight:600}
-.article-main{background:var(--bg-card);border:1px solid rgba(0,0,0,.05);border-top:1px solid var(--highlight-line);border-radius:24px;padding:28px;box-shadow:0 10px 30px var(--shadow-ambient)}
-.article-main h1{font-size:clamp(24px,4vw,36px);line-height:1.4;letter-spacing:-.7px;margin-bottom:8px}.date{font-size:13px;color:var(--text-sub);margin-bottom:26px}.lead{font-size:16px;line-height:1.9;margin-bottom:26px}.article-body p{font-size:14px;line-height:1.9;margin:0 0 20px}.article-body h2{font-size:19px;line-height:1.5;margin:30px 0 12px;padding-left:12px;border-left:4px solid #0dcaf0}.notice{margin:26px 0;padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,rgba(13,110,253,.07),rgba(32,201,151,.07));border:1px solid rgba(13,110,253,.12);font-size:13px}
-.spec-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0}.spec{padding:14px;border-radius:16px;background:rgba(0,0,0,.025);border:1px solid rgba(0,0,0,.04)}.spec b{display:block;font-size:12px;color:var(--text-sub);margin-bottom:3px}.spec span{font-size:14px;font-weight:600}
-.nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.nav a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 15px;border-radius:14px;background:var(--bg-card);border:1px solid rgba(0,0,0,.06);color:var(--text-main);text-decoration:none;font-size:13px;font-weight:600;box-shadow:0 8px 20px var(--shadow-ambient)}.nav a.primary{background:linear-gradient(135deg,var(--aurora-start),var(--aurora-end));color:#fff;border:0}
-body.is-dark-mode{--bg-page:#070d1c;--bg-card:rgba(14,25,47,.94);--text-main:#edf6ff;--text-sub:#a9bbd0;--highlight-line:rgba(142,233,255,.17);--shadow-ambient:rgba(0,0,0,.38)}body.is-dark-mode .blog-title{color:#f5fbff}
-@media(min-width:600px){.quick-actions{grid-template-columns:repeat(3,1fr)}.spec-grid{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:768px){body{padding:40px 20px}header{margin-bottom:30px}.blog-title{font-size:28px}.hero{padding:34px}.article-main{padding:38px 42px}.article-card{padding:28px}.article-card h2{font-size:22px}}
-</style></head><body><div class="container">
-<a class="site-header-link" href="index.html"><header><div class="blog-title">windows11at</div><div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div></header></a>
-<div class="section-title">Articles</div>
-<div class="article-card"><span class="kicker">AI · 2026/10/01</span><h2>Google DeepMind、次世代AIモデル「Gemini 4 Argon」を発表</h2><div class="meta">100万トークン出力と高度推論を搭載</div><p class="summary">Google DeepMindが発表した「Gemini 4 Argon」について、長時間ワークフロー、料金、ベンチマーク、社内活用、Fairwindプログラムなどをまとめた記事です。</p><a class="btn" href="News_blog/news2026100101.html">記事を読む →</a></div>
-<div class="article-card"><span class="kicker">APPLE · 2026/09/10</span><h2>Apple、新しいiPhoneを発表</h2><div class="meta">iPhone 18 Pro / iPhone 18 Pro Max / iPhone Duo</div><p class="summary">iPhone 18 Proシリーズの可変絞りやA20 Pro、iPhone Duoの折りたたみディスプレイなどを簡潔にまとめた記事です。</p><a class="btn" href="article2.html">記事を読む →</a></div>
-<div class="article-card"><span class="kicker">NEWS · SECURITY · 2026/09/09</span><h2>【速報】Microsoft、974件の脆弱性を修正</h2><div class="meta">Windows関連は723件</div><p class="summary">Microsoftの9月の月例セキュリティ更新を解説。悪用確認済みのゼロデイも含まれる大規模アップデートです。</p><a class="btn" href="news2026090901.html">記事を読む →</a></div>
-<div class="article-card"><span class="kicker">AI · 2026/10/01</span><h2>Google DeepMindが次世代AIモデル「Gemini 4 Argon」を発表</h2><div class="meta">100万トークン出力と高度推論</div><p class="summary">Gemini 4 Argonの技術的進化、API料金、ベンチマーク、Google社内インフラでの検証、Fairwindプログラム、段階的リリースについて詳しく解説。</p><a class="btn" href="News_blog/news2026100101.html">記事を読む →</a></div><div class="nav"><a class="primary" href="index.html">← トップページ</a></div>
-<footer>© 2026 windows11at</footer></div><script>if(localStorage.getItem("windows11at-dark-mode")==="on")document.body.classList.add("is-dark-mode");</script></body></html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="記事一覧 | windows11at">
+  <title>記事一覧 | windows11at</title>
+
+  <!-- K-UI 2.0 統一ウェブフォント -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===================================================
+       K-UI 2.0 Design Tokens Specification
+       =================================================== */
+    :root {
+      --k-font-body: 'Inter', 'Noto Sans JP', -apple-system, sans-serif;
+      --k-font-dot: 'DotGothic16', monospace;
+
+      --k-tracking-tight: -0.02em;
+      --k-tracking-body: -0.011em;
+      --k-tracking-dot: 0.06em;
+
+      --k-color-bg-base: #F3F8F6;
+      --k-bg-aurora: linear-gradient(135deg, rgba(0, 230, 161, 0.14) 0%, rgba(0, 163, 255, 0.12) 50%, rgba(180, 255, 120, 0.10) 100%);
+
+      --k-glass-bg: rgba(255, 255, 255, 0.72);
+      --k-glass-blur: blur(28px) saturate(190%);
+      --k-glass-blur-heavy: blur(40px) saturate(210%);
+
+      --k-glass-border: 1px solid rgba(0, 200, 160, 0.22);
+      --k-glass-border-hover: 1px solid rgba(0, 163, 255, 0.5);
+
+      --k-color-lime: #00E6A1;
+      --k-color-cyan: #00A3FF;
+      --k-color-text-main: #0F172A;
+      --k-color-text-sub: #64748B;
+
+      --k-shadow-glass: 0 12px 36px rgba(0, 120, 255, 0.06);
+      --k-shadow-glow-lime: 0 0 16px rgba(0, 230, 161, 0.35);
+
+      --k-radius-lg: 14px;
+      --k-radius-md: 10px;
+      --k-radius-sm: 6px;
+
+      --k-duration-press: 90ms;
+      --k-ease-press: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--k-font-body);
+      letter-spacing: var(--k-tracking-body);
+      background-color: var(--k-color-bg-base);
+      background-image: var(--k-bg-aurora);
+      background-attachment: fixed;
+      color: var(--k-color-text-main);
+      line-height: 1.8;
+      padding-top: 24px;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+
+    .k-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ヘッダーエリア */
+    header {
+      margin-bottom: 28px;
+    }
+
+    .site-header-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .blog-title {
+      font-family: var(--k-font-dot);
+      font-size: 24px;
+      letter-spacing: var(--k-tracking-dot);
+      font-weight: 700;
+      color: var(--k-color-text-main);
+    }
+
+    .blog-subtitle {
+      font-size: 12px;
+      color: var(--k-color-text-sub);
+      margin-top: 2px;
+    }
+
+    .section-title {
+      font-family: var(--k-font-dot);
+      font-size: 13px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-cyan);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 記事カード */
+    .article-card {
+      background: var(--k-glass-bg);
+      -webkit-backdrop-filter: var(--k-glass-blur);
+      backdrop-filter: var(--k-glass-blur);
+      border: var(--k-glass-border);
+      border-radius: var(--k-radius-md);
+      box-shadow: var(--k-shadow-glass);
+      padding: 22px 24px;
+      margin-bottom: 20px;
+      position: relative;
+      transition: border-color 0.2s, transform var(--k-duration-press) var(--k-ease-press);
+    }
+
+    .article-card::after {
+      content: '';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 6px;
+      height: 6px;
+      background-image: radial-gradient(var(--k-color-lime) 1.5px, transparent 0);
+      background-size: 3px 3px;
+      opacity: 0.75;
+    }
+
+    .article-card:hover {
+      border: var(--k-glass-border-hover);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--k-font-dot);
+      font-size: 11px;
+      letter-spacing: var(--k-tracking-dot);
+      color: var(--k-color-cyan);
+      background: rgba(0, 163, 255, 0.08);
+      border: 1px solid rgba(0, 163, 255, 0.25);
+      padding: 3px 8px;
+      border-radius: var(--k-radius-sm);
+      margin-bottom: 12px;
+    }
+
+    .article-card h2 {
+      font-size: 18.5px;
+      line-height: 1.4;
+      letter-spacing: var(--k-tracking-tight);
+      font-weight: 700;
+      color: var(--k-color-text-main);
+      margin-bottom: 8px;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: var(--k-color-text-sub);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .summary {
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    /* K-UI アクションボタン */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 38px;
+      padding: 0 16px;
+      border-radius: var(--k-radius-sm);
+      background: rgba(255, 255, 255, 0.85);
+      border: var(--k-glass-border);
+      color: var(--k-color-text-main);
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform var(--k-duration-press) var(--k-ease-press), border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+      border-color: var(--k-color-lime);
+      box-shadow: var(--k-shadow-glow-lime);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(0, 230, 161, 0.15), rgba(0, 163, 255, 0.15));
+      border: 1px solid rgba(0, 200, 160, 0.35);
+    }
+
+    .nav {
+      display: flex;
+      margin-top: 28px;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding: 16px 0;
+      border-top: 1px dashed rgba(0, 200, 160, 0.25);
+      font-family: var(--k-font-dot);
+      font-size: 11px;
+      color: var(--k-color-text-sub);
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      body { padding-top: 40px; }
+      .blog-title { font-size: 28px; }
+      .article-card { padding: 26px 28px; }
+      .article-card h2 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="k-container">
+    <a class="site-header-link" href="index.html">
+      <header>
+        <div class="blog-title">windows11at</div>
+        <div class="blog-subtitle">ガジェット要塞と自作アプリ開発の記録</div>
+      </header>
+    </a>
+
+    <div class="section-title">[ARTICLES / ARCHIVE]</div>
+
+    <article class="article-card">
+      <span class="kicker">[AI] · 2026/10/09</span>
+      <h2>【速報】Google、個人向けGemini無料版を「Flash-Lite」のみに制限へ</h2>
+      <div class="meta">無料ではGeminiの賢いモデルが利用できなくなる</div>
+      <p class="summary">2026年10月9日から、課金していないユーザーはGeminiをFlash-Liteしか利用できなくなります</p>
+      <a class="btn btn-primary" href="News_blog/news2026100902.html">記事を読む →</a>
+    </article>
+
+    <!-- 新規追加記事：2026年10月 国内企業・機関の情報漏洩事案 -->
+    <article class="article-card">
+      <span class="kicker">[NEWS / SECURITY] · 2026/10/09</span>
+      <h2>2026年10月における国内企業・機関の情報漏洩事案に関する包括的分析報告書</h2>
+      <div class="meta">流出判明・懸念累計2,600万件超のセキュリティインシデント事例解説</div>
+      <p class="summary">2026年10月初頭に相次ぎ公表された大規模な不正アクセスおよび情報漏洩事案について、原因・被害規模・侵入手口および今後の防衛戦略を網羅的にまとめた包括分析報告書です。</p>
+      <a class="btn btn-primary" href="News_blog/news2026100901.html">記事を読む →</a>
+    </article>
+
+    <!-- 記事: Gemini 4 Argon -->
+    <article class="article-card">
+      <span class="kicker">[AI] · 2026/10/01</span>
+      <h2>Google DeepMind、次世代AIモデル「Gemini 4 Argon」を発表</h2>
+      <div class="meta">100万トークン出力と高度推論を搭載</div>
+      <p class="summary">Google DeepMindが発表した「Gemini 4 Argon」について、長時間ワークフロー、料金、ベンチマーク、社内活用、Fairwindプログラムなどをまとめた記事です。</p>
+      <a class="btn" href="News_blog/news2026100101.html">記事を読む →</a>
+    </article>
+
+    <!-- 記事: Apple iPhone 18 -->
+    <article class="article-card">
+      <span class="kicker">[APPLE] · 2026/09/10</span>
+      <h2>Apple、新しいiPhoneを発表</h2>
+      <div class="meta">iPhone 18 Pro / iPhone 18 Pro Max / iPhone Duo</div>
+      <p class="summary">iPhone 18 Proシリーズの可変絞りやA20 Pro、iPhone Duoの折りたたみディスプレイなどを簡潔にまとめた記事です。</p>
+      <a class="btn" href="article2.html">記事を読む →</a>
+    </article>
+
+    <!-- 記事: Microsoft 脆弱性修正 -->
+    <article class="article-card">
+      <span class="kicker">[NEWS / SECURITY] · 2026/09/09</span>
+      <h2>【速報】Microsoft、974件の脆弱性を修正</h2>
+      <div class="meta">Windows関連は723件――過去最大級の月例アップデート</div>
+      <p class="summary">Microsoftの9月の月例セキュリティ更新を解説。悪用確認済みのゼロデイも含まれる大規模アップデートです。</p>
+      <a class="btn" href="news2026090901.html">記事を読む →</a>
+    </article>
+
+    <div class="nav">
+      <a class="btn btn-primary" href="index.html">← トップページ</a>
+    </div>
+
+    <footer>
+      © 2026 windows11at | K-UI 2.0 Clean Architecture
+    </footer>
+  </div>
+
+</body>
+</html>
