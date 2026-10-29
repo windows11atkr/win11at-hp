@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xperia破壊ニキ | 限界突破・検証ポータル OFFICIAL SITE</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#08080c',
+                            dark: '#101018',
+                            card: '#181824',
+                            red: '#ff0055',
+                            purple: '#9d00ff',
+                            neon: '#00f0ff',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon-red': '0 0 20px rgba(255, 0, 85, 0.5), 0 0 40px rgba(255, 0, 85, 0.2)',
+                        'neon-purple': '0 0 20px rgba(157, 0, 255, 0.5), 0 0 40px rgba(157, 0, 255, 0.2)',
+                        'neon-blue': '0 0 20px rgba(0, 240, 255, 0.5), 0 0 40px rgba(0, 240, 255, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #08080c;
+            color: #f3f4f6;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glitch Animation Effects */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip: rect(0, 0, 0, 0);
+        }
+
+        .glitch::before {
+            left: -2px;
+            text-shadow: 2px 0 #ff0055;
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: 2px;
+            text-shadow: -2px 0 #00f0ff;
+            animation: glitch-anim2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 30px, 0); }
+            20% { clip: rect(40px, 9999px, 60px, 0); }
+            40% { clip: rect(20px, 9999px, 80px, 0); }
+            60% { clip: rect(70px, 9999px, 10px, 0); }
+            80% { clip: rect(30px, 9999px, 50px, 0); }
+            100% { clip: rect(60px, 9999px, 90px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(50px, 9999px, 20px, 0); }
+            20% { clip: rect(10px, 9999px, 70px, 0); }
+            40% { clip: rect(80px, 9999px, 30px, 0); }
+            60% { clip: rect(30px, 9999px, 60px, 0); }
+            80% { clip: rect(60px, 9999px, 10px, 0); }
+            100% { clip: rect(20px, 9999px, 40px, 0); }
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(24, 24, 36, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 85, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(255, 0, 85, 0.3);
+        }
+
+        /* Screen Shake Animation */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .shake-active {
+            animation: shake 0.2s ease-in-out infinite;
+        }
+
+        /* Phone Simulator Cracks Overlay */
+        .crack-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        /* Scanline Effect */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.3)
+            );
+            background-size: 100% 4px;
+        }
+
+        /* Animated Grid Background */
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen text-gray-100 selection:bg-cyber-red selection:text-white">
+
+    <!-- Ambient Grid & Glow Overlay -->
+    <div class="fixed inset-0 cyber-grid pointer-events-none z-0"></div>
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-cyber-purple/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-cyber-red/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 glass-card border-b border-white/10 px-4 lg:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyber-red to-cyber-purple flex items-center justify-center font-extrabold text-xl shadow-neon-red group-hover:scale-105 transition-transform">
+                    X
+                </div>
+                <div>
+                    <span class="font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-cyber-red glitch" data-text="Xperia破壊ニキ">Xperia破壊ニキ</span>
+                    <span class="block text-[10px] text-gray-400 font-mono tracking-widest uppercase">Official Cyber Portal</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 font-mono text-sm">
+                <a href="#about" class="text-gray-300 hover:text-cyber-neon transition-colors"><i class="fa-solid fa-user-ninja text-cyber-red mr-2"></i>PROFILE</a>
+                <a href="#tests" class="text-gray-300 hover:text-cyber-neon transition-colors"><i class="fa-solid fa-flask text-cyber-purple mr-2"></i>TEST LOGS</a>
+                <a href="#simulator" class="text-gray-300 hover:text-cyber-neon transition-colors"><i class="fa-solid fa-gamepad text-cyber-neon mr-2"></i>SIMULATOR</a>
+                <a href="#guestbook" class="text-gray-300 hover:text-cyber-neon transition-colors"><i class="fa-solid fa-comments text-amber-400 mr-2"></i>GUESTBOOK</a>
+            </nav>
+
+            <!-- Sound FX Toggle & Mobile Button -->
+            <div class="flex items-center gap-4">
+                <button id="soundToggleBtn" onclick="toggleAudio()" class="px-3 py-1.5 rounded-full text-xs font-mono bg-cyber-card border border-white/10 hover:border-cyber-neon flex items-center gap-2 transition-all">
+                    <i class="fa-solid fa-volume-xmark text-cyber-red" id="soundIcon"></i>
+                    <span id="soundLabel" class="hidden sm:inline text-gray-400">SOUND: OFF</span>
+                </button>
+                <a href="#simulator" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyber-red to-cyber-purple text-xs font-bold tracking-wider hover:opacity-90 shadow-neon-red transition-all">
+                    <i class="fa-solid fa-hammer"></i> 破壊シミュレータ
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+
+        <!-- Hero Section -->
+        <section class="relative min-h-[85vh] flex items-center justify-center px-4 py-16 overflow-hidden">
+            <div class="max-w-5xl mx-auto text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border-cyber-red/40 text-cyber-red font-mono text-xs mb-6 shadow-neon-red">
+                    <span class="w-2 h-2 rounded-full bg-cyber-red animate-ping"></span>
+                    XPERIA ULTIMATE DURABILITY EXPERIMENT
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-tight mb-6">
+                    愛ゆえの<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-red via-purple-400 to-cyber-neon">「極限破壊」</span><br>
+                    Xperiaの真価を解き放つ。
+                </h1>
+
+                <p class="text-base sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                    「何台壊れても、俺のXperia愛は折れない。」<br>
+                    落下、煮沸、凍結、超高圧— 限界を超えた耐久テストの記録と、伝説の検証劇がここに。
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#simulator" onclick="playEffectSound('crash')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyber-red to-cyber-purple font-bold text-lg shadow-neon-red hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+                        Xperiaを壊してみる (シミュレーション)
+                    </a>
+                    <a href="#tests" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card border border-white/20 hover:border-cyber-neon font-bold text-lg hover:text-cyber-neon transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-list-check"></i>
+                        過去の検証記録を見る
+                    </a>
+                </div>
+
+                <!-- Quick Stats Ribbon -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
+                    <div class="glass-card p-4 rounded-xl border border-white/5">
+                        <div class="text-3xl font-black font-mono text-cyber-red" id="counterBroken">999+</div>
+                        <div class="text-xs text-gray-400 mt-1">破壊・検証台数</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border border-white/5">
+                        <div class="text-3xl font-black font-mono text-cyber-neon">99.8%</div>
+                        <div class="text-xs text-gray-400 mt-1">限界突破成功率</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border border-white/5">
+                        <div class="text-3xl font-black font-mono text-cyber-purple">MAX</div>
+                        <div class="text-xs text-gray-400 mt-1">SONY/Xperia愛</div>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border border-white/5">
+                        <div class="text-3xl font-black font-mono text-amber-400">∞</div>
+                        <div class="text-xs text-gray-400 mt-1">ファンタスティック魂</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="about" class="py-20 px-4 border-t border-white/5 bg-cyber-dark/40 relative">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-xs font-mono text-cyber-neon tracking-widest uppercase mb-2">// CREATOR PROFILE</h2>
+                    <h3 class="text-3xl md:text-4xl font-black">Xperia破壊ニキ とは？</h3>
+                </div>
+
+                <div class="grid md:grid-cols-12 gap-8 items-center">
+                    <!-- Profile Avatar Card -->
+                    <div class="md:col-span-5 glass-card p-6 rounded-2xl border border-cyber-red/30 shadow-neon-red text-center relative overflow-hidden group">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-cyber-red/20 rounded-full blur-2xl"></div>
+                        <div class="relative z-10">
+                            <div class="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-tr from-cyber-red via-purple-600 to-cyber-neon p-1 shadow-2xl">
+                                <div class="w-full h-full rounded-full bg-cyber-black flex items-center justify-center overflow-hidden">
+                                    <i class="fa-solid fa-user-ninja text-7xl text-gray-200 group-hover:scale-110 transition-transform duration-500"></i>
+                                </div>
+                            </div>
+                            <h4 class="text-2xl font-extrabold mb-1">Xperia破壊ニキ</h4>
+                            <p class="text-xs font-mono text-cyber-neon mb-4">@Xperia_Destruction_Niki</p>
+                            
+                            <div class="flex justify-center gap-2 mb-6">
+                                <span class="px-3 py-1 rounded-full text-xs bg-cyber-red/20 border border-cyber-red/40 text-cyber-red">ガジェット検証者</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-cyber-purple/20 border border-cyber-purple/40 text-cyber-purple">Xperia信者</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-amber-500/20 border border-amber-500/40 text-amber-400">限界チャレンジャー</span>
+                            </div>
+
+                            <p class="text-sm text-gray-300 leading-relaxed font-light">
+                                「壊すのではない、試しているのだ。」<br>
+                                誰もが行わなかった過酷極まる環境下でXperiaの真の耐久力と魅力を世界に発信するトップクリエイター。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Profile Details & Status Skill Meters -->
+                    <div class="md:col-span-7 space-y-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/10">
+                            <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-simple text-cyber-red"></i> 破壊ニキ・ステータス評価
+                            </h4>
+
+                            <div class="space-y-4 font-mono text-xs">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-300">Xperia知識＆愛着 (Love & Knowledge)</span>
+                                        <span class="text-cyber-neon">999 / 100</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-cyber-purple to-cyber-neon h-2.5 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-300">検証実験の過酷さ (Testing Intensity)</span>
+                                        <span class="text-cyber-red">99.9%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-amber-500 to-cyber-red h-2.5 rounded-full" style="width: 98%"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-300">画面ヒビ割れ耐性（メンタル）</span>
+                                        <span class="text-purple-400">MAX</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-blue-500 to-cyber-purple h-2.5 rounded-full" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Motto/Philosophy -->
+                        <div class="glass-card p-6 rounded-2xl border border-white/10 relative">
+                            <i class="fa-solid fa-quote-left text-4xl text-cyber-red/20 absolute top-4 left-4"></i>
+                            <div class="relative z-10 pl-6">
+                                <h5 class="text-sm font-bold text-cyber-neon mb-2">VERIFICATION PHILOSOPHY</h5>
+                                <p class="text-sm text-gray-300 italic leading-relaxed">
+                                    「メーカーが『防水・防塵・高耐久』と謳うなら、どこまで耐えられるか確かめるのが男のロマン。どんな衝撃にも最後まで画面を灯そうとするXperiaの健気な姿に、俺は毎回涙している。」
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Records / Destruction Gallery -->
+        <section id="tests" class="py-20 px-4 relative">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                    <div>
+                        <h2 class="text-xs font-mono text-cyber-neon tracking-widest uppercase mb-2">// EXPERIMENT LOGS</h2>
+                        <h3 class="text-3xl md:text-4xl font-black">伝説の過酷検証実績</h3>
+                    </div>
+                    <p class="text-xs text-gray-400 font-mono mt-2 md:mt-0">※すべての実験は安全な特別環境下で行われています</p>
+                </div>
+
+                <!-- Test Cards Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- Test Card 1 -->
+                    <div class="glass-card glass-card-hover rounded-2xl overflow-hidden border border-white/10 flex flex-col">
+                        <div class="h-44 bg-gradient-to-br from-red-900/40 to-black relative flex items-center justify-center p-4">
+                            <i class="fa-solid fa-building-circle-arrow-right text-6xl text-cyber-red/60"></i>
+                            <span class="absolute top-3 right-3 px-2 py-1 rounded text-[10px] font-mono font-bold bg-cyber-red text-white">DROP TEST</span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">上空100m高所落下実験</h4>
+                                <p class="text-xs text-gray-400 mb-4">ドローンからアスファルトへ直撃落下。Gorilla Glassの限界をアタック。</p>
+                            </div>
+                            <div>
+                                <div class="space-y-2 text-xs font-mono border-t border-white/10 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">ダメージ度:</span>
+                                        <span class="text-cyber-red font-bold">98% (大破)</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">起動生存率:</span>
+                                        <span class="text-emerald-400 font-bold">40% (奇跡の復旧)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Card 2 -->
+                    <div class="glass-card glass-card-hover rounded-2xl overflow-hidden border border-white/10 flex flex-col">
+                        <div class="h-44 bg-gradient-to-br from-amber-900/40 to-black relative flex items-center justify-center p-4">
+                            <i class="fa-solid fa-fire-burner text-6xl text-amber-500/60"></i>
+                            <span class="absolute top-3 right-3 px-2 py-1 rounded text-[10px] font-mono font-bold bg-amber-500 text-black">BOILING TEST</span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">100℃熱湯煮沸耐久戦</h4>
+                                <p class="text-xs text-gray-400 mb-4">沸騰した鍋にXperiaを投入。高温警告が出た後のカメラ動作を検証。</p>
+                            </div>
+                            <div>
+                                <div class="space-y-2 text-xs font-mono border-t border-white/10 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">ダメージ度:</span>
+                                        <span class="text-amber-400 font-bold">75% (熱停止)</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">冷却後生存率:</span>
+                                        <span class="text-emerald-400 font-bold">90% (冷却で生還)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Card 3 -->
+                    <div class="glass-card glass-card-hover rounded-2xl overflow-hidden border border-white/10 flex flex-col">
+                        <div class="h-44 bg-gradient-to-br from-blue-900/40 to-black relative flex items-center justify-center p-4">
+                            <i class="fa-solid fa-icicles text-6xl text-cyber-neon/60"></i>
+                            <span class="absolute top-3 right-3 px-2 py-1 rounded text-[10px] font-mono font-bold bg-cyber-neon text-black">SUB-ZERO TEST</span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">マイナス20℃極寒氷漬け</h4>
+                                <p class="text-xs text-gray-400 mb-4">水没させたまま完全凍結。解凍後に有機ELディスプレイが映るか？</p>
+                            </div>
+                            <div>
+                                <div class="space-y-2 text-xs font-mono border-t border-white/10 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">ダメージ度:</span>
+                                        <span class="text-cyber-neon font-bold">30% (バッテリー低下)</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">起動生存率:</span>
+                                        <span class="text-emerald-400 font-bold">99% (完璧動作)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Card 4 -->
+                    <div class="glass-card glass-card-hover rounded-2xl overflow-hidden border border-white/10 flex flex-col">
+                        <div class="h-44 bg-gradient-to-br from-purple-900/40 to-black relative flex items-center justify-center p-4">
+                            <i class="fa-solid fa-truck-monster text-6xl text-cyber-purple/60"></i>
+                            <span class="absolute top-3 right-3 px-2 py-1 rounded text-[10px] font-mono font-bold bg-cyber-purple text-white">CRUSH TEST</span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">2t大型車踏みつぶし</h4>
+                                <p class="text-xs text-gray-400 mb-4">タイヤで直接踏みつける超重圧検証。ボディフレームの強度が試される。</p>
+                            </div>
+                            <div>
+                                <div class="space-y-2 text-xs font-mono border-t border-white/10 pt-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">ダメージ度:</span>
+                                        <span class="text-cyber-red font-bold">85% (フレーム曲がり)</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">起動生存率:</span>
+                                        <span class="text-emerald-400 font-bold">65% (画面動作)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulator Section -->
+        <section id="simulator" class="py-20 px-4 bg-cyber-dark/80 border-t border-b border-white/10 relative">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-10">
+                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-cyber-red/20 text-cyber-red border border-cyber-red/40">INTERACTIVE GAME</span>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-3 mb-2">Xperia 破壊シミュレータ</h2>
+                    <p class="text-sm text-gray-400">ツールを選んで画面タップ/クリック！ Xperiaの限界耐久力を疑似体験せよ。</p>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8 items-start">
+                    <!-- Control Panel (Left/Top) -->
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="glass-card p-5 rounded-2xl border border-white/10">
+                            <h3 class="text-sm font-bold font-mono text-gray-300 mb-4 uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-toolbox text-cyber-neon"></i> 破壊ツール選択
+                            </h3>
+
+                            <div class="grid grid-cols-2 gap-3" id="toolSelector">
+                                <button onclick="selectTool('drop')" id="tool-drop" class="tool-btn active p-3 rounded-xl border border-cyber-red bg-cyber-red/20 text-left transition-all">
+                                    <i class="fa-solid fa-turn-down text-xl text-cyber-red mb-1 block"></i>
+                                    <div class="font-bold text-xs">落下 (Drop)</div>
+                                    <div class="text-[10px] text-gray-400">ダメージ: 小</div>
+                                </button>
+
+                                <button onclick="selectTool('hammer')" id="tool-hammer" class="tool-btn p-3 rounded-xl border border-white/10 bg-cyber-card hover:border-white/30 text-left transition-all">
+                                    <i class="fa-solid fa-hammer text-xl text-amber-400 mb-1 block"></i>
+                                    <div class="font-bold text-xs">金槌 (Hammer)</div>
+                                    <div class="text-[10px] text-gray-400">ダメージ: 中</div>
+                                </button>
+
+                                <button onclick="selectTool('laser')" id="tool-laser" class="tool-btn p-3 rounded-xl border border-white/10 bg-cyber-card hover:border-white/30 text-left transition-all">
+                                    <i class="fa-solid fa-bolt text-xl text-cyber-neon mb-1 block"></i>
+                                    <div class="font-bold text-xs">高能レーザー</div>
+                                    <div class="text-[10px] text-gray-400">ダメージ: 高</div>
+                                </button>
+
+                                <button onclick="selectTool('bend')" id="tool-bend" class="tool-btn p-3 rounded-xl border border-white/10 bg-cyber-card hover:border-white/30 text-left transition-all">
+                                    <i class="fa-solid fa-arrows-left-right text-xl text-cyber-purple mb-1 block"></i>
+                                    <div class="font-bold text-xs">折り曲げ</div>
+                                    <div class="text-[10px] text-gray-400">ダメージ: 極大</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Damage Display Status -->
+                        <div class="glass-card p-5 rounded-2xl border border-white/10 font-mono">
+                            <div class="text-xs text-gray-400 mb-1">CURRENT DAMAGE</div>
+                            <div class="flex items-baseline justify-between mb-2">
+                                <span class="text-3xl font-black text-cyber-red" id="damagePercent">0%</span>
+                                <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" id="statusBadge">正常 (NORMAL)</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden mb-4">
+                                <div id="damageBar" class="bg-gradient-to-r from-emerald-400 via-amber-400 to-cyber-red h-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button onclick="repairPhone()" class="flex-1 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold transition-all">
+                                    <i class="fa-solid fa-rotate-left mr-1"></i> 修理・リセット
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Phone Canvas / Mock Area (Right/Bottom) -->
+                    <div class="lg:col-span-8 flex justify-center">
+                        <div class="relative group cursor-crosshair select-none" id="phoneContainer" onclick="damagePhone(event)">
+                            
+                            <!-- Phone Outer Shell -->
+                            <div id="phoneBody" class="w-[280px] sm:w-[320px] h-[580px] sm:h-[640px] bg-black rounded-[40px] p-4 border-4 border-gray-700 shadow-2xl relative overflow-hidden transition-transform duration-100">
+                                
+                                <!-- Camera / Speaker Bar (Xperia Signature Design) -->
+                                <div class="w-full flex justify-between items-center px-6 py-2 z-30 relative">
+                                    <div class="w-3 h-3 rounded-full bg-gray-800 border border-gray-600"></div>
+                                    <div class="w-16 h-1 bg-gray-800 rounded-full"></div>
+                                    <div class="w-2 h-2 rounded-full bg-blue-900"></div>
+                                </div>
+
+                                <!-- Screen Screen Area -->
+                                <div id="phoneScreen" class="w-full h-[calc(100%-2rem)] bg-gradient-to-b from-slate-900 via-indigo-950 to-black rounded-[28px] relative overflow-hidden flex flex-col justify-between p-6 scanlines">
+                                    
+                                    <!-- Screen Content (Simulated Xperia UI) -->
+                                    <div class="text-center mt-8 space-y-2 z-10 pointer-events-none" id="screenContent">
+                                        <div class="text-4xl font-light font-mono" id="clockDisplay">12:34</div>
+                                        <div class="text-xs text-cyber-neon tracking-widest font-mono">XPERIA CINEMATICS</div>
+                                        
+                                        <div class="pt-10">
+                                            <div class="w-16 h-16 mx-auto rounded-2xl bg-cyber-red/30 border border-cyber-red/50 flex items-center justify-center text-cyber-red mb-2">
+                                                <i class="fa-solid fa-shield-halved text-2xl"></i>
+                                            </div>
+                                            <div class="text-xs text-gray-300">タップして強度検証</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Glitch / Broken Screen Effect Layers -->
+                                    <div id="glitchOverlay" class="absolute inset-0 bg-cyber-red/20 opacity-0 pointer-events-none transition-opacity duration-100 z-15"></div>
+                                    <div id="deadPixels" class="absolute inset-0 pointer-events-none z-15"></div>
+
+                                    <!-- SVG Crack Canvas Overlay -->
+                                    <svg class="crack-svg" id="crackSvg" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Dynamic Cracks Will Be Appended Here -->
+                                    </svg>
+
+                                    <!-- Bottom Navigation Bar Simulated -->
+                                    <div class="flex justify-center gap-8 text-gray-600 text-xs z-10 pointer-events-none">
+                                        <i class="fa-solid fa-play rotate-180"></i>
+                                        <i class="fa-regular fa-circle"></i>
+                                        <i class="fa-regular fa-square"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Click Prompt Overlay -->
+                            <div class="absolute -bottom-8 left-0 right-0 text-center text-xs font-mono text-gray-400 animate-bounce">
+                                <i class="fa-solid fa-hand-pointer mr-1"></i> スマホ画面を直接クリックして攻撃！
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fan Comments / Guestbook Section -->
+        <section id="guestbook" class="py-20 px-4 relative">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-xs font-mono text-cyber-neon tracking-widest uppercase mb-2">// FAN COMMUNITY</h2>
+                    <h3 class="text-3xl font-black">応援＆破壊報告 掲示板</h3>
+                    <p class="text-xs text-gray-400 mt-1">ニキへのアツいメッセージや、あなたのXperia耐久エピソードを投稿しよう！</p>
+                </div>
+
+                <!-- Post Comment Form -->
+                <form id="commentForm" onsubmit="postComment(event)" class="glass-card p-6 rounded-2xl border border-white/10 mb-10 space-y-4">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-mono text-gray-400 mb-1">ハンドルネーム</label>
+                            <input type="text" id="commentName" required placeholder="例: 匿名Xperiaファン" class="w-full bg-cyber-black border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-cyber-red">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono text-gray-400 mb-1">愛用モデル</label>
+                            <input type="text" id="commentModel" placeholder="例: Xperia 1 V / Xperia 5 IV" class="w-full bg-cyber-black border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-cyber-purple">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 mb-1">メッセージ</label>
+                        <textarea id="commentText" required rows="3" placeholder="ニキの検証動画最高です！自分のXperiaも3階から落としましたが無事でした！" class="w-full bg-cyber-black border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-cyber-neon"></textarea>
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-gradient-to-r from-cyber-red to-cyber-purple font-bold text-sm hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> コメントを送信する
+                    </button>
+                </form>
+
+                <!-- Comments List -->
+                <div class="space-y-4" id="commentsContainer">
+                    
+                    <!-- Default Preset Comment 1 -->
+                    <div class="glass-card p-5 rounded-xl border border-white/5 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-cyber-neon">ソニー魂継承者 <span class="text-xs font-normal text-gray-400">(Xperia 1 VI)</span></span>
+                            <span class="text-[10px] font-mono text-gray-500">2026.10.28 14:20</span>
+                        </div>
+                        <p class="text-xs text-gray-300">ニキの煮沸実験を見て感動しました！どんな過酷な実験でも最後に起動した瞬間の「SONY」ロゴの神々しさが忘れられません！応援してます！</p>
+                    </div>
+
+                    <!-- Default Preset Comment 2 -->
+                    <div class="glass-card p-5 rounded-xl border border-white/5 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-cyber-red">ガジェットマニアA <span class="text-xs font-normal text-gray-400">(Xperia 5 II)</span></span>
+                            <span class="text-[10px] font-mono text-gray-500">2026.10.27 09:15</span>
+                        </div>
+                        <p class="text-xs text-gray-300">シミュレーターで100%まで破壊しちゃいました笑。実際の動画での耐熱テストも楽しみにしてます！</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-card border-t border-white/10 py-10 px-4 text-center font-mono text-xs text-gray-500 relative z-10">
+        <div class="max-w-6xl mx-auto space-y-4">
+            <div class="flex justify-center items-center gap-2">
+                <div class="w-6 h-6 rounded bg-cyber-red flex items-center justify-center text-white font-bold text-xs">X</div>
+                <span class="font-bold text-gray-300">Xperia破壊ニキ OFFICIAL PORTAL</span>
+            </div>
+            <p>© 2026 Xperia Destruction Niki Fan Project. All Rights Reserved.</p>
+            <p class="text-[10px] text-gray-600">※当サイトはエンターテインメント目的で作られたファンポータルです。実際の端末の故意による破壊行動を推奨するものではありません。</p>
+        </div>
+    </footer>
+
+    <!-- Audio FX & Interactive Script -->
+    <script>
+        // State Management
+        let audioEnabled = false;
+        let audioCtx = null;
+        let currentTool = 'drop';
+        let damage = 0;
+
+        // Tool Configs
+        const tools = {
+            drop: { damage: 12, name: 'ドラム落下', soundFreq: 120 },
+            hammer: { damage: 25, name: 'ハンマー打撃', soundFreq: 80 },
+            laser: { damage: 35, name: 'レーザー照射', soundFreq: 440 },
+            bend: { damage: 50, name: '強烈ベンディング', soundFreq: 60 }
+        };
+
+        // Live Clock
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clockDisplay').textContent = `${h}:${m}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Audio System (Web Audio API for zero external asset dependencies)
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function toggleAudio() {
+            initAudio();
+            audioEnabled = !audioEnabled;
+            const soundIcon = document.getElementById('soundIcon');
+            const soundLabel = document.getElementById('soundLabel');
+
+            if (audioEnabled) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                soundIcon.className = "fa-solid fa-volume-high text-cyber-neon";
+                soundLabel.textContent = "SOUND: ON";
+                playEffectSound('synth');
+            } else {
+                soundIcon.className = "fa-solid fa-volume-xmark text-cyber-red";
+                soundLabel.textContent = "SOUND: OFF";
+            }
+        }
+
+        function playEffectSound(type) {
+            if (!audioEnabled || !audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'crash') {
+                // Glass shatter / Noise sound simulation
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(30, now + 0.3);
+                gain.gain.setValueAtTime(0.5, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'synth') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            }
+        }
+
+        // Simulator Tool Selector
+        function selectTool(toolKey) {
+            currentTool = toolKey;
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-cyber-red', 'bg-cyber-red/20');
+                btn.classList.add('border-white/10', 'bg-cyber-card');
+            });
+
+            const selectedBtn = document.getElementById(`tool-${toolKey}`);
+            selectedBtn.classList.add('active', 'border-cyber-red', 'bg-cyber-red/20');
+            selectedBtn.classList.remove('border-white/10', 'bg-cyber-card');
+
+            playEffectSound('synth');
+        }
+
+        // Damage Phone Click Handler
+        function damagePhone(event) {
+            const tool = tools[currentTool];
+            damage = Math.min(100, damage + tool.damage);
+
+            // Update UI
+            updateDamageDisplay();
+
+            // Trigger Screen Shake
+            const phoneBody = document.getElementById('phoneBody');
+            phoneBody.classList.add('shake-active');
+            setTimeout(() => phoneBody.classList.remove('shake-active'), 200);
+
+            // Trigger Glitch Flash
+            const glitch = document.getElementById('glitchOverlay');
+            glitch.style.opacity = '0.8';
+            setTimeout(() => glitch.style.opacity = (damage / 150).toString(), 150);
+
+            // Sound
+            playEffectSound('crash');
+
+            // Draw Crack SVG at click position
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            createCrackPattern(x, y);
+
+            // Dead pixels at high damage
+            if (damage > 60) {
+                addDeadPixelCluster();
+            }
+        }
+
+        function updateDamageDisplay() {
+            document.getElementById('damagePercent').textContent = `${damage}%`;
+            document.getElementById('damageBar').style.width = `${damage}%`;
+
+            const statusBadge = document.getElementById('statusBadge');
+            if (damage === 0) {
+                statusBadge.textContent = "正常 (NORMAL)";
+                statusBadge.className = "text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+            } else if (damage < 40) {
+                statusBadge.textContent = "軽傷 (LIGHT DAMAGE)";
+                statusBadge.className = "text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30";
+            } else if (damage < 80) {
+                statusBadge.textContent = "重傷 (CRITICAL)";
+                statusBadge.className = "text-xs px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30";
+            } else {
+                statusBadge.textContent = "限界突破 (DESTROYED)";
+                statusBadge.className = "text-xs px-2 py-0.5 rounded bg-cyber-red/30 text-cyber-red border border-cyber-red/50 animate-pulse";
+            }
+        }
+
+        // Generate SVG Glass Crack Lines
+        function createCrackPattern(cx, cy) {
+            const svg = document.getElementById('crackSvg');
+            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+            const numRays = 5 + Math.floor(Math.random() * 5);
+            for (let i = 0; i < numRays; i++) {
+                const angle = (Math.PI * 2 / numRays) * i + (Math.random() * 0.4 - 0.2);
+                const length = 40 + Math.random() * 80;
+                const ex = cx + Math.cos(angle) * length;
+                const ey = cy + Math.sin(angle) * length;
+
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", cx);
+                line.setAttribute("y1", cy);
+                line.setAttribute("x2", ex);
+                line.setAttribute("y2", ey);
+                line.setAttribute("stroke", "rgba(255, 255, 255, 0.75)");
+                line.setAttribute("stroke-width", "1.5");
+                group.appendChild(line);
+            }
+
+            // Impact Ring
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", cx);
+            circle.setAttribute("cy", cy);
+            circle.setAttribute("r", 6 + Math.random() * 8);
+            circle.setAttribute("fill", "none");
+            circle.setAttribute("stroke", "rgba(255, 255, 255, 0.9)");
+            circle.setAttribute("stroke-width", "2");
+            group.appendChild(circle);
+
+            svg.appendChild(group);
+        }
+
+        // Add Dead Pixel Visual Artifacts
+        function addDeadPixelCluster() {
+            const container = document.getElementById('deadPixels');
+            const box = document.createElement('div');
+            box.className = 'absolute bg-cyber-red/80 blur-[1px] pointer-events-none';
+            box.style.width = `${Math.random() * 30 + 10}px`;
+            box.style.height = `${Math.random() * 80 + 20}px`;
+            box.style.top = `${Math.random() * 80}%`;
+            box.style.left = `${Math.random() * 80}%`;
+            container.appendChild(box);
+        }
+
+        // Repair / Reset Simulator
+        function repairPhone() {
+            damage = 0;
+            updateDamageDisplay();
+            document.getElementById('crackSvg').innerHTML = '';
+            document.getElementById('deadPixels').innerHTML = '';
+            document.getElementById('glitchOverlay').style.opacity = '0';
+            playEffectSound('synth');
+        }
+
+        // Fan Comment Submission Handler
+        function postComment(event) {
+            event.preventDefault();
+            const name = document.getElementById('commentName').value;
+            const model = document.getElementById('commentModel').value || 'Xperia Fan';
+            const text = document.getElementById('commentText').value;
+
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+            const container = document.getElementById('commentsContainer');
+            const newComment = document.createElement('div');
+            newComment.className = "glass-card p-5 rounded-xl border border-cyber-neon/30 space-y-2 animate-fade-in";
+            newComment.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-sm text-cyber-neon">${escapeHtml(name)} <span class="text-xs font-normal text-gray-400">(${escapeHtml(model)})</span></span>
+                    <span class="text-[10px] font-mono text-gray-500">${dateStr}</span>
+                </div>
+                <p class="text-xs text-gray-300">${escapeHtml(text)}</p>
+            `;
+
+            container.prepend(newComment);
+            document.getElementById('commentForm').reset();
+            playEffectSound('synth');
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[m];
+            });
+        }
+    </script>
+</body>
+</html>
