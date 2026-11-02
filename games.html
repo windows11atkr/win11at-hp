@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEON 2048 | windows11at</title>
+    <title>PCビルドガチャ | windows11at</title>
     <style>
         /* Aero-SQUI 1.0 共通テーマ定義 */
         :root {
@@ -276,6 +276,43 @@
         .game-stat { padding: 9px 6px; border-radius: 12px; background: rgba(56, 189, 248, .08); color: #4d687a; font-size: 11px; }
         .game-stat strong { display: block; margin-top: 2px; color: #087da8; font-size: 15px; }
 
+
+        /* PC Build Gacha */
+        .pc-game { width: 100%; color: #eaf6ff; text-align: left; }
+        .pc-game-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+        .pc-game-kicker { color:#68d8ff; font-size:10px; letter-spacing:2px; font-weight:800; }
+        .pc-game-heading { font-size:18px; font-weight:800; }
+        .pc-budget-box { flex-shrink:0; background:rgba(255,255,255,.08); border:1px solid rgba(104,216,255,.2); border-radius:12px; padding:7px 10px; color:#a9c9dc; font-size:10px; text-align:center; }
+        .pc-budget-box strong { display:block; color:#fff; font-size:15px; }
+        .pc-progress { height:6px; background:rgba(255,255,255,.1); border-radius:99px; overflow:hidden; margin-bottom:10px; }
+        .pc-progress div { height:100%; width:0; background:linear-gradient(90deg,#38bdf8,#a78bfa,#4ade80); transition:width .25s; }
+        .pc-status { min-height:36px; margin-bottom:12px; padding:9px 11px; border-radius:10px; background:rgba(56,189,248,.09); color:#b8d9eb; font-size:12px; }
+        .pc-slots { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; margin-bottom:16px; }
+        .pc-slot { min-width:0; padding:9px; border:1px solid rgba(255,255,255,.1); border-radius:11px; background:rgba(255,255,255,.045); }
+        .pc-slot.active { border-color:#38bdf8; box-shadow:0 0 0 1px rgba(56,189,248,.18); }
+        .pc-slot.done { border-color:rgba(74,222,128,.3); }
+        .pc-slot-name { color:#8caec2; font-size:10px; font-weight:700; }
+        .pc-slot-part { margin-top:3px; font-size:11px; font-weight:700; overflow-wrap:anywhere; }
+        .pc-slot-price { margin-top:4px; color:#68d8ff; font-size:10px; }
+        .pc-options-title { font-size:14px; font-weight:800; margin-bottom:9px; }
+        .pc-options { display:grid; grid-template-columns:1fr; gap:8px; }
+        .pc-option { display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:11px; color:#eaf6ff; background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.13); border-radius:12px; cursor:pointer; font:inherit; transition:background .15s,border .15s,transform .15s; }
+        .pc-option:hover { background:rgba(56,189,248,.13); transform:translateY(-1px); }
+        .pc-option.selected { border-color:#38bdf8; background:rgba(56,189,248,.18); box-shadow:0 0 0 1px rgba(56,189,248,.18); }
+        .pc-option-main { min-width:0; flex:1; }
+        .pc-option-name { font-size:12px; font-weight:800; overflow-wrap:anywhere; }
+        .pc-option-meta { margin-top:4px; color:#a9c9dc; font-size:10px; line-height:1.5; }
+        .pc-option-price { flex-shrink:0; color:#7ee7ff; font-size:11px; font-weight:800; }
+        .pc-actions { display:flex; gap:8px; margin-top:12px; }
+        .pc-actions .puzzle-action:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+        .pc-result { margin-top:16px; padding:15px; border:1px solid rgba(104,216,255,.3); border-radius:15px; background:rgba(56,189,248,.08); }
+        .pc-result h3 { font-size:19px; margin-bottom:6px; }
+        .pc-result-score { color:#7ee7ff; font-size:28px; font-weight:900; }
+        .pc-result p { margin-top:7px; color:#c1d8e7; font-size:12px; line-height:1.65; }
+        .pc-result .pc-share { width:100%; margin-top:12px; padding:11px; border:0; border-radius:10px; color:#fff; background:#111827; font-weight:800; cursor:pointer; }
+        .pc-result .pc-share:hover { background:#263449; }
+        @media (max-width:480px) { .pc-game-heading {font-size:15px;} .pc-slots {gap:6px;} .pc-slot {padding:7px;} .pc-option {padding:9px;} }
+
         /* 操作ヒント */
         .controls-guide {
             background: rgba(0, 0, 0, 0.02);
@@ -320,6 +357,70 @@
             color: var(--text-sub);
             text-align: center;
         }
+
+        /* NEON LAB UI OVERHAUL v2 */
+        :root { --bg-page:#080d18; --bg-card:rgba(13,23,42,.92); --text-main:#eaf6ff; --text-sub:#91a8c0; --aurora-start:#00e5ff; --aurora-mid:#6c63ff; --aurora-end:#ff4fd8; --glow-color:rgba(0,229,255,.22); }
+        body { background: radial-gradient(ellipse at 12% 0%,rgba(0,229,255,.12),transparent 38%), radial-gradient(ellipse at 90% 25%,rgba(141,76,255,.14),transparent 38%), #080d18; color:#eaf6ff; padding:28px 22px; }
+        body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.12; z-index:-1; background-image:linear-gradient(rgba(100,190,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(100,190,255,.18) 1px,transparent 1px); background-size:36px 36px; mask-image:linear-gradient(to bottom,black,transparent 90%); }
+        .container { max-width:1540px; }
+        header { margin-bottom:34px; }
+        .blog-title { color:#f3fbff; font-size:32px; text-shadow:0 0 24px rgba(0,229,255,.18); }
+        .blog-subtitle { font-size:14px; color:#8ba8c3; }
+        .store-layout { gap:26px; }
+        .app-identity-card,.store-main-panel { background:linear-gradient(145deg,rgba(18,32,56,.97),rgba(9,16,31,.97)); border:1px solid rgba(104,216,255,.2); border-radius:28px; box-shadow:0 22px 65px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.05); color:#eaf6ff; }
+        .app-identity-card { padding:30px 24px; }
+        .app-name,.panel-title { color:#f3fbff; }
+        .app-name { font-size:24px; }
+        .app-developer { color:#9ab2ca; font-size:14px; }
+        .store-badge { background:rgba(0,229,255,.12); color:#72edff; border:1px solid rgba(0,229,255,.22); font-size:13px; padding:7px 14px; }
+        @media (min-width:768px) { .store-sidebar { width:310px; } .store-main-panel { padding:40px; } .panel-title { font-size:28px; } .panel-desc { font-size:16px; line-height:1.8; } }
+        .store-main-panel { padding:26px; text-align:left; }
+        .panel-title { font-size:25px; letter-spacing:-.4px; }
+        .panel-desc { color:#a6bed4; font-size:15px; line-height:1.75; }
+        .canvas-container { max-width:none; width:100%; margin-bottom:28px; padding:clamp(18px,2.5vw,34px); border-radius:26px; background:linear-gradient(145deg,#0c1830,#111d3a 55%,#151333); border:1px solid rgba(89,220,255,.35); box-shadow:0 22px 60px rgba(0,0,0,.35),0 0 40px rgba(40,126,255,.1),inset 0 1px rgba(255,255,255,.06); }
+        .pc-game { max-width:1200px; margin:auto; }
+        .pc-game-top { align-items:flex-end; gap:18px; margin-bottom:20px; }
+        .pc-game-kicker { font-size:13px; letter-spacing:3px; color:#59e8ff; }
+        .pc-game-heading { font-size:clamp(24px,3vw,38px); line-height:1.2; letter-spacing:-.8px; color:#f3fbff; text-shadow:0 0 24px rgba(0,229,255,.16); }
+        .pc-budget-box { font-size:13px; padding:12px 18px; border-radius:16px; background:rgba(0,229,255,.08); border-color:rgba(0,229,255,.3); min-width:150px; }
+        .pc-budget-box strong { font-size:clamp(20px,2.2vw,28px); color:#74f0ff; }
+        .pc-progress { height:10px; margin-bottom:16px; background:rgba(255,255,255,.08); }
+        .pc-status { min-height:58px; padding:15px 18px; border-radius:15px; font-size:15px; line-height:1.65; background:linear-gradient(90deg,rgba(0,229,255,.1),rgba(125,91,255,.08)); border:1px solid rgba(104,216,255,.13); color:#d0eaff; }
+        .pc-slots { grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:26px; }
+        .pc-slot { padding:15px; border-radius:17px; background:rgba(255,255,255,.035); border-color:rgba(160,205,255,.14); min-height:106px; transition:transform .2s,border .2s,background .2s; }
+        .pc-slot.active { border-color:#38eaff; background:rgba(0,229,255,.09); box-shadow:0 0 0 1px rgba(56,234,255,.14),0 0 25px rgba(0,229,255,.07); transform:translateY(-2px); }
+        .pc-slot.done { border-color:rgba(74,222,128,.32); background:rgba(74,222,128,.045); }
+        .pc-slot-name { color:#80a9c9; font-size:13px; letter-spacing:.2px; }
+        .pc-slot-part { margin-top:8px; font-size:14px; line-height:1.45; color:#f2f9ff; }
+        .pc-slot-price { margin-top:7px; color:#66eaff; font-size:13px; }
+        .pc-options-title { font-size:clamp(20px,2vw,27px); margin:0 0 14px; color:#f4fbff; }
+        .pc-options { grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; }
+        .pc-option { min-height:145px; align-items:flex-start; padding:18px; border-radius:18px; background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025)); border-color:rgba(151,202,255,.17); }
+        .pc-option:hover { background:linear-gradient(145deg,rgba(0,229,255,.14),rgba(125,91,255,.08)); border-color:rgba(0,229,255,.5); transform:translateY(-3px); }
+        .pc-option.selected { border-color:#55ecff; background:linear-gradient(145deg,rgba(0,229,255,.18),rgba(108,99,255,.13)); box-shadow:0 0 0 1px rgba(85,236,255,.22),0 10px 28px rgba(0,0,0,.14); }
+        .pc-option-name { font-size:16px; line-height:1.45; color:#f2faff; }
+        .pc-option-meta { margin-top:9px; font-size:12px; line-height:1.7; color:#9eb9d2; }
+        .pc-option-price { font-size:15px; color:#6ff0ff; }
+        .pc-actions { display:none; }
+        .puzzle-note { margin-top:20px; color:#89a9c7; font-size:13px; }
+        .pc-result { padding:clamp(20px,3vw,34px); border-radius:24px; background:linear-gradient(135deg,rgba(0,229,255,.11),rgba(139,92,246,.12)); border-color:rgba(91,224,255,.34); box-shadow:inset 0 1px rgba(255,255,255,.06); }
+        .pc-result h3 { font-size:clamp(27px,3vw,40px); color:#fff; margin-bottom:10px; }
+        .pc-result-score { font-size:clamp(42px,5vw,64px); line-height:1.1; letter-spacing:-1.5px; text-shadow:0 0 28px rgba(126,231,255,.2); }
+        .pc-result p { font-size:15px; line-height:1.9; color:#d0e4f5; margin-top:16px; }
+        .pc-result .pc-share { margin-top:22px; padding:17px; border-radius:14px; font-size:16px; background:linear-gradient(90deg,#151b2d,#202c48); border:1px solid rgba(255,255,255,.14); }
+        .pc-result .pc-share:hover { background:linear-gradient(90deg,#26344d,#263a60); }
+        .pc-roast { margin-top:18px; padding:18px 20px; border-left:4px solid #ff62d0; border-radius:12px; background:rgba(255,79,216,.075); color:#ffe0f7; font-size:16px; line-height:1.8; }
+        .pc-result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:20px; }
+        .pc-result-part { padding:14px; border:1px solid rgba(150,205,255,.14); border-radius:14px; background:rgba(2,10,25,.24); min-width:0; }
+        .pc-result-part small { display:block; color:#8cb1cf; font-size:12px; margin-bottom:5px; }
+        .pc-result-part strong { display:block; color:#f5fbff; font-size:14px; line-height:1.55; overflow-wrap:anywhere; }
+        .controls-guide { max-width:none; background:rgba(13,23,42,.75); color:#eaf6ff; border-color:rgba(104,216,255,.16); padding:22px; font-size:15px; }
+        .controls-guide ul { color:#a6bed4; line-height:1.9; }
+        .back-nav { color:#a6bed4; font-size:14px; }
+        footer { color:#66829d; }
+        @media (max-width:1000px) { .pc-slots {grid-template-columns:repeat(2,minmax(0,1fr));} .pc-options {grid-template-columns:1fr;} .pc-option {min-height:0;} }
+        @media (max-width:560px) { body {padding:14px 9px;} .store-main-panel {padding:14px;} .canvas-container {padding:12px;} .pc-game-top {align-items:stretch; flex-direction:column;} .pc-budget-box {text-align:left;} .pc-budget-box strong {display:inline; margin-left:8px;} .pc-slots {grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;} .pc-slot {padding:10px;min-height:95px;} .pc-slot-name {font-size:11px;} .pc-slot-part {font-size:12px;} .pc-slot-price {font-size:11px;} .pc-option {padding:14px;} .pc-option-name {font-size:15px;} .pc-result-grid {grid-template-columns:1fr;} .panel-title {font-size:21px;} }
+
     </style>
 </head>
 <body>
@@ -351,8 +452,8 @@
                         </svg>
                     </div>
                     
-                    <h1 class="app-name">NEON 2048</h1>
-                    <p class="app-developer">Puzzle Game v2.0</p>
+                    <h1 class="app-name">PCビルドガチャ</h1>
+                    <p class="app-developer">自作PCビルドゲーム v2.0 NEON LAB</p>
                     <div class="store-store-status">
                         <span class="store-badge">HTML5 ゲーム</span>
                     </div>
@@ -362,17 +463,29 @@
             <!-- 右側：ゲームメイン画面 -->
             <main class="store-main">
                 <div class="store-main-panel">
-                    <h2 class="panel-title">NEON 2048</h2>
-                    <p class="panel-desc">数字をスワイプして重ね、2048を目指す定番パズル。考える楽しさと気持ちよい連鎖を、いつでも手軽に楽しめます。</p>
+                    <h2 class="panel-title">目指せハイエンド！パーツ引き当てガチャビルド</h2>
+                    <p class="panel-desc">ランダム候補をタップしてパーツを選ぶだけ。選択すると自動で次へ進む、ネオン仕様のPC構築ラボ。予算・性能・相性・電源容量でスコアが変化！ 2MBメモリから1TBメモリ、1W電源から1000kW電源まで、現実とネタの境界を超えたパーツが登場。</p>
                     
                     <!-- ゲームキャンバス -->
                     <div class="canvas-container" id="gameContainer">
-                        <div class="puzzle-game" aria-label="NEON 2048 ゲーム">
-                            <div class="puzzle-top"><div class="puzzle-title">NEON 2048</div><div class="puzzle-score"><div class="score-box">SCORE<strong id="puzzle-score">0</strong></div><div class="score-box">BEST<strong id="puzzle-best">0</strong></div></div></div>
-                            <div class="puzzle-board" id="puzzle-board" aria-label="ゲーム盤面" data-move=""></div>
-                            <div class="puzzle-note" id="move-feedback" aria-live="polite">矢印キーまたはスワイプで、タイルを動かしてみよう</div>
-                            <div class="puzzle-actions"><button class="puzzle-action" id="puzzle-undo">↶ ひとつ戻す</button><button class="puzzle-action" id="puzzle-restart">↻ はじめから</button></div>
-                            <p class="puzzle-note">PC：矢印キー　スマホ：上下左右にスワイプ</p>
+                        <div class="pc-game" aria-label="自作PCビルドゲーム">
+                            <div class="pc-game-top">
+                                <div><div class="pc-game-kicker">RANDOM PARTS BUILD</div><div class="pc-game-heading">自作PCビルドガチャ</div></div>
+                                <div class="pc-budget-box">予算<strong id="pc-budget">300,000円</strong></div>
+                            </div>
+                            <div class="pc-progress"><div id="pc-progress-bar"></div></div>
+                            <div class="pc-status" id="pc-status">パーツを選んでPCを完成させよう。</div>
+                            <div class="pc-slots" id="pc-slots"></div>
+                            <div class="pc-options-wrap">
+                                <div class="pc-options-title" id="pc-options-title">① CPUを選ぼう</div>
+                                <div class="pc-options" id="pc-options"></div>
+                            </div>
+                            <div class="pc-actions">
+                                <button class="puzzle-action" id="pc-next" disabled>次へ進む →</button>
+                                <button class="puzzle-action" id="pc-reset">↻ 最初から</button>
+                            </div>
+                            <div class="pc-result" id="pc-result" hidden></div>
+                            <p class="puzzle-note">CPU → GPU → メモリ → ストレージ → 電源 → マザーボード → 冷却 → ケース の順に選択。</p>
                         </div>
                         <canvas id="gameCanvas" width="400" height="500"></canvas>
                         
@@ -390,12 +503,13 @@
 
                     <!-- 操作ガイド -->
                     <div class="controls-guide">
-                        <strong>遊び方・操作方法</strong>
+                        <strong>遊び方・スコア判定</strong>
                         <ul>
-                            <li><strong>矢印キー / スワイプ：</strong> すべてのタイルを選んだ方向へ動かします。</li>
-                            <li><strong>同じ数字を重ねる：</strong> タイルが合体して数字とスコアが増えます。</li>
-                            <li><strong>ひとつ戻す：</strong> ミスした手を一度だけやり直せます。ベストスコアはこの端末に保存されます。</li>
-                            <li><strong>ゲームオーバー：</strong> ガジェットの耐久値が0になるとゲーム終了です。</li>
+                            <li><strong>パーツを選択：</strong> カードをクリック／タップすると、その場で選択されて次のパーツへ進みます。</li>
+                            <li><strong>予算：</strong> 30万円を超えると超過額に応じて減点。ただし性能が高ければ高得点の可能性も。</li>
+                            <li><strong>バランス：</strong> CPUとGPUの性能差、メモリ容量、ストレージ容量、電源の余裕を判定します。</li>
+                            <li><strong>ネタパーツ：</strong> 2MBメモリや1000kW電源など、極端なパーツも登場。数値が大きければ必ず正解とは限りません。</li>
+                            <li><strong>Xに投稿：</strong> リザルトの共有ボタンから、スコア・ページURL・ハッシュタグを投稿画面へ送れます。投稿内容はX側で確認してから送信します。</li>
                         </ul>
                     </div>
                 </div>
@@ -418,543 +532,388 @@
         </footer>
     </div>
 
-    <!-- ゲームロジックJavaScript -->
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const gameOverlay = document.getElementById('gameOverlay');
-        const overlayTitle = document.getElementById('overlayTitle');
-        const overlayScore = document.getElementById('overlayScore');
-        const overlayDesc = document.getElementById('overlayDesc');
-        const startBtn = document.getElementById('startBtn');
-
-        // ゲーム状態管理
-        let gameState = 'READY'; // READY, PLAYING, GAMEOVER
-        let score = 0;
-        let hp = 5;
-        let maxHp = 5;
-        let lastEnemySpawn = 0;
-        let spawnInterval = 1200; // ms
-        let gameMode = 'normal';
-        let combo = 0;
-        let lastKillAt = 0;
-        let bestScore = Number(localStorage.getItem('gadgetDefenderBest') || 0);
-        const modeSettings = { normal: { hp: 5, spawn: 1200, label: 'NORMAL' }, relax: { hp: 7, spawn: 1550, label: 'RELAX' }, challenge: { hp: 3, spawn: 820, label: 'HARD' } };
-
-        // オブジェクト配列
-        let bullets = [];
-        let enemies = [];
-        let particles = [];
-        let powerups = [];
-
-        // 中心（プレイヤーコア＝スマートフォン）の位置
-        const coreX = canvas.width / 2;
-        const coreY = canvas.height / 2;
-        const coreRadius = 25;
-
-        // 星座バックグラウンドエフェクト用
-        let stars = [];
-        for(let i=0; i<30; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2,
-                alpha: Math.random()
-            });
-        }
-
-        // イベントリスナー
-        startBtn.addEventListener('click', startGame);
-        canvas.addEventListener('pointerdown', fireBullet);
-        const legacyBestScore = document.getElementById('bestScore');
-        if (legacyBestScore) legacyBestScore.textContent = bestScore;
-        document.querySelectorAll('.mode-btn').forEach(btn => btn.addEventListener('click', () => {
-            if (gameState === 'PLAYING') return;
-            gameMode = btn.dataset.mode;
-            document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b === btn));
-            document.getElementById('modeDisplay').textContent = modeSettings[gameMode].label;
-        }));
-
-        function startGame() {
-            gameState = 'PLAYING';
-            score = 0;
-            maxHp = modeSettings[gameMode].hp;
-            hp = maxHp;
-            bullets = [];
-            enemies = [];
-            particles = [];
-            powerups = [];
-            combo = 0;
-            spawnInterval = modeSettings[gameMode].spawn;
-            document.getElementById('comboDisplay').textContent = '×0';
-            lastEnemySpawn = performance.now();
-            gameOverlay.style.opacity = 0;
-            setTimeout(() => { gameOverlay.style.display = 'none'; }, 300);
-        }
-
-        function gameOver() {
-            gameState = 'GAMEOVER';
-            overlayTitle.innerText = 'GAME OVER';
-            if (score > bestScore) {
-                bestScore = score;
-                localStorage.setItem('gadgetDefenderBest', bestScore);
-                document.getElementById('bestScore').textContent = bestScore;
-            }
-            overlayScore.innerText = `最終スコア: ${score}　ベスト: ${bestScore}`;
-            overlayScore.style.display = 'block';
-            overlayDesc.innerHTML = 'ガジェットのセキュリティが突破されました！<br>もう一度挑戦しますか？';
-            startBtn.innerText = 'リトライ';
-            gameOverlay.style.display = 'flex';
-            setTimeout(() => { gameOverlay.style.opacity = 1; }, 10);
-        }
-
-        function fireBullet(e) {
-            if (gameState !== 'PLAYING') return;
-            if (timestamp - lastKillAt > 1800 && combo > 0) {
-                combo = 0;
-                document.getElementById('comboDisplay').textContent = '×0';
-            }
-
-            // キャンバス内の相対座標を取得
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.clientX - rect.left;
-            const clientY = e.clientY - rect.top;
-            
-            // キャンバス本来の解像度サイズにスケーリング変換
-            const targetX = (clientX / rect.width) * canvas.width;
-            const targetY = (clientY / rect.height) * canvas.height;
-
-            // 中心からの角度を計算
-            const angle = Math.atan2(targetY - coreY, targetX - coreX);
-
-            // 弾を追加
-            bullets.push({
-                x: coreX + Math.cos(angle) * coreRadius,
-                y: coreY + Math.sin(angle) * coreRadius,
-                vx: Math.cos(angle) * 5,
-                vy: Math.sin(angle) * 5,
-                radius: 4
-            });
-
-            // 発射時微小パーティクル
-            createParticles(coreX + Math.cos(angle) * coreRadius, coreY + Math.sin(angle) * coreRadius, '#38bdf8', 4);
-        }
-
-        function createParticles(x, y, color, count) {
-            for(let i=0; i<count; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 2 + 1;
-                particles.push({
-                    x: x, y: y,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed,
-                    radius: Math.random() * 2 + 1,
-                    color: color,
-                    alpha: 1,
-                    decay: Math.random() * 0.03 + 0.02
-                });
-            }
-        }
-
-        // メインゲームループ
-        function loop(timestamp) {
-            update(timestamp);
-            draw();
-            requestAnimationFrame(loop);
-        }
-
-        function update(timestamp) {
-            // 背景の星を揺らす
-            stars.forEach(s => {
-                s.alpha += (Math.random() - 0.5) * 0.1;
-                if(s.alpha < 0) s.alpha = 0;
-                if(s.alpha > 1) s.alpha = 1;
-            });
-
-            if (gameState !== 'PLAYING') return;
-
-            // 敵の自動生成
-            if (timestamp - lastEnemySpawn > spawnInterval) {
-                spawnEnemy();
-                lastEnemySpawn = timestamp;
-                // 徐々に難易度アップ
-                if (spawnInterval > 500) spawnInterval -= 15;
-            }
-
-            // 弾の移動
-            bullets.forEach((b, index) => {
-                b.x += b.vx;
-                b.y += b.vy;
-                // 画面外に出たら削除
-                if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
-                    bullets.splice(index, 1);
-                }
-            });
-
-            // 敵の移動とコア衝突判定
-            enemies.forEach((enemy, eIndex) => {
-                // コア（中心）に向かって進む
-                const angle = Math.atan2(coreY - enemy.y, coreX - enemy.x);
-                enemy.x += Math.cos(angle) * enemy.speed;
-                enemy.y += Math.sin(angle) * enemy.speed;
-
-                // コアとの衝突
-                const distToCore = Math.hypot(coreX - enemy.x, coreY - enemy.y);
-                if (distToCore < coreRadius + enemy.radius) {
-                    enemies.splice(eIndex, 1);
-                    hp--;
-                    createParticles(enemy.x, enemy.y, '#ef4444', 12);
-                    if (hp <= 0) {
-                        gameOver();
-                    }
-                }
-
-                // 弾との衝突判定
-                bullets.forEach((bullet, bIndex) => {
-                    const distToBullet = Math.hypot(bullet.x - enemy.x, bullet.y - enemy.y);
-                    if (distToBullet < enemy.radius + bullet.radius) {
-                        // 撃破効果
-                        createParticles(enemy.x, enemy.y, enemy.color, 8);
-                        enemies.splice(eIndex, 1);
-                        bullets.splice(bIndex, 1);
-                        combo++;
-                        lastKillAt = timestamp;
-                        score += 10 + Math.min(combo, 15) * 2;
-                        document.getElementById('comboDisplay').textContent = `×${combo}`;
-                        if (Math.random() < 0.12) spawnPowerup(enemy.x, enemy.y);
-                    }
-                });
-            });
-
-            powerups.forEach((item, index) => {
-                item.life -= 1;
-                const dist = Math.hypot(coreX - item.x, coreY - item.y);
-                if (dist < coreRadius + item.radius) {
-                    if (item.type === 'heal') hp = Math.min(maxHp, hp + 1);
-                    if (item.type === 'burst') {
-                        enemies.forEach(enemy => createParticles(enemy.x, enemy.y, '#facc15', 7));
-                        score += enemies.length * 8;
-                        enemies = [];
-                    }
-                    createParticles(item.x, item.y, item.color, 15);
-                    powerups.splice(index, 1);
-                } else if (item.life <= 0) powerups.splice(index, 1);
-            });
-
-            // パーティクルの更新
-            particles.forEach((p, index) => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.alpha -= p.decay;
-                if (p.alpha <= 0) {
-                    particles.splice(index, 1);
-                }
-            });
-        }
-
-        function spawnEnemy() {
-            // 画面外の四方からランダムに出現
-            let x, y;
-            const edge = Math.floor(Math.random() * 4); // 0:上, 1:右, 2:下, 3:左
-            const offset = 30;
-
-            if (edge === 0) {
-                x = Math.random() * canvas.width;
-                y = -offset;
-            } else if (edge === 1) {
-                x = canvas.width + offset;
-                y = Math.random() * canvas.height;
-            } else if (edge === 2) {
-                x = Math.random() * canvas.width;
-                y = canvas.height + offset;
-            } else {
-                x = -offset;
-                y = Math.random() * canvas.height;
-            }
-
-            // スコアに応じて高速な敵が出現
-            const isFast = Math.random() < 0.25 && score > 100;
-
-            enemies.push({
-                x: x, y: y,
-                radius: isFast ? 6 : 9,
-                speed: isFast ? 1.8 : 1.0,
-                color: isFast ? '#a855f7' : '#ef4444', // 紫＝高速バグ、赤＝通常バグ
-            });
-        }
-
-        function spawnPowerup(x, y) {
-            const type = Math.random() < .58 ? 'heal' : 'burst';
-            powerups.push({ x, y, radius: 10, type, color: type === 'heal' ? '#4ade80' : '#facc15', life: 420 });
-        }
-
-        function draw() {
-            // 画面クリア
-            ctx.fillStyle = '#0d111d';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // 背景の星
-            stars.forEach(s => {
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-                ctx.fillRect(s.x, s.y, s.size, s.size);
-            });
-
-            // 中央の防衛コア（スマートフォンをデフォルメデザイン）
-            ctx.save();
-            ctx.translate(coreX, coreY);
-            
-            // オーラ光沢
-            let gradient = ctx.createRadialGradient(0, 0, 10, 0, 0, coreRadius + 15);
-            gradient.addColorStop(0, 'rgba(56, 189, 248, 0.2)');
-            gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(0, 0, coreRadius + 15, 0, Math.PI * 2);
-            ctx.fill();
-
-            // スマホ筐体風角丸四角形
-            ctx.fillStyle = '#1e293b';
-            ctx.strokeStyle = '#38bdf8';
-            ctx.lineWidth = 2;
-            const w = 26;
-            const h = 42;
-            ctx.beginPath();
-            ctx.roundRect(-w/2, -h/2, w, h, 6);
-            ctx.fill();
-            ctx.stroke();
-
-            // 内側画面
-            ctx.fillStyle = '#0f172a';
-            ctx.beginPath();
-            ctx.roundRect(-w/2 + 2, -h/2 + 4, w - 4, h - 8, 3);
-            ctx.fill();
-
-            // 壁・インジケータ光
-            ctx.fillStyle = hp > 2 ? '#38bdf8' : '#ef4444';
-            ctx.beginPath();
-            ctx.arc(0, h/2 - 2, 1.5, 0, Math.PI*2);
-            ctx.fill();
-            
-            ctx.restore();
-
-            // 弾の描画
-            bullets.forEach(b => {
-                ctx.fillStyle = '#38bdf8';
-                ctx.shadowColor = '#38bdf8';
-                ctx.shadowBlur = 8;
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0; // リセット
-            });
-
-            // 敵の描画
-            enemies.forEach(e => {
-                ctx.fillStyle = e.color;
-                ctx.shadowColor = e.color;
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // コアに近いデザイン用のインナーコア
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(e.x, e.y, e.radius * 0.4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            });
-
-            powerups.forEach(item => {
-                ctx.fillStyle = item.color;
-                ctx.shadowColor = item.color;
-                ctx.shadowBlur = 15;
-                ctx.beginPath();
-                ctx.arc(item.x, item.y, item.radius + Math.sin(item.life / 12) * 1.5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = '#fff';
-                ctx.font = 'bold 12px system-ui';
-                ctx.textAlign = 'center';
-                ctx.fillText(item.type === 'heal' ? '+' : '⚡', item.x, item.y + 4);
-                ctx.shadowBlur = 0;
-            });
-
-            // パーティクルの描画
-            particles.forEach(p => {
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = p.alpha;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            ctx.globalAlpha = 1.0; // リセット
-
-            // UIテキスト（プレイ中のみ常時表示）
-            if (gameState === 'PLAYING' || gameState === 'GAMEOVER') {
-                ctx.font = 'bold 14px system-ui, sans-serif';
-                ctx.fillStyle = '#ffffff';
-                ctx.textAlign = 'left';
-                ctx.fillText(`SCORE: ${score}`, 15, 25);
-                if (combo > 1) {
-                    ctx.fillStyle = '#facc15';
-                    ctx.fillText(`COMBO ×${combo}`, 15, 45);
-                    ctx.fillStyle = '#ffffff';
-                }
-
-                // HPバー
-                ctx.textAlign = 'right';
-                ctx.fillText('HP: ', canvas.width - 75, 25);
-                
-                // HPの枠線
-                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-                ctx.lineWidth = 1;
-                ctx.strokeRect(canvas.width - 70, 14, 55, 12);
-                
-                // HPの残量充填
-                if(hp > 0) {
-                    ctx.fillStyle = hp > 2 ? '#22c55e' : '#ef4444';
-                    ctx.fillRect(canvas.width - 68, 16, (hp / maxHp) * 51, 8);
-                }
-            }
-        }
-
-        // ループの開始
-        requestAnimationFrame(loop);
-    </script>
-    <script>
-        /* NEON 2048: キーボード・スワイプ両対応の独立パズルゲーム */
+        /* PC Build Gacha: CPU/GPU/Memory/Storage/PSU and supporting parts */
         (() => {
-            const boardEl = document.getElementById('puzzle-board');
-            const scoreEl = document.getElementById('puzzle-score');
-            const bestEl = document.getElementById('puzzle-best');
-            const noteEl = document.querySelector('.puzzle-note');
-            const feedbackEl = document.getElementById('move-feedback');
-            let grid, score, previous = null;
-            let best = Number(localStorage.getItem('neon2048Best') || 0);
-
-            const emptyGrid = () => Array.from({ length: 4 }, () => Array(4).fill(0));
-            const clone = value => JSON.parse(JSON.stringify(value));
-            function addTile() {
-                const spaces = [];
-                grid.forEach((row, r) => row.forEach((value, c) => { if (!value) spaces.push([r, c]); }));
-                if (!spaces.length) return;
-                const [r, c] = spaces[Math.floor(Math.random() * spaces.length)];
-                grid[r][c] = Math.random() < .9 ? 2 : 4;
+            const $ = id => document.getElementById(id);
+            const slotsEl = $('pc-slots'), optionsEl = $('pc-options');
+            const titleEl = $('pc-options-title'), statusEl = $('pc-status');
+            const nextBtn = $('pc-next'), resetBtn = $('pc-reset'), resultEl = $('pc-result');
+            const budget = 300000;
+            const slotOrder = ['cpu','gpu','ram','storage','psu','motherboard','cooling','case'];
+            const labels = {cpu:'CPU',gpu:'GPU',ram:'メモリ',storage:'ストレージ',psu:'電源',motherboard:'マザーボード',cooling:'CPUクーラー',case:'PCケース'};
+            const parts = {
+              cpu: [
+                ['Intel 4004',1971,0.02,20],['Intel 8086',1978,0.05,20],['Intel 80386DX',1985,0.1,20],['Intel 80486DX2',1992,0.2,20],
+                ['Pentium 100',1994,0.4,20],['Pentium II 300',1997,0.7,30],['Pentium III 1GHz',2000,1,35],['Pentium 4 3.2GHz',2004,1.4,55],
+                ['Athlon 64  FX-55',2004,1.8,60],['Core 2 Duo E6600',2006,2.5,65],['Core 2 Quad Q6600',2007,3,95],['Core i7-920',2008,4,130],
+                ['Core i5-2500K',2011,5,95],['FX-8350',2012,4.5,125],['Core i7-4790K',2014,6,88],['Ryzen 7 1800X',2017,7,95],
+                ['Core i7-8700K',2017,7.5,95],['Ryzen 5 3600',2019,7,65],['Core i9-9900K',2018,8,95],['Ryzen 9 3950X',2019,9,105],
+                ['Core i5-12400F',2022,8,65],['Ryzen 7 5800X3D',2022,9,105],['Core i9-12900K',2021,10,241],['Ryzen 9 7950X',2022,11,170],
+                ['Core i5-14600K',2023,10,181],['Ryzen 7 7800X3D',2023,11,120],['Core Ultra 7 265K',2024,11,250],
+                ['Ryzen 7 9800X3D',2024,12,120],['Ryzen 9 9950X3D',2025,13,170],['Core Ultra 9 285K',2024,12,250],
+                ['Intel Xeon Platinum 8592+',2023,12,350],['AMD EPYC 9654',2022,13,360],['Raspberry Pi 1 CPU',2012,0.3,3],
+                ['Zilog Z80',1976,0.03,5],['MOS 6502',1975,0.02,2],['Motorola 68000',1979,0.06,5],
+                ['架空 128コアCPU',2026,15,500],['真空管式CPU（ネタ）',1950,0.01,1000]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(100,Math.round(p[2]*p[2]*1700))})),
+              gpu: [
+                ['IBM MDA',1981,.02,5],['CGAグラフィックス',1981,.03,5],['S3 Trio64',1995,.2,5],['3dfx Voodoo 2',1998,.7,10],
+                ['NVIDIA RIVA TNT2',1999,.6,10],['GeForce 2 GTS',2000,.8,25],['GeForce 4 Ti 4600',2002,1,50],
+                ['GeForce 6800 Ultra',2004,1.5,110],['GeForce 8800 GTX',2006,2.5,180],['Radeon HD 4870',2008,2.4,160],
+                ['GeForce GTX 480',2010,3,250],['GeForce GTX 580',2010,3.5,244],['Radeon HD 7970',2011,4,250],
+                ['GeForce GTX 680',2012,4.5,195],['GeForce GTX 780 Ti',2013,5.5,250],['GeForce GTX 970',2014,6,145],
+                ['GeForce GTX 980 Ti',2015,7,250],['Radeon RX 480',2016,5.5,150],['GeForce GTX 1080 Ti',2017,8.5,250],
+                ['Radeon RX Vega 64',2017,7.5,295],['GeForce RTX 2080 Ti',2018,10,250],['Radeon RX 5700 XT',2019,8,225],
+                ['GeForce RTX 3080',2020,12,320],['Radeon RX 6800 XT',2020,11,300],['GeForce RTX 3090',2020,13,350],
+                ['GeForce RTX 4060',2023,8,115],['Radeon RX 7800 XT',2023,10,263],['GeForce RTX 4070 SUPER',2024,12,220],
+                ['GeForce RTX 4090',2022,16,450],['GeForce RTX 5090',2025,20,575],['Radeon RX 9070 XT',2025,14,304],
+                ['Intel Arc A770',2022,7,225],['Intel Arc B580',2024,9,190],['NVIDIA Tesla K80',2014,4,300],
+                ['Matrox Millennium',1995,.1,5],['画面出力なしGPU',2026,0,1],['架空 RTX 9990 SUPER',2026,25,900]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(100,Math.round(p[2]*p[2]*1900))})),
+              ram: [
+                ['2MB FPM SIMM',1990,.02,5],['4MB SIMM',1992,.03,5],['8MB EDO RAM',1995,.05,5],['16MB SDRAM',1997,.1,5],
+                ['32MB SDRAM',1998,.15,5],['64MB PC100',1999,.2,5],['128MB PC133',2000,.3,5],['256MB DDR',2002,.5,5],
+                ['512MB DDR',2003,.7,5],['1GB DDR',2004,1,5],['2GB DDR2',2006,1.5,5],['4GB DDR3',2009,2.5,5],
+                ['8GB DDR3',2012,3,5],['16GB DDR4',2016,5,5],['32GB DDR4',2019,6,5],['64GB DDR4',2020,7,5],
+                ['16GB DDR5',2022,6,5],['32GB DDR5',2023,8,5],['64GB DDR5',2024,9,5],['96GB DDR5',2024,9.5,5],
+                ['128GB DDR5',2024,10,5],['256GB ECC RDIMM',2024,10,5],['512GB サーバーRAM',2025,11,5],
+                ['1TB ECCメモリ',2025,12,5],['2MB 低速メモリ（ネタ）',1980,.01,5],['1TB 超高速RAM（ネタ）',2026,15,5]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(100,Math.round(p[2]*p[2]*1200)),capacity:parseCapacity(p[0])})),
+              storage: [
+                ['1MB フロッピー風ストレージ',1980,.01,1],['10MB HDD',1985,.1,5],['20MB HDD',1987,.15,5],['40MB HDD',1990,.2,5],
+                ['120MB HDD',1993,.3,5],['1GB HDD',1997,.5,5],['10GB HDD',2000,1,5],['40GB HDD',2002,1.5,5],
+                ['80GB HDD',2004,2,5],['160GB HDD',2006,2.5,5],['500GB HDD',2008,3,5],['1TB HDD',2009,3.5,5],
+                ['2TB HDD',2010,4,5],['4TB HDD',2013,4.5,5],['8TB HDD',2016,5,5],['20TB HDD',2022,6,5],
+                ['32GB SATA SSD',2010,4,5],['128GB SATA SSD',2013,5,5],['500GB SATA SSD',2017,6,5],
+                ['1TB NVMe SSD',2019,8,5],['2TB PCIe 4.0 NVMe',2021,9,5],['4TB PCIe 5.0 NVMe',2024,11,5],
+                ['8TB NVMe SSD',2025,12,5],['100TB データセンターSSD',2025,13,5],['1000TB（1EB）架空SSD',2026,15,5],
+                ['1MBの超高性能SSD（ネタ）',2026,14,5],['1000TB HDD（ネタ）',2026,8,5]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(100,Math.round(p[2]*p[2]*900)),capacity:parseCapacity(p[0])})),
+              psu: [
+                ['1W USB電源（ネタ）',2026,0,1],['20W ACアダプター',2000,0,20],['65W SFX電源',2010,1,65],['150W OEM電源',2005,1,150],
+                ['250W ATX電源',2000,1,250],['350W ノーブランド',2008,1,350],['450W 80 PLUS Bronze',2012,2,450],
+                ['550W 80 PLUS Gold',2016,3,550],['650W 80 PLUS Gold',2018,4,650],['750W 80 PLUS Gold',2020,5,750],
+                ['850W 80 PLUS Platinum',2022,6,850],['1000W 80 PLUS Gold',2023,7,1000],['1200W 80 PLUS Platinum',2024,8,1200],
+                ['1600W ハイエンド電源',2024,9,1600],['2000W サーバー電源',2022,8,2000],['5000W 産業用電源',2020,5,5000],
+                ['100kW 工場用電源',2020,2,100000],['1000kW（1MW）ネタ電源',2026,1,1000000]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(100,Math.round(p[3]*0.8))})),
+              motherboard: [
+                ['Intel 440BX（Slot 1）',1998,2,30],['Socket A DDR board',2002,2,50],['LGA775 DDR2 board',2006,3,70],
+                ['X58 LGA1366',2008,4,120],['Z68 LGA1155',2011,5,120],['Z97 LGA1150',2014,6,130],
+                ['X370 AM4',2017,6,130],['Z390 LGA1151',2018,7,150],['B550 AM4',2020,7,120],
+                ['Z690 LGA1700',2021,8,220],['X670E AM5',2022,9,300],['B650 AM5',2023,8,180],
+                ['Z790 LGA1700',2023,9,250],['X870E AM5',2024,10,350],['Z890 LGA1851',2024,10,300],
+                ['サーバー用デュアルソケット',2023,10,700],['Socket不明の謎マザー',2026,0,50]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(100,p[3]*1000)})),
+              cooling: [
+                ['純正アルミヒートシンク',1998,1,5],['小型トップフロー',2005,2,10],['タワー型空冷',2012,4,15],
+                ['大型デュアルタワー空冷',2018,7,25],['120mm簡易水冷',2015,5,20],['240mm簡易水冷',2017,7,25],
+                ['360mm簡易水冷',2020,9,35],['420mm簡易水冷',2023,10,45],['液体窒素（ネタ）',2026,15,500],
+                ['冷却なし（危険）',2026,0,0]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(0,p[4]*1000)})),
+              case: [
+                ['段ボール箱（ネタ）',2026,0,0],['ベージュのATケース',1998,1,30],['ミニタワーケース',2005,2,40],
+                ['ミドルタワー',2012,4,60],['静音ミドルタワー',2018,6,90],['ピラーレスケース',2023,7,120],
+                ['高エアフローケース',2024,8,150],['フルタワー',2015,7,180],['オープンフレーム',2020,6,100],
+                ['水槽型RGBケース',2024,7,180],['ラックマウントケース',2010,5,150]
+              ].map(p=>({name:p[0],year:p[1],perf:p[2],watt:p[3],price:Math.max(0,p[3]*1000)}))
+            };
+            function parseCapacity(name) {
+                const m = name.match(/(\d+(?:\.\d+)?)\s*(MB|GB|TB|EB)/i);
+                if (!m) return 0;
+                const n = Number(m[1]), unit = m[2].toUpperCase();
+                return n * ({MB:1/1024,GB:1,TB:1024,EB:1024*1024}[unit] || 1);
             }
-            function render() {
-                boardEl.innerHTML = '';
-                grid.flat().forEach(value => {
-                    const tile = document.createElement('div');
-                    tile.className = `tile ${value ? `v-${value} new` : ''}`;
-                    tile.textContent = value || '';
-                    tile.dataset.value = value || '空きマス';
-                    boardEl.appendChild(tile);
+            let picks = {}, stage = 0, chosenIndex = -1, candidates = [];
+            const yen = n => (Number.isFinite(Number(n)) ? Math.round(Number(n)) : 0).toLocaleString('ja-JP') + '円';
+            const rand = arr => arr[Math.floor(Math.random()*arr.length)];
+            function cost(part) {
+                if (part.price !== undefined && Number.isFinite(Number(part.price))) return Math.max(0, Number(part.price));
+                return Math.max(100, Math.round((Number(part.perf)||0)*(Number(part.perf)||0)*1000));
+            }
+            function makeCandidates(slot) {
+                const list = parts[slot];
+                candidates = [];
+                while (candidates.length < 3) {
+                    const item = rand(list);
+                    if (!candidates.some(x=>x.name===item.name)) candidates.push(item);
+                }
+                chosenIndex = -1;
+                renderOptions();
+            }
+            function renderSlots() {
+                slotsEl.innerHTML = '';
+                slotOrder.forEach((slot,i)=>{
+                    const item = picks[slot];
+                    const div = document.createElement('div');
+                    div.className = 'pc-slot' + (item?' done':'') + (i===stage && stage<slotOrder.length?' active':'');
+                    div.innerHTML = `<div class="pc-slot-name">${i+1}. ${labels[slot]}</div><div class="pc-slot-part">${item?escapeHTML(item.name):'未選択'}</div><div class="pc-slot-price">${item?yen(cost(item)):'候補から選択'}</div>`;
+                    slotsEl.appendChild(div);
                 });
-                const guide = document.createElement('div');
-                guide.className = 'cursor-guide';
-                guide.setAttribute('aria-hidden', 'true');
-                guide.textContent = '＋';
-                boardEl.appendChild(guide);
-                scoreEl.textContent = score.toLocaleString();
-                bestEl.textContent = best.toLocaleString();
+                $('pc-progress-bar').style.width = (Object.keys(picks).length/slotOrder.length*100)+'%';
             }
-            function merge(line) {
-                const compact = line.filter(Boolean);
-                const out = [];
-                let gained = 0;
-                for (let i = 0; i < compact.length; i++) {
-                    if (compact[i] === compact[i + 1]) { const value = compact[i] * 2; out.push(value); gained += value; i++; }
-                    else out.push(compact[i]);
+            function escapeHTML(s) { return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+            function renderOptions() {
+                optionsEl.innerHTML = '';
+                candidates.forEach((p,i)=>{
+                    const b = document.createElement('button');
+                    b.className = 'pc-option'+(i===chosenIndex?' selected':'');
+                    let meta = `${p.year}年頃 · 性能指数 ${p.perf} · ${p.watt}W`;
+                    if (p.capacity) meta += ` · 容量 ${p.capacity<1?(p.capacity*1024).toFixed(0)+'MB':p.capacity.toLocaleString()+'GB相当'}`;
+                    b.innerHTML = `<div class="pc-option-main"><div class="pc-option-name">${escapeHTML(p.name)}</div><div class="pc-option-meta">${meta}</div></div><div class="pc-option-price">${yen(cost(p))}</div>`;
+                    b.addEventListener('click',()=>{chosenIndex=i; picks[slotOrder[stage]]=p; stage++; renderSlots(); if(stage<slotOrder.length){ chosenIndex=-1; titleEl.textContent=`${stage+1} ${labels[slotOrder[stage]]}を選ぼう`; statusEl.textContent=stageQuips[slotOrder[stage]] || `${labels[slotOrder[stage]]}の候補が出た。運命のクリックをどうぞ。`; makeCandidates(slotOrder[stage]); } else { finish(); }});
+                    optionsEl.appendChild(b);
+                });
+            }
+            const stageQuips = {
+                cpu: 'CPUガチャ開幕。ここでPentium 4を引くか、怪物を引くか。運命は3枚のカードにある。',
+                gpu: '次はGPU。予算の大半を溶かす準備はできた？',
+                ram: 'メモリ選択。容量が大きいほど正義……とは限らないのがこのゲーム。',
+                storage: 'ストレージ選択。OSが入らない容量を引いても泣かない。',
+                psu: '電源選択。ここをケチると、PCより先に採点結果が燃える。',
+                motherboard: 'マザーボード選択。CPUとソケットの相性？ 今回は運命に任せよう。',
+                cooling: '冷却選択。液体窒素を選ぶと、PCより先に部屋の空気が凍るかもしれない。',
+                case: '最後はケース。段ボールで世界を変えるのも、まあ自作PCの一形態……なのか？'
+            };
+            function start() {
+                picks={}; stage=0; chosenIndex=-1; resultEl.hidden=true; resultEl.innerHTML='';
+                $('pc-budget').textContent=yen(budget);
+                nextBtn.textContent='カードを選ぶと自動で進みます'; nextBtn.disabled=true;
+                statusEl.textContent='カードをタップして選択。選んだ瞬間に次のパーツへ！ 目指せハイエンド、予算は生きて帰れるか。';
+                titleEl.textContent='① CPUを選ぼう';
+                renderSlots(); makeCandidates(slotOrder[stage]);
+            }
+            function next() {
+                if (chosenIndex<0 || stage>=slotOrder.length) return;
+                picks[slotOrder[stage]]=candidates[chosenIndex];
+                stage++;
+                renderSlots();
+                if(stage<slotOrder.length) {
+                    chosenIndex=-1; titleEl.textContent=`${stage+1} ${labels[slotOrder[stage]]}を選ぼう`;
+                    statusEl.textContent=stageQuips[slotOrder[stage]] || `${labels[slotOrder[stage]]}の候補が出た。`;
+                    nextBtn.disabled=true; makeCandidates(slotOrder[stage]);
+                } else finish();
+            }
+            function finish() {
+                optionsEl.innerHTML=''; titleEl.textContent='ビルド完成！'; nextBtn.disabled=true; nextBtn.textContent='ビルド完成';
+                const list=slotOrder.map(s=>picks[s]);
+                const total=list.reduce((n,p)=>n+(Number.isFinite(cost(p))?cost(p):0),0);
+                const cpu=picks.cpu, gpu=picks.gpu, ram=picks.ram, storage=picks.storage, psu=picks.psu;
+                let score=Math.round((cpu.perf*7 + gpu.perf*10 + ram.perf*2 + storage.perf*1.5 + picks.motherboard.perf + picks.cooling.perf + picks.case.perf)*5);
+                const powerNeed=cpu.watt+gpu.watt+100;
+                let notes=[];
+                const ratio=Math.max(cpu.perf, gpu.perf, .1)/Math.max(Math.min(cpu.perf,gpu.perf),.1);
+                if(cpu.perf>gpu.perf*2.4) { score-=70; notes.push('CPUが強すぎてGPUがボトルネック気味。'); }
+                else if(gpu.perf>cpu.perf*2.8) { score-=60; notes.push('GPUにCPUが追いつかず、ボトルネック発生！'); }
+                else notes.push('CPUとGPUの組み合わせは比較的バランス良好。');
+                if(ram.name.includes('2MB')) { score-=100; notes.push('メモリ2MBでは現代PCの起動すら厳しい！'); }
+                else if(ram.name.includes('1TB')) { score+=35; notes.push('1TBメモリ！ 大規模処理向けの怪物構成。'); }
+                if(storage.name.includes('1MB')) { score-=90; notes.push('ストレージ1MB。OSを入れる場所がありません。'); }
+                else if(storage.name.includes('1000TB')) { score+=25; notes.push('1000TB級ストレージ。容量だけならデータセンター級！'); }
+                if(psu.watt<powerNeed) { score-=160; notes.push(`電源容量不足（必要目安 ${powerNeed}W / 選択 ${psu.watt}W）。電源が悲鳴を上げた！`); }
+                else if(psu.watt>powerNeed*5 && psu.watt>3000) { score-=20; notes.push('電源が巨大すぎる。PCより工場を動かせそう。'); }
+                else notes.push('電源容量は必要目安を満たしています。');
+                if(picks.cooling.perf===0 && cpu.watt>65) { score-=100; notes.push('冷却なしで高消費電力CPUを運用。サーマルスロットリング不可避！'); }
+                if(picks.motherboard.name.includes('謎')) { score-=80; notes.push('ソケット不明のマザーボード。CPUが刺さる保証なし。'); }
+                if(total>budget) { const penalty=Math.min(250,Math.ceil((total-budget)/10000)*8); score-=penalty; notes.push(`予算を${yen(total-budget)}超過。財布にダメージ！`); }
+                else { score+=Math.round((budget-total)/10000); notes.push(`予算内に収まった（残り ${yen(budget-total)}）。`); }
+                score=Number.isFinite(score)?Math.max(0,score):0;
+                const rank=score>=800?'神構成':score>=600?'ハイエンド':score>=400?'良構成':score>=220?'ミドル級':score>=100?'クセ強構成':'ジャンク級';
+                const title=score<100 && psu.watt<powerNeed?'電源容量不足で爆発しました！':rank;
+                // ネタコメントは条件別に多数用意し、同じ結果でも毎回違うツッコミを出す。
+                const roastPool = [];
+                if (gpu.name.includes('RTX 5090') || gpu.name.includes('RTX 9990')) roastPool.push(
+                    'GPUだけで世界征服する気か。ほかのパーツがついていけるかは別問題。',
+                    'グラボが主役、残りのパーツは付き人。',
+                    'ベンチマークを回す前に財布のベンチマークが落ちた。',
+                    'フレームレートは上がる。財布の残高は下がる。'
+                );
+                if (gpu.perf < 1) roastPool.push(
+                    '映像出力はできる。ゲーム性能？ そこは聞かない約束。',
+                    'GPUが歴史資料館から出土しました。',
+                    '画面は映る。勝てるとは言っていない。',
+                    'グラボというより、グラフィックの思い出。'
+                );
+                if (cpu.perf < 1) roastPool.push(
+                    'CPUが古代遺跡級。OSが起動する前に歴史の授業が終わる。',
+                    '演算速度より年輪のほうが立派。',
+                    'このCPU、発売当時の未来を生きてる。',
+                    'CPUが懐かしすぎてBIOSが同窓会を始めた。'
+                );
+                if (cpu.perf > gpu.perf * 2.4) roastPool.push(
+                    'CPU「俺はまだ本気を出していない」 GPU「いや、こっちが限界です」',
+                    'CPUが全力疾走、GPUは散歩。',
+                    '処理待ちのGPUに有給休暇をあげてください。',
+                    'CPUだけが先にゴールして、GPUを待っている。'
+                );
+                if (gpu.perf > cpu.perf * 2.8) roastPool.push(
+                    'GPU「早くデータをくれ」 CPU「ちょっと待って」──ボトルネック漫才。',
+                    'GPUに高級スポーツカーを積んだのに、CPUは自転車。',
+                    'グラボは本気。CPUはまだ起きてない。',
+                    'GPUが待ち時間を使って資格を取れそう。'
+                );
+                if (ram.name.includes('2MB')) roastPool.push(
+                    'メモリ2MB。ブラウザのタブを開く前にタブを閉じよう。',
+                    'メモリというより、メモリの試供品。',
+                    'OS「住める場所がありません」',
+                    '現代のアプリが玄関でUターンした。'
+                );
+                if (ram.name.includes('1TB')) roastPool.push(
+                    'メモリ1TB。タブを何枚開く気だ、地球上の全サイトか？',
+                    'RAMだけでデータセンターの面接に行ける。',
+                    'メモリが豪邸。CPUがワンルームだったら泣く。',
+                    'アプリを閉じるという概念を忘れた構成。'
+                );
+                if (storage.name.includes('1MB')) roastPool.push(
+                    'ストレージ1MB。OSのインストーラーが荷物をまとめて帰った。',
+                    '保存できるのは希望と小さなテキストくらい。',
+                    '空き容量より、容量そのものが少ない。',
+                    '「ディスク容量が不足しています」が起動音になりそう。'
+                );
+                if (storage.name.includes('1000TB')) roastPool.push(
+                    'ストレージ1EB級。ゲームを全部入れてもまだ地平線が見えない。',
+                    '容量は巨大。整理整頓能力も試される。',
+                    'バックアップ先のバックアップ先が必要なやつ。',
+                    'データセンターが個人宅に引っ越してきた。'
+                );
+                if (psu.watt < powerNeed) roastPool.push(
+                    '電源「聞いてないんですけど!?」 GPU「ワット数なら出せます」',
+                    '電源容量が足りない。コンセントに謝っても解決しません。',
+                    'PC「起動したい」電源「その願いは私の容量を超えている」',
+                    '電源が悲鳴。マザーボードが耳をふさいだ。',
+                    'ワット数が足りないので、夢と希望で補おう。無理です。'
+                );
+                if (psu.watt >= 100000) roastPool.push(
+                    '家庭用PCなのに工場の受電設備みたいな電源。',
+                    '電源容量で近所の商店街まで支える気か。',
+                    'PCを組んだはずが、電力インフラを整備していた。',
+                    '電気代の請求書がラスボスとして登場しそう。'
+                );
+                if (picks.motherboard.name.includes('謎')) roastPool.push(
+                    'ソケット不明。CPUとマザーが初対面のまま終わる可能性。',
+                    '規格？ 相性？ すべては運命の一言で片づけられた。',
+                    'マザーボードの説明書が「まず型番を教えてください」と言っている。'
+                );
+                if (picks.cooling.perf===0 && cpu.watt>65) roastPool.push(
+                    '冷却なし。CPUがサーマルスロットリングで省エネ系インフルエンサーに転身。',
+                    'ヒートシンク不在。熱だけはハイエンド。',
+                    'CPU温度のグラフがロケットの打ち上げ計画。',
+                    'ファンがない？ 気合いで風を起こそう。起きません。'
+                );
+                if (picks.case.name.includes('段ボール')) roastPool.push(
+                    '段ボールケース。エアフローは気合い、耐久性は祈り。',
+                    '究極の軽量ケース。水濡れという名の天敵がいる。',
+                    'ケース代を節約した結果、梱包材が主役になった。',
+                    'RGBより先に宅配便のロゴが光りそう。'
+                );
+                if (total > budget) roastPool.push(
+                    '予算オーバー！ 電卓が「それは聞いてない」と言っています。',
+                    '30万円の壁を突破。財布のHPはゼロに近い。',
+                    '構成は豪華、会計はホラー。',
+                    '見積もりを見た家族が静かに部屋を出ていった。',
+                    '予算管理の授業、欠席してました？'
+                );
+                if (total <= budget * .45) roastPool.push(
+                    '予算が余りすぎ。パーツ選びより貯金がハイエンド。',
+                    '財布には優しいが、性能は遠慮がち。',
+                    '余った予算でモニターを買うか、もう一度ガチャを回そう。',
+                    '節約の才能がすごい。性能にも少し分けてあげて。'
+                );
+                if (score >= 800) roastPool.push(
+                    'これは強い。ベンチマークソフトが先に緊張している。',
+                    'ハイエンドの気配。電源と冷却がついてきていれば本物。',
+                    '性能の暴力。ただし予算の被害状況も確認しよう。',
+                    'PCパーツ選びの神が一瞬だけログインした。'
+                );
+                if (score < 100) roastPool.push(
+                    'これは自作PCというより、パーツの寄せ集め大会。',
+                    '性能評価の担当者がそっとブラウザを閉じた。',
+                    '起動するかどうかも含めて、ロマン枠。',
+                    'ジャンク級。でも話のネタとしては優勝候補。'
+                );
+                const generalRoasts = [
+                    'その構成、パーツ同士が会議している。「誰が責任者？」',
+                    'スペック表だけ見たら強そう。実際どうかは神のみぞ知る。',
+                    'ベンチマークの前に、まず配線と相性の確認をお願いします。',
+                    '自作PCあるある：パーツを選ぶ時間が、組み立てる時間より長い。',
+                    'このPC、ロマンと現実が同じケースに入っている。',
+                    '性能を求めた結果、謎のこだわり構成が誕生。',
+                    '冷静に見れば変。でもガチャ結果としては満点の面白さ。',
+                    '将来性はあります。互換性があるかは別の話。',
+                    '「とりあえず一番高いやつ」だけではPCは完成しない。',
+                    'パーツ選びのコンセプトは「後悔は組んでから考える」。',
+                    'この構成を見たショップ店員、まずマザーボードを確認。',
+                    '性能・価格・相性の三者面談が必要です。',
+                    'ケースの中は夢いっぱい、見積もりの中は数字いっぱい。',
+                    '理論上はPC。ロマン的には宇宙船。',
+                    '今すぐ買う前に、規格と実売価格をもう一度確認しよう。',
+                    '構成表はできた。次は互換性チェックという現実が待っている。',
+                    'このPCで何をするのか、PC本人も気になっている。',
+                    'パーツが豪華でも、組み合わせの妙がなければ宝の持ち腐れ。',
+                    'CPUとGPUの会話：「君、何年モデル？」「そこは聞かないで」',
+                    'ガチャの神は笑っている。財布は笑っていない。',
+                    '冷却、電源、相性。自作PC三大「あとで気づくと痛い」ポイント。',
+                    '見た目に全振りするのも自作の醍醐味。エアフローは忘れずに。',
+                    'そのパーツ構成、掲示板に貼ったらレスが伸びそう。',
+                    'ひとつ確かなこと：普通の構成にはならなかった。',
+                    '完成おめでとう。次は現実世界での互換性確認クエストです。',
+                    'CPUクーラーの高さ、ケースに入る？ 未来の自分に確認を任せたな。',
+                    '規格表を見れば防げた悲劇が、ここにひとつ。',
+                    '予算の使い方が大胆。計画性は今後のアップデートに期待。',
+                    'そのPC、ベンチマークより先にSNSで話題になりそう。',
+                    '電源容量に余裕があっても、コネクタの確認は忘れずに。',
+                    'パーツを選ぶたびに、別のパーツの存在意義が揺らいでいる。',
+                    'ガチャ運が良いのか悪いのか、専門家でも意見が割れそう。',
+                    'ハイエンドを目指したはずが、クセ強ビルドに着地。',
+                    '自作PCは自由。だからって自由すぎる構成にしなくてもいい。',
+                    'このビルドの最大の強みは、説明するときの話題の多さ。',
+                    '性能を数値化したら、ツッコミどころまで数値化された。',
+                    'パーツの世代差が大きい。タイムマシンをケースに詰めた？',
+                    'もし現実に組むなら、ソケット・メモリ規格・寸法を要チェック。',
+                    '価格はゲーム内の目安。現実の市場価格は別世界です。',
+                    '見た目は完成。動作するかは、組み立て後のあなたに託された。',
+                    'この結果を見た未来の自分「なぜこの選択をした？」',
+                    'そのパーツ、スペックよりも存在感が強い。',
+                    'おめでとう！ 一般的な自作PCの常識から少し旅に出ました。',
+                    '最高の構成かどうかはさておき、最高に語れる構成ではある。',
+                    'もう一回回せば神構成かもしれない。沼の入口へようこそ。',
+                    'パーツ選びは戦略ゲーム。今回は運要素がかなり強かった。',
+                    '性能を追う者、予算に追われる。自作PCの縮図。',
+                    'CPU、GPU、RAM、SSD。略語を並べると強そうに見える現象。',
+                    '構成が完成した瞬間、次の構成を考え始める。それが沼。',
+                    'パーツの個性が強すぎて、ケースの中で主役争いが起きている。',
+                    '完成度はともかく、インパクトは十分。'
+                ];
+                roastPool.push(...generalRoasts);
+                // 重複を避けて最大4つ表示。条件に合うツッコミを優先して混ぜる。
+                const shuffled = roastPool.sort(()=>Math.random()-.5);
+                const roasts = [...new Set(shuffled)].slice(0,4);
+                if (!Number.isFinite(total) || !Number.isFinite(score)) {
+                    // 最後の防波堤：不正な値が画面に出るのを防止。
+                    console.error('Non-finite build values detected', {total,score,picks});
                 }
-                while (out.length < 4) out.push(0);
-                return { line: out, gained };
+                const safeTotal = Number.isFinite(total) ? total : 0;
+                const safeScore = Number.isFinite(score) ? score : 0;
+                statusEl.textContent='ビルド完成。性能評価班がざわついています。';
+                resultEl.hidden=false;
+                const resultParts = [
+                    ['CPU',cpu.name],['GPU',gpu.name],['メモリ',ram.name],['ストレージ',storage.name],
+                    ['電源',psu.name],['マザーボード',picks.motherboard.name],['冷却',picks.cooling.name],['ケース',picks.case.name]
+                ].map(([label,name])=>`<div class="pc-result-part"><small>${label}</small><strong>${escapeHTML(name)}</strong></div>`).join('');
+                resultEl.innerHTML=`<h3>${escapeHTML(title)}</h3><div class="pc-result-score">戦闘力 ${safeScore.toLocaleString('ja-JP')}</div><p><strong>総額：</strong>${yen(safeTotal)} / 予算 ${yen(budget)}<br><strong>予算残り：</strong>${yen(Math.max(0,budget-safeTotal))}</p><div class="pc-result-grid">${resultParts}</div><p><strong>構成チェック</strong><br>${notes.map(escapeHTML).join('<br>')}</p><div class="pc-roast">💬 ${roasts.map(escapeHTML).join('<br>💬 ')}</div><button class="pc-share" id="pc-share">𝕏 このビルドをXで自慢する</button><button class="pc-share" id="pc-retry" style="margin-top:10px;background:linear-gradient(90deg,#075985,#4338ca)">↻ もう一度ガチャを回す</button>`;
+                $('pc-share').addEventListener('click',()=>share(safeScore,title,safeTotal,[...notes,...roasts]));
+                $('pc-retry').addEventListener('click',start);
+                renderSlots();
             }
-            function getLine(index, direction) {
-                const vertical = direction === 'up' || direction === 'down';
-                const line = vertical ? grid.map(row => row[index]) : [...grid[index]];
-                return (direction === 'right' || direction === 'down') ? line.reverse() : line;
+            function share(score,title,total,notes) {
+                const pageUrl=location.href.split('#')[0];
+                const text=`${title}！予算30万円でPCを組んでみた。総額：${yen(total)}／戦闘力：${score}\n${notes.slice(0,2).join(' ')}\n#自作PCビルドゲーム #自作PC\n${pageUrl}`;
+                const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);
+                window.open(url,'_blank','noopener,noreferrer');
             }
-            function putLine(index, direction, line) {
-                const final = (direction === 'right' || direction === 'down') ? [...line].reverse() : line;
-                if (direction === 'up' || direction === 'down') final.forEach((value, r) => grid[r][index] = value);
-                else grid[index] = final;
-            }
-            function canMove() {
-                for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
-                    if (!grid[r][c] || grid[r][c] === grid[r + 1]?.[c] || grid[r][c] === grid[r]?.[c + 1]) return true;
-                }
-                return false;
-            }
-            function animateMove(direction) {
-                const labels = { left: ['←', '左へスライド'], right: ['→', '右へスライド'], up: ['↑', '上へスライド'], down: ['↓', '下へスライド'] };
-                const [arrow, label] = labels[direction];
-                boardEl.dataset.move = arrow;
-                feedbackEl.textContent = `${arrow} ${label}`;
-                boardEl.classList.remove('moving', 'move-left', 'move-right', 'move-up', 'move-down');
-                void boardEl.offsetWidth;
-                boardEl.classList.add('moving', `move-${direction}`);
-                setTimeout(() => boardEl.classList.remove('moving', `move-${direction}`), 400);
-            }
-            function move(direction) {
-                const before = clone(grid);
-                const scoreBefore = score;
-                let gain = 0;
-                for (let i = 0; i < 4; i++) { const result = merge(getLine(i, direction)); putLine(i, direction, result.line); gain += result.gained; }
-                if (JSON.stringify(before) === JSON.stringify(grid)) return;
-                previous = { grid: before, score: scoreBefore };
-                animateMove(direction);
-                score += gain;
-                if (score > best) { best = score; localStorage.setItem('neon2048Best', best); }
-                addTile();
-                if (!canMove()) noteEl.textContent = 'ゲームオーバー！「はじめから」で再挑戦できます。';
-                else noteEl.textContent = grid.flat().includes(2048) ? '2048達成！さらに上を目指せます。' : 'PC：矢印キー　スマホ：上下左右にスワイプ';
-                render();
-            }
-            function restart() { grid = emptyGrid(); score = 0; previous = null; addTile(); addTile(); noteEl.textContent = 'PC：矢印キー　スマホ：上下左右にスワイプ'; feedbackEl.textContent = '矢印キーまたはスワイプで、タイルを動かしてみよう'; render(); }
-            document.getElementById('puzzle-restart').addEventListener('click', restart);
-            document.getElementById('puzzle-undo').addEventListener('click', () => {
-                if (!previous) { noteEl.textContent = '戻せる手がありません。'; return; }
-                grid = previous.grid; score = previous.score; previous = null; noteEl.textContent = 'ひとつ前の状態に戻しました。'; feedbackEl.textContent = '↶ ひとつ前の手に戻しました'; render();
-            });
-            const keyMap = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
-            document.addEventListener('keydown', e => { if (keyMap[e.key]) { e.preventDefault(); move(keyMap[e.key]); } });
-            let startX = 0, startY = 0;
-            let pointerIsDown = false;
-            function previewDirection(dx, dy) {
-                if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return null;
-                return Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
-            }
-            function updateCursorGuide(e) {
-                const rect = boardEl.getBoundingClientRect();
-                const guide = boardEl.querySelector('.cursor-guide');
-                if (!guide) return;
-                const tile = e.target.closest('.tile');
-                boardEl.querySelectorAll('.tile.cursor-target').forEach(el => el.classList.remove('cursor-target'));
-                if (tile) tile.classList.add('cursor-target');
-                guide.style.left = `${e.clientX - rect.left}px`;
-                guide.style.top = `${e.clientY - rect.top}px`;
-                boardEl.classList.add('is-hovering');
-                const direction = pointerIsDown && previewDirection(e.clientX - startX, e.clientY - startY);
-                const arrows = { left: '←', right: '→', up: '↑', down: '↓' };
-                guide.textContent = direction ? arrows[direction] : '＋';
-                if (direction) feedbackEl.textContent = `${arrows[direction]} この方向に離すと、盤面全体が動きます`;
-                else if (tile) feedbackEl.textContent = `${tile.dataset.value} のタイルを指しています。ここから好きな方向へスワイプできます`;
-            }
-            boardEl.addEventListener('pointerdown', e => { startX = e.clientX; startY = e.clientY; pointerIsDown = true; updateCursorGuide(e); });
-            boardEl.addEventListener('pointermove', updateCursorGuide);
-            boardEl.addEventListener('pointerleave', () => {
-                if (pointerIsDown) return;
-                boardEl.classList.remove('is-hovering');
-                boardEl.querySelectorAll('.tile.cursor-target').forEach(el => el.classList.remove('cursor-target'));
-            });
-            boardEl.addEventListener('pointerup', e => {
-                const dx = e.clientX - startX, dy = e.clientY - startY;
-                pointerIsDown = false;
-                const direction = previewDirection(dx, dy);
-                if (!direction) return;
-                move(direction);
-            });
-            restart();
+            nextBtn.addEventListener('click',next);
+            resetBtn.addEventListener('click',start);
+            start();
         })();
     </script>
 </body>
