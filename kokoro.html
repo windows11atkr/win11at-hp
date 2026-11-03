@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101722">
+  <meta name="description" content="16歳未満のSNS利用を一律に禁止する政策について、子どもの安全とつながる権利の両面から根拠・出典を確認し、代替策を提案する特設ページ。">
+  <title>つながりを守る政策へ｜16歳未満SNS一律禁止を考える</title>
+  <style>
+    :root {
+      --bg: #101722;
+      --panel: #172231;
+      --panel2: #1d2b3d;
+      --text: #f3f6fa;
+      --muted: #b7c3d1;
+      --line: #35465a;
+      --accent: #77e0c0;
+      --accent2: #a5c8ff;
+      --warn: #ffd18a;
+      --max: 1160px;
+      --radius: 22px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .22)
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at 80% 0%, #20364a 0, transparent 34%), var(--bg);
+      color: var(--text);
+      font-family: Inter, "Noto Sans JP", "Yu Gothic UI", Meiryo, sans-serif;
+      line-height: 1.8
+    }
+
+    a {
+      color: var(--accent2);
+      text-underline-offset: 4px
+    }
+
+    a:hover {
+      color: var(--accent)
+    }
+
+    button {
+      font: inherit
+    }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: auto
+    }
+
+    .skip:focus {
+      left: 12px;
+      top: 12px;
+      background: #fff;
+      color: #000;
+      padding: 8px 12px;
+      z-index: 99
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(16, 23, 34, .88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, .09)
+    }
+
+    .nav {
+      max-width: var(--max);
+      margin: auto;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      justify-content: space-between
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: .02em;
+      white-space: nowrap
+    }
+
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #10202b;
+      font-weight: 900
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .navlinks a {
+      font-size: .88rem;
+      color: var(--muted);
+      text-decoration: none
+    }
+
+    .navlinks a:hover {
+      color: var(--text)
+    }
+
+    .menu {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 7px 10px;
+      border-radius: 10px
+    }
+
+    main {
+      overflow: hidden
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: auto;
+      padding: 0 22px
+    }
+
+    .hero {
+      padding: 92px 0 76px;
+      position: relative
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--accent);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase
+    }
+
+    .kicker:before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--accent)
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      line-height: 1.14;
+      letter-spacing: -.055em;
+      max-width: 900px;
+      margin: 24px 0
+    }
+
+    h1 span {
+      color: var(--accent)
+    }
+
+    .lead {
+      font-size: clamp(1.06rem, 2vw, 1.3rem);
+      color: #d3dce7;
+      max-width: 760px
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 30px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      transition: transform .2s, background .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px)
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #10202b;
+      border-color: var(--accent)
+    }
+
+    .secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, .04)
+    }
+
+    .hero-meta {
+      margin-top: 36px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: .84rem
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 40px;
+      align-items: center
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      background: linear-gradient(145deg, rgba(119, 224, 192, .09), rgba(165, 200, 255, .04));
+      box-shadow: var(--shadow)
+    }
+
+    .hero-card .big {
+      font-size: 3.8rem;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -.06em;
+      color: var(--accent)
+    }
+
+    .hero-card p {
+      color: var(--muted);
+      margin-bottom: 0
+    }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 22px
+    }
+
+    .mini {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .045);
+      border: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .mini strong {
+      display: block;
+      font-size: 1rem
+    }
+
+    .mini small {
+      color: var(--muted)
+    }
+
+    section {
+      padding: 78px 0;
+      border-top: 1px solid rgba(255, 255, 255, .07)
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 34px
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .13em
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 3.1rem);
+      line-height: 1.25;
+      letter-spacing: -.035em;
+      margin: 10px 0 14px
+    }
+
+    .section-head p {
+      color: var(--muted);
+      margin: 0
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px
+    }
+
+    .card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .018))
+    }
+
+    .card .num {
+      color: var(--accent);
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .12em
+    }
+
+    .card h3 {
+      margin: 8px 0;
+      font-size: 1.2rem;
+      line-height: 1.45
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted)
+    }
+
+    .note {
+      border-left: 3px solid var(--warn);
+      padding: 14px 18px;
+      background: rgba(255, 209, 138, .07);
+      border-radius: 0 12px 12px 0;
+      color: #e7d9c4;
+      margin-top: 20px
+    }
+
+    .callout {
+      padding: 30px;
+      border-radius: var(--radius);
+      background: linear-gradient(110deg, rgba(119, 224, 192, .12), rgba(165, 200, 255, .08));
+      border: 1px solid rgba(119, 224, 192, .28)
+    }
+
+    .callout blockquote {
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      line-height: 1.55;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: -.025em
+    }
+
+    .callout p {
+      color: var(--muted);
+      margin: 14px 0 0
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 650px;
+      background: rgba(255, 255, 255, .025)
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top
+    }
+
+    th {
+      color: var(--accent);
+      font-size: .88rem;
+      background: rgba(255, 255, 255, .04)
+    }
+
+    td {
+      color: #d6dfe9
+    }
+
+    tr:last-child td {
+      border-bottom: 0
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: .76rem;
+      color: var(--muted)
+    }
+
+    .sources {
+      counter-reset: source;
+      display: grid;
+      gap: 12px
+    }
+
+    .source {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .025)
+    }
+
+    .source:before {
+      counter-increment: source;
+      content: "0" counter(source);
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 1.1rem
+    }
+
+    .source h3 {
+      margin: 0 0 4px;
+      font-size: 1rem
+    }
+
+    .source p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .91rem
+    }
+
+    .source a {
+      display: inline-block;
+      margin-top: 7px;
+      font-weight: 700
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px
+    }
+
+    .check {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .035);
+      border: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .check b {
+      color: var(--accent);
+      font-size: 1.2rem
+    }
+
+    .check p {
+      margin: 0;
+      color: var(--muted)
+    }
+
+    .faq details {
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0
+    }
+
+    .faq summary {
+      cursor: pointer;
+      font-weight: 800
+    }
+
+    .faq details p {
+      color: var(--muted);
+      margin: 12px 0 0
+    }
+
+    footer {
+      padding: 36px 0 54px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .86rem
+    }
+
+    .footer-row {
+      display: flex;
+      gap: 22px;
+      justify-content: space-between;
+      flex-wrap: wrap
+    }
+
+    .small {
+      font-size: .82rem;
+      color: var(--muted)
+    }
+
+    @media(max-width:850px) {
+      .hero-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-card {
+        max-width: 600px
+      }
+
+      .grid3 {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .navlinks {
+        display: none;
+        position: absolute;
+        top: 61px;
+        left: 0;
+        right: 0;
+        background: #101722;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line)
+      }
+
+      .navlinks.open {
+        display: grid;
+        grid-template-columns: 1fr 1fr
+      }
+
+      .menu {
+        display: block
+      }
+    }
+
+    @media(max-width:580px) {
+      .hero {
+        padding: 62px 0 52px
+      }
+
+      .grid3,
+      .grid2 {
+        grid-template-columns: 1fr
+      }
+
+      .card-row {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .wrap {
+        padding: 0 17px
+      }
+
+      .nav {
+        padding: 10px 17px
+      }
+
+      .hero-card .big {
+        font-size: 3rem
+      }
+
+      section {
+        padding: 58px 0
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      *,
+      *:before,
+      *:after {
+        transition: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#main">本文へスキップ</a>
+  <header>
+    <nav class="nav" aria-label="メインナビゲーション">
+      <a class="brand" href="index.html"><span class="mark">つ</span><span>つながりを守る政策へ</span></a>
+      <button class="menu" id="menuBtn" aria-expanded="false" aria-controls="navlinks">メニュー</button>
+      <div class="navlinks" id="navlinks">
+        <a href="#issue">問題提起</a><a href="#rights">つながる権利</a><a href="#alternatives">代替策</a><a
+          href="#evidence">根拠・出典</a><a href="#about">このページについて</a>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <div class="wrap hero" id="top">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">POLICY NOTE / JAPAN</div>
+          <h1>子どもを守るために、<br><span>SNSを奪う</span>必要はあるのか。</h1>
+          <p class="lead">
+            16歳未満のSNS利用を一律に禁止する案について、子どもの安全と、つながり・相談・表現の機会の両面から考えます。目指すのは「危険を放置すること」ではなく、子どもがより安全につながれる環境です。</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#issue">論点を読む ↓</a>
+            <a class="btn secondary" href="#evidence">出典・一次資料を見る ↗</a>
+          </div>
+          <div class="hero-meta"><span><i class="dot"></i>根拠と意見を区別</span><span><i class="dot"></i>出典を明記</span><span><i
+                class="dot"></i>一律禁止以外の選択肢を検討</span></div>
+        </div>
+        <aside class="hero-card" aria-label="ページの立場">
+          <div class="tag">このページの立場</div>
+          <div class="big">安全 × つながり</div>
+          <p>子どもの被害を減らすことは重要です。ただし、利用禁止の効果だけでなく、失われる支援や権利、実施上の課題も同時に評価する必要があります。</p>
+          <div class="card-row">
+            <div class="mini"><strong>守るべきもの</strong><small>心身の安全・プライバシー</small></div>
+            <div class="mini"><strong>失ってはいけないもの</strong><small>相談先・居場所・学ぶ機会</small></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <section id="issue">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">01 / THE QUESTION</div>
+          <h2>「禁止すれば安全」だけで、<br>結論を出してよいのか。</h2>
+          <p>一律禁止を支持する側には、犯罪被害や心身への影響を減らしたいという問題意識があります。その目的を認めたうえで、手段の効果と副作用を検証します。</p>
+        </div>
+        <div class="grid3">
+          <article class="card">
+            <div class="num">POINT 01</div>
+            <h3>目的と手段は別に評価する</h3>
+            <p>子どもを守る目的が重要でも、16歳未満の全員を対象とする禁止が最も有効な方法かどうかは、別途根拠が必要です。</p>
+          </article>
+          <article class="card">
+            <div class="num">POINT 02</div>
+            <h3>被害の種類ごとに対策する</h3>
+            <p>詐欺、性的搾取、誹謗中傷、依存を促す設計などは、原因も対策も異なります。年齢制限だけでなく、運営企業の責任も問うべきです。</p>
+          </article>
+          <article class="card">
+            <div class="num">POINT 03</div>
+            <h3>副作用も測定する</h3>
+            <p>利用制限による被害減少だけでなく、孤立、相談先の減少、規制対象外サービスへの移行なども評価対象にする必要があります。</p>
+          </article>
+        </div>
+        <div class="note"><strong>確認：</strong>このページは一律禁止への反対・慎重論を提示する政策提言です。SNSの危険性を否定したり、SNSがすべての人を救うと断定したりするものではありません。
+        </div>
+      </div>
+    </section>
+
+    <section id="rights">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">02 / CONNECTION MATTERS</div>
+          <h2>SNSは、危険な場所であると同時に、<br>誰かの居場所でもある。</h2>
+          <p>ネット上のつながりは、趣味の交流だけでなく、現実では話しにくい悩みを共有したり、似た経験を持つ人や相談窓口を見つけたりする入口になることがあります。</p>
+        </div>
+        <div class="callout">
+          <blockquote>「危険から守る」ことと、<br>「支えにつながる道を残す」ことを両立させたい。</blockquote>
+          <p>孤立している子どもや、学校・家庭で相談しづらい子どもにとって、オンラインの居場所が支えになる場合があります。一律禁止を検討するなら、その影響を当事者の声も含めて評価する必要があります。</p>
+        </div>
+        <div class="grid2" style="margin-top:16px">
+          <article class="card">
+            <div class="num">守るべき安全</div>
+            <h3>犯罪・嫌がらせ・有害な設計から守る</h3>
+            <p>危険な接触、詐欺、拡散される有害コンテンツ、過度な利用を促す機能への対策は欠かせません。</p>
+          </article>
+          <article class="card">
+            <div class="num">守るべき機会</div>
+            <h3>相談・交流・表現・学習の機会を残す</h3>
+            <p>オンラインでのつながりが支えになっている人もいます。規制の設計では、支援を必要とする子どもが孤立しない仕組みが必要です。</p>
+          </article>
+        </div>
+        <p class="small" style="margin-top:18px">
+          注意：ここで述べているのは、オンラインのつながりが支えになる場合があるという点です。SNSが自殺を防ぐ効果や、その大きさを定量的に断定するには、別途、質の高い研究と対象集団に即した検討が必要です。</p>
+      </div>
+    </section>
+
+    <section id="risk">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">03 / RISKS & TRADE-OFFS</div>
+          <h2>禁止の効果と、副作用を<br>同じテーブルで検証する。</h2>
+          <p>政策の評価では、期待される利益だけでなく、実施可能性・権利・プライバシー・想定外の影響も確認する必要があります。</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>論点</th>
+                <th>確認したい問い</th>
+                <th>必要な根拠</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>被害の減少</td>
+                <td>禁止で、どの種類の被害がどれだけ減る見込みか。</td>
+                <td>被害類型別の統計、導入前後の評価</td>
+              </tr>
+              <tr>
+                <td>年齢確認</td>
+                <td>年齢確認は正確で、プライバシーを守れるか。</td>
+                <td>技術評価、データ最小化、第三者監査</td>
+              </tr>
+              <tr>
+                <td>規制の回避</td>
+                <td>対象外サービスへの移行や年齢詐称が起きないか。</td>
+                <td>実施国の評価、利用実態の調査</td>
+              </tr>
+              <tr>
+                <td>居場所・相談</td>
+                <td>オンラインの支えを必要とする子どもへの代替策はあるか。</td>
+                <td>子ども本人の意見、支援者・当事者の調査</td>
+              </tr>
+              <tr>
+                <td>企業の責任</td>
+                <td>年齢制限を導入しても、企業の安全対策が弱まらないか。</td>
+                <td>安全設計、通報対応、透明性報告の指標</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="alternatives">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">04 / POLICY OPTIONS</div>
+          <h2>「一律禁止」だけではない、<br>具体的な対策を組み合わせる。</h2>
+          <p>対策は二者択一ではありません。サービスの危険度や年齢層に応じて、複数の施策を組み合わせ、効果を検証することができます。</p>
+        </div>
+        <div class="grid3">
+          <article class="card">
+            <div class="num">A / PLATFORM</div>
+            <h3>事業者の安全責任を強化</h3>
+            <p>未成年者に対するリスク評価、危険な接触への対策、通報処理の迅速化、透明性のある報告を求める。</p>
+          </article>
+          <article class="card">
+            <div class="num">B / DESIGN</div>
+            <h3>年齢に応じた安全設計</h3>
+            <p>公開範囲の初期設定、知らない相手からの接触制限、推薦・自動再生・通知などの設定を見直す。</p>
+          </article>
+          <article class="card">
+            <div class="num">C / EDUCATION</div>
+            <h3>実践的なリテラシー教育</h3>
+            <p>詐欺、個人情報、画像の拡散、誹謗中傷、困ったときの相談方法を、実際の場面に沿って学ぶ。</p>
+          </article>
+          <article class="card">
+            <div class="num">D / SUPPORT</div>
+            <h3>オンライン相談の選択肢を守る</h3>
+            <p>子どもが安全な相談窓口や支援につながれるよう、学校・地域・オンラインの複数の経路を整える。</p>
+          </article>
+          <article class="card">
+            <div class="num">E / PRIVACY</div>
+            <h3>年齢確認と個人情報保護</h3>
+            <p>必要以上の本人情報を集めない方式、保存期間の制限、目的外利用の防止、独立した検証を検討する。</p>
+          </article>
+          <article class="card">
+            <div class="num">F / EVALUATION</div>
+            <h3>導入後の効果を測る</h3>
+            <p>被害件数だけでなく、相談へのアクセス、孤立、プライバシー侵害、回避行動なども継続的に評価する。</p>
+          </article>
+        </div>
+        <div class="note"><strong>提案：</strong>政策を採用する前に、目的・対象・根拠・副作用・代替策・評価指標を公開し、子ども本人を含む当事者の意見を反映させる。</div>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">05 / EVIDENCE & SOURCES</div>
+          <h2>意見だけでなく、<br>根拠を確かめる。</h2>
+          <p>以下は論点を検討するための資料です。資料の内容を要約していますが、リンク先の原文を確認し、更新や文脈にも注意してください。</p>
+        </div>
+        <div class="sources">
+          <article class="source">
+            <div>
+              <h3>UNICEF — <i>Age-based restrictions of social media</i>（2025年）</h3>
+              <p>子どものオンライン体験には学習・交流・自己表現の機会と危険の両方があると整理。年齢制限だけでは十分でなく、企業の安全設計、リテラシー教育、保護者・教育者への支援、実施後の評価が必要と論じています。</p>
+              <a href="https://www.unicef.org/media/170606/file/UNICEF%20policy%20note_age%20restrictions%20social%20media_FINAL%20%28003%29.pdf"
+                target="_blank" rel="noopener">一次資料（PDF）を読む ↗</a>
+            </div>
+          </article>
+          <article class="source">
+            <div>
+              <h3>子どもをSNS被害から守る会 — 要望書案（2026年10月3日）</h3>
+              <p>16歳未満のSNS利用禁止、子どもに安全な設計を企業に義務づける法整備、国主導の年齢確認を求める側の主張を確認できます。反対意見を評価する際も、まず提案の原文を読むことが重要です。</p><a
+                href="https://note.com/sns_kodomomamoru/n/n3380af958311" target="_blank" rel="noopener">団体の要望書案を読む ↗</a>
+            </div>
+          </article>
+          <article class="source">
+            <div>
+              <h3>埼玉新聞 — 「16歳未満SNS利用禁止を」市民グループが法整備要請（2026年10月30日）</h3>
+              <p>要望書の提出と、共同代表による主張を報じた記事。団体の活動について、独立した報道から確認するための資料です。</p><a
+                href="https://www.saitama-np.co.jp/articles/221014/postDetail" target="_blank" rel="noopener">報道記事を読む
+                ↗</a>
+            </div>
+          </article>
+          <article class="source">
+            <div>
+              <h3>日テレNEWS NNN（ライブドアニュース掲載）— 要望書提出の報道（2026年10月30日）</h3>
+              <p>団体が求める規制と、その理由についての報道。政策の事実関係を確認する際は、団体自身の説明と報道を照らし合わせてください。</p><a
+                href="https://news.livedoor.com/article/detail/32694430/" target="_blank" rel="noopener">報道記事を読む ↗</a>
+            </div>
+          </article>
+        </div>
+        <p class="small" style="margin-top:18px">
+          資料の扱い：UNICEFの政策ノートは、あらゆる年齢制限を一律に否定する文書ではありません。年齢制限だけでは不十分で、包括的な対策が必要だという論点を参照しています。出典のない数字や「専門家は全員こう考えている」といった表現は使用していません。
+        </p>
+      </div>
+    </section>
+
+    <section id="questions">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">06 / QUESTIONS</div>
+          <h2>議論のためのチェックリスト</h2>
+          <p>賛成・反対どちらの立場でも、同じ質問に答えられる政策を目指します。</p>
+        </div>
+        <div class="checklist">
+          <div class="check"><b>01</b>
+            <p>何を「SNS」と定義し、どのサービス・機能を規制対象にするのか。</p>
+          </div>
+          <div class="check"><b>02</b>
+            <p>禁止によって減ると見込まれる被害と、その推定の根拠は何か。</p>
+          </div>
+          <div class="check"><b>03</b>
+            <p>相談先やオンラインの居場所を必要とする子どもに、どんな支援を用意するのか。</p>
+          </div>
+          <div class="check"><b>04</b>
+            <p>年齢確認で集めるデータをどう最小化し、漏えいや目的外利用を防ぐのか。</p>
+          </div>
+          <div class="check"><b>05</b>
+            <p>導入後、効果と副作用を誰がどの指標で評価し、結果を公開するのか。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">07 / ABOUT THIS PAGE</div>
+          <h2>このページの立場と更新方針</h2>
+          <p>このページは、16歳未満のSNS利用を一律に禁止する政策に反対・慎重な立場から、論点と出典を整理するための個人制作のたたき台です。公的機関や研究機関の公式見解を代表するものではありません。</p>
+        </div>
+        <div class="grid2">
+          <article class="card">
+            <h3>事実と意見を分ける</h3>
+            <p>報道で確認できる事実、資料に記載された主張、このページの提案を混同しないようにします。</p>
+          </article>
+          <article class="card">
+            <h3>誤りは修正する</h3>
+            <p>出典の誤り、更新された情報、表現の不正確さが見つかった場合は、原資料を確認して更新します。</p>
+          </article>
+        </div>
+        <p class="small" style="margin-top:20px">
+          公開前に、リンクの有効性・引用内容・日付を再確認してください。体験談を掲載する場合は、本人の同意とプライバシー保護を優先し、個人が特定される情報は載せないでください。</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap footer-row">
+      <div><strong style="color:var(--text)">つながりを守る政策へ</strong><br>16歳未満SNS一律禁止を考える</div>
+      <div>出典を確認し、当事者の声を聞き、政策の効果を検証する。<br><span class="small">© 2026 個人制作の政策提言ページ案</span></div>
+    </div>
+  </footer>
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const nav = document.getElementById('navlinks');
+    btn.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+    }));
+  </script>
+</body>
+
+</html>
